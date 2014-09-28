@@ -1,2 +1,40 @@
 // This File is imported last, and will override other styles in the cascade
 // Add styles here to make changes without digging in too much
+
+/* overrides of the lousy styles from _syntax.scss */
+.CodeRay pre {
+  background: none;
+  color: #000;
+}
+
+/* fixes issue where the whole line wouldn't get colored in a diff */
+.CodeRay span.insert, .CodeRay span.change, .CodeRay span.delete {
+        width: auto;
+}
+
+@import "coderay";
+
+body {
+    line-height: 1.7em;
+    font-size: 1em;
+}
+
+body>div {
+    background: none;
+}
+
+body>div>div {
+    background: none;
+    border-right-width: 0px;
+}
+
+html {
+    background: none;
+}
+
+pre {
+  font-size: 13px;
+  border-radius: none;
+  border: none;
+  box-shadow: none;
+}
