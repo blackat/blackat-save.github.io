@@ -9,7 +9,7 @@
   <meta name="author" content="Your Name">
 
   
-  <meta name="description" content="01. The application The application will allow the user to manage a list of movies, show them, update them, store new ones and delete existing ones. &hellip;">
+  <meta name="description" content="Introduction The web application will allow the user to manage a list of movies, show them, update them, store new ones and delete existing ones. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -85,42 +85,46 @@
   </header>
 
 
-<div class="entry-content"><h2>01. The application</h2>
+<div class="entry-content"><h2>Introduction</h2>
 
-<p>The application will allow the user to manage a list of movies, show them, update them, store new ones and delete existing ones. Basically a normal <code>CRUD</code> based application but totally written in Javascript.</p>
+<p>The web application will allow the user to manage a list of movies, show them, update them, store new ones and delete existing ones.</p>
 
-<p><strong>// todo: better specify the actors into play, the name of the resource that will be introduced later on</strong>
-The first flow will be a request from the <code>UI</code> to get the list of movies already stored in the database. The <code>REST</code> request will use the <em>HTTP verb</em> <code>GET</code>, then <code>Express.js</code>, according to a list of configured routes, will call a method on the controller managing the movie resource. The controller will call the database to fetch data.</p>
+<p>This web application will help to show how to structure a full stack Javascript web application and which components are required to make it work.</p>
 
-<p>How to structure a full stack Javascript web application. I will consider these ingredients</p>
+<p>The application will start simple and step by step components will be added such as the database, the testing framework, the task runner and the dependency management.</p>
 
-<h3>Folder structure</h3>
+<h2>The Single Page Web Application</h2>
 
-<pre><code>├── app
-│   └── index.html
-├── lib
-│   ├── config
-│   │   └── express.js
-│   ├── controllers
-│   │   └── index.js
-│   └── routes.js
-├── package.json
-└── server.js
-</code></pre>
-
-<h2>Base web application to scale</h2>
-
-<p>Let&rsquo;s start implementing a basic web application base on <code>node</code> and <code>expressjs</code>.</p>
+<p>As first step the web application will be composed by</p>
 
 <ul>
-<li>Prerequisites
-<code>node.js</code> must be installed, check <a href="(http://nodejs.org/download/)">node</a> for your platform.</li>
-<li>Create <code>package.json</code>
-This file is used by <code>npm</code> to store metadata of projects published as npm module.</li>
+<li>Node.js the web server</li>
+<li>Express the web framework</li>
 </ul>
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<!-- more -->
+
+
+<h3>1.1 Folder structure</h3>
+
+<p>The starting point is the folder structure to organize resources and configuration files.</p>
+
+<pre><code>├── app
+│   └── index.html          # =&gt; single html page loading resources
+├── lib
+│   ├── config
+│   │   └── express.js      # =&gt; configuration file for expressjs framework
+│   ├── controllers
+│   │   └── index.js        # =&gt; controller to serve the starting page
+│   └── routes.js           # =&gt; router to map REST request with controller
+├── package.json            # =&gt; set of required nodeJs modules
+└── server.js               # =&gt; boostrap of the server side
+</code></pre>
+
+<h3>1.2 Express Dependency</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -143,12 +147,11 @@ This file is used by <code>npm</code> to store metadata of projects published as
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p><a href="(http://expressjs.com/)" title="express-web-framework">express</a> is web application framework for node able to manage requests and responses, defining routes and much more.</p>
+<p><strong>Express</strong> is a web application framework for <strong>Node.js</strong> used to develop web application totally written in Javascript. The framework provides <em>high level methods</em> way to manage requests mapping a route with the designated controller able to provide data.</p>
 
-<ul>
-<li>Create <code>server.js</code></li>
-</ul>
+<p>In the <code>package.json</code> file add the dependency on the web framework. This file is used by <code>npm</code> to store metadata of projects published as npm module and to easily installed them locally running the command <code>npm install</code>.</p>
 
+<h3>1.3 Server Configuration</h3>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -173,81 +176,92 @@ This file is used by <code>npm</code> to store metadata of projects published as
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Express framework module is loaded by <code>require('express')</code> node method, then a new application is created invoking <code>express()</code>. Express provides <em>high level</em> methods to defines routes and dealing with request and response.</p>
+<p><strong>Express</strong> module is loaded by <code>require('express')</code> then a new application instance is created invoking <code>express()</code>.</p>
 
-<p>A route is defined via <code>app.VERB</code> method, where <em>VERB</em> stands for <em>HTTP VERB</em>, in this case <code>GET/</code>, the <em>URL</em> the route is mapped to and the response to be sent.</p>
+<p>Defined a route via</p>
+
+<ul>
+<li><code>app.VERB</code> method, where <code>VERB</code> stands for <code>HTTP VERB</code>. In the example <code>GET</code> is the verb;</li>
+<li><code>/</code> the <code>URL</code> the route is mapped to;</li>
+<li>a function implementation to manage request and response.</li>
+</ul>
+
 
 <p>Finally <em>bind</em> and <em>listen</em> for connection invoking method <code>app.listen()</code>.</p>
 
-<ul>
-<li>Run the application
-Download modules running <code>npm install</code> from the command line, then <code>node server.js</code>, open a browser and hit <code>http://localhost:9001</code>.</li>
-</ul>
+<h3>1.4 First Run of the Application</h3>
+
+<p>Run <code>npm install</code> in the command line to locally install the declared dependencies. Once done type <code>node server.js</code>, open a browser and hit <code>http://localhost:9001</code>.</p>
+
+<h3>1.5 Separate Express routes</h3>
+
+<figure class='code'><figcaption><span>lib/routes.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">app</span><span class="p">.</span><span class="nx">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">){</span>
+</span><span class='line'>        <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="s1">&#39;Hello World&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<h3>Add Express routes and structure the application</h3>
+<p>Express 4.0 has introduced the <code>app.route()</code> <a href="http://expressjs.com/4x/api.html#app.route" title="Express route method">method</a> which is the recommended approach to handle HTTP verbs. Routes are in a separated files which is loaded by <code>server.js</code> as follows.</p>
 
-<p>Express 4.0 has introduced the <code>app.route()</code> <a href="http://expressjs.com/4x/api.html#app.route" title="Express route method">method</a> which is the recommended approach to handle HTTP verbs. We can start to structure a little bit the application creating a <code>routes.js</code> file under <code>lib</code> folder:</p>
-
-<pre><code>module.exports = function(app) {
-
-    app.route('/').get(function(req, res, next){
-        res.send('Hello World');
-    });
-};
-</code></pre>
-
-<p>{:.language-javascript}</p>
-
-<p>then change <code>server.js</code> as follows:</p>
-
-<pre><code>var express = require('express'),
-    app = express();
-
-require('./lib/routes')(app);
-
-var server = app.listen(9001, function(){
-    console.log('Express server is listening on port %d', server.address().port);
-});
-</code></pre>
-
-<p>{:.language-javascript}</p>
-
-<p>now routes are in a separated files which is loaded by <code>server.js</code>.</p>
-
-<h3>Add Single Page Web Application</h3>
-
-<p>Returning a message as a response to a <code>GET/</code> is fine, but usually it is better to have a page, for instance <code>index.html</code>, which serves us a <strong>single page application</strong>.</p>
-
-<ul>
-<li>Modify <code>routes.js</code> in order to call a function able to return our application page.</li>
-</ul>
+<figure class='code'><figcaption><span>server.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">),</span>
+</span><span class='line'>    <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./lib/routes&#39;</span><span class="p">)(</span><span class="nx">app</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">9001</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Express server is listening on port %d&#39;</span><span class="p">,</span> <span class="nx">server</span><span class="p">.</span><span class="nx">address</span><span class="p">().</span><span class="nx">port</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>var index = require('./controllers');
+<h3>1.6 Return index.html</h3>
 
-module.exports = function(app) {
-
-    app.route('/').get(index.index);
-};
-</code></pre>
-
-<p>{:.language-javascript}</p>
-
-<ul>
-<li><p>Now add the <em>function</em> able to return as a response the render of the <code>index.html</code> page.
-~~~
-exports.index = function(req, res) {
-  res.render(&lsquo;index&rsquo;);
-}
-~~~
-{:.language-javascript}</p></li>
-<li><p>Create the <em>html page</em> which will support the single page web application.</p></li>
-</ul>
+<figure class='code'><figcaption><span>lib/routes.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">index</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./controllers&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">app</span><span class="p">.</span><span class="nx">route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="nx">index</span><span class="p">.</span><span class="nx">index</span><span class="p">);</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<figure class='code'><figcaption><span>index.html </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p>The <code>html</code> page will give the life to the single page web application. The function calls the <code>index</code> controller method called <code>index</code> which returns the page as follows:</p>
+
+<figure class='code'><figcaption><span>lib/controllers/index.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">exports</span><span class="p">.</span><span class="nx">index</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">res</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then the <code>html</code> page to be returned</p>
+
+<figure class='code'><figcaption><span>app/index.html</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -270,45 +284,100 @@ exports.index = function(req, res) {
 </span></code></pre></td></tr></table></div></figure>
 
 
+<h3>1.7 Express Configuration and the Render Engine</h3>
+
+<p>The <code>index.html</code> page cannot still be found by express. Configure the web framework to render and serve views from a given folder.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">rootpath</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">normalize</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">&#39;/../..&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">app</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;views&#39;</span><span class="p">,</span> <span class="nx">rootpath</span> <span class="o">+</span> <span class="s1">&#39;/app&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">app</span><span class="p">.</span><span class="nx">engine</span><span class="p">(</span><span class="s1">&#39;html&#39;</span><span class="p">,</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;ejs&#39;</span><span class="p">).</span><span class="nx">renderFile</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">app</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;view engine&#39;</span><span class="p">,</span> <span class="s1">&#39;html&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally add <code>ejs</code> render engine for <code>html</code> page as a dependency</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;web-app-101&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.0.1&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nt">&quot;express&quot;</span><span class="p">:</span> <span class="s2">&quot;4.0.x&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;ejs&quot;</span><span class="p">:</span> <span class="s2">&quot;~0.8.4&quot;</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nt">&quot;devDependencies&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>1.8 Update Server with Express Configuration</h3>
+
+<p>Update the server requiring the express configuration</p>
+
+<figure class='code'><figcaption><span>server.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">var</span> <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">),</span>
+</span><span class='line'>    <span class="nx">app</span> <span class="o">=</span> <span class="nx">express</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./lib/routes&#39;</span><span class="p">)(</span><span class="nx">app</span><span class="p">);</span>
+</span><span class='line'><span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./lib/config/express&#39;</span><span class="p">)(</span><span class="nx">app</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">server</span> <span class="o">=</span> <span class="nx">app</span><span class="p">.</span><span class="nx">listen</span><span class="p">(</span><span class="mi">9001</span><span class="p">,</span> <span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Express server is listening on port %d&#39;</span><span class="p">,</span> <span class="nx">server</span><span class="p">.</span><span class="nx">address</span><span class="p">().</span><span class="nx">port</span><span class="p">);</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>then run <code>npm install</code>, <code>node server.js</code> and check the result in the browser.</p>
+
+<h2>2 Web Application features and Look &amp; Feel</h2>
+
+<p>In this second step some features and look &amp; feel will be added to the web application through</p>
+
 <ul>
-<li>The <code>index.html</code> page cannot still be found by the <strong>web framework</strong>. Everything related to routing, serving resources and then handling requests and responses is managed by <code>expressjs</code>, the web framework. The page <code>index.html</code> is a resources. Configure the web framework to point to a folder containing the views which will be rendered to the user and the <strong>render engine</strong>: <code>ejs</code>.</li>
+<li>Angular the ui framework</li>
+<li>Bootstrap the css framework</li>
 </ul>
 
 
-<pre><code>var path = require('path');
-
-module.exports = function(app) {
-
-    var rootpath = path.normalize(__dirname + '/../..');
-
-    app.set('views', rootpath + '/app');
-
-    app.engine('html', require('ejs').renderFile);
-    app.set('view engine', 'html');
-};
-</code></pre>
-
-<p>{:.language-javascript}</p>
-
-<ul>
-<li>Add <code>"ejs": "~0.8.4"</code> to <code>package.json</code> file and run <code>npm install</code> to have the render engine available in <code>node_modules</code> folder.</li>
-</ul>
-
-
-<p>Bla</p>
-
-<pre><code>var express = require('express'),
-    app = express();
-
-require('./lib/routes')(app);
-require('./lib/config/express')(app);
-
-var server = app.listen(9001, function(){
-    console.log('Express server is listening on port %d', server.address().port);
-});
-</code></pre>
-
-<p>{:.language-javascript}</p>
+<h3>2.1 Folder Structure</h3>
 
 <h2>Continuos build integration</h2>
 
@@ -479,29 +548,6 @@ var server = app.listen(9001, function(){
 
 <p>just to have a basic project which can run tests</p>
 
-<h3>Dependencies</h3>
-
-<figure class='code'><figcaption><span>package.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;simple-webapp&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;a simple fullstack web application&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;version&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0.1&quot;</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;private&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-</span><span class='line'>    <span class="s2">&quot;dependencies&quot;</span><span class="o">:</span> <span class="p">{</span>
-</span><span class='line'>        <span class="s2">&quot;express&quot;</span><span class="o">:</span> <span class="s2">&quot;4.x&quot;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
 <h3>MongoDB</h3>
 
 <h4>Model</h4>
@@ -540,6 +586,29 @@ var server = app.listen(9001, function(){
 <p>I have defined a very simple schema for a product with only two fields <code>name</code> and <code>description</code>.</p>
 
 <blockquote><p>Models are fancy constructors compiled from our Schema definitions.</p></blockquote>
+
+<h4>Routes</h4>
+
+<p>Once the user has required an action on a resource it has to be served according to its name and the <code>HTTP verb</code>. Thus create an instance of <a href="http://expressjs.com/4x/api.html#app.route" title="express route api">route</a> with a specific name and then manage all the <code>HTTP verbs</code> avoiding duplicates in names.</p>
+
+<figure class='code'><figcaption><span>/lib/routes.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">products</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./controllers/products&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">app</span><span class="p">.</span><span class="nx">route</span><span class="p">(</span><span class="s1">&#39;api/products&#39;</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="nx">products</span><span class="p">.</span><span class="nx">products</span><span class="p">);</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <h4>Controller</h4>
 
@@ -581,31 +650,6 @@ var server = app.listen(9001, function(){
 <p>The module <code>products.js</code> exports the function <code>products()</code> adding it to the <code>exports</code> object. The function will be added to the root of the module.</p>
 
 <!-- Reference links -->
-
-
-<h3>Express</h3>
-
-<h4>Routes</h4>
-
-<p>Once the user has required an action on a resource it has to be served according to its name and the <code>HTTP verb</code>. Thus create an instance of <a href="http://expressjs.com/4x/api.html#app.route" title="express route api">route</a> with a specific name and then manage all the <code>HTTP verbs</code> avoiding duplicates in names.</p>
-
-<figure class='code'><figcaption><span>/lib/routes.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">var</span> <span class="nx">products</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./controllers/products&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nx">app</span><span class="p">.</span><span class="nx">route</span><span class="p">(</span><span class="s1">&#39;api/products&#39;</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="nx">products</span><span class="p">.</span><span class="nx">products</span><span class="p">);</span>
-</span><span class='line'><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure>
 
 
 <h3>NodeJS</h3>
