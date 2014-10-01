@@ -9,12 +9,7 @@
   <meta name="author" content="Your Name">
 
   
-<<<<<<< HEAD
   <meta name="description" content="01. The application The application will allow the user to manage a list of movies, show them, update them, store new ones and delete existing ones. &hellip;">
-=======
-  <meta name="description" content="The application
-The application will allow the user to manage a list of movies, show them, update them, store new ones and delete existing ones. &hellip;">
->>>>>>> e660e107c87b71ada170316435e9121495bc714a
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -34,10 +29,7 @@ The application will allow the user to manage a list of movies, show them, updat
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<<<<<<< HEAD
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-=======
->>>>>>> e660e107c87b71ada170316435e9121495bc714a
 
   
 
@@ -93,12 +85,8 @@ The application will allow the user to manage a list of movies, show them, updat
   </header>
 
 
-<<<<<<< HEAD
 <div class="entry-content"><h2>01. The application</h2>
 
-=======
-<div class="entry-content"><h2 id="the-application">The application</h2>
->>>>>>> e660e107c87b71ada170316435e9121495bc714a
 <p>The application will allow the user to manage a list of movies, show them, update them, store new ones and delete existing ones. Basically a normal <code>CRUD</code> based application but totally written in Javascript.</p>
 
 <p><strong>// todo: better specify the actors into play, the name of the resource that will be introduced later on</strong>
@@ -106,7 +94,6 @@ The first flow will be a request from the <code>UI</code> to get the list of mov
 
 <p>How to structure a full stack Javascript web application. I will consider these ingredients</p>
 
-<<<<<<< HEAD
 <h3>Folder structure</h3>
 
 <pre><code>├── app
@@ -155,37 +142,10 @@ This file is used by <code>npm</code> to store metadata of projects published as
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
-=======
-<h2 id="base-web-application-to-scale">Base web application to scale</h2>
-<p>Let’s start implementing a basic web application base on <code>node</code> and <code>expressjs</code>.</p>
-
-<ul>
-  <li>Prerequisites
-<code>node.js</code> must be installed, check <a href="(http://nodejs.org/download/) [node_installation]">node</a> for your platform.</li>
-  <li>Create <code>package.json</code>
-This file is used by <code>npm</code> to store metadata of projects published as npm module.</li>
-</ul>
-
-<div><div class="CodeRay">
-  <div class="code"><pre>{
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">web-app-101</span><span class="delimiter">&quot;</span></span>,
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">version</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">0.0.1</span><span class="delimiter">&quot;</span></span>,
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">dependencies</span><span class="delimiter">&quot;</span></span>: {
-        <span class="key"><span class="delimiter">&quot;</span><span class="content">express</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">4.0.x</span><span class="delimiter">&quot;</span></span>
-    },
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">devDependencies</span><span class="delimiter">&quot;</span></span>: {
-
-    }
-}
-</pre></div>
-</div>
-</div>
->>>>>>> e660e107c87b71ada170316435e9121495bc714a
 
 <p><a href="(http://expressjs.com/)" title="express-web-framework">express</a> is web application framework for node able to manage requests and responses, defining routes and much more.</p>
 
 <ul>
-<<<<<<< HEAD
 <li>Create <code>server.js</code></li>
 </ul>
 
@@ -212,25 +172,6 @@ This file is used by <code>npm</code> to store metadata of projects published as
 </span><span class='line'><span class="p">});</span>
 </span></code></pre></td></tr></table></div></figure>
 
-=======
-  <li>Create <code>server.js</code></li>
-</ul>
-
-<div><div class="CodeRay">
-  <div class="code"><pre><span class="keyword">var</span> express = require(<span class="string"><span class="delimiter">'</span><span class="content">express</span><span class="delimiter">'</span></span>),
-    app = express();
-
-app.get(<span class="string"><span class="delimiter">'</span><span class="content">/</span><span class="delimiter">'</span></span>, <span class="keyword">function</span>(req, res) {
-    res.send(<span class="string"><span class="delimiter">&quot;</span><span class="content">Hello World</span><span class="delimiter">&quot;</span></span>)
-});
-
-<span class="keyword">var</span> server = app.listen(<span class="integer">9001</span>, <span class="keyword">function</span>() {
-    console.log(<span class="string"><span class="delimiter">'</span><span class="content">Express server is listening on port %d</span><span class="delimiter">'</span></span>, server.address().port);
-});
-</pre></div>
-</div>
-</div>
->>>>>>> e660e107c87b71ada170316435e9121495bc714a
 
 <p>Express framework module is loaded by <code>require('express')</code> node method, then a new application is created invoking <code>express()</code>. Express provides <em>high level</em> methods to defines routes and dealing with request and response.</p>
 
@@ -239,7 +180,6 @@ app.get(<span class="string"><span class="delimiter">'</span><span class="conten
 <p>Finally <em>bind</em> and <em>listen</em> for connection invoking method <code>app.listen()</code>.</p>
 
 <ul>
-<<<<<<< HEAD
 <li>Run the application
 Download modules running <code>npm install</code> from the command line, then <code>node server.js</code>, open a browser and hit <code>http://localhost:9001</code>.</li>
 </ul>
@@ -371,130 +311,6 @@ var server = app.listen(9001, function(){
 <p>{:.language-javascript}</p>
 
 <h2>Continuos build integration</h2>
-=======
-  <li>Run the application
-Download modules running <code>npm install</code> from the command line, then <code>node server.js</code>, open a browser and hit <code>http://localhost:9001</code>.</li>
-</ul>
-
-<h3 id="add-express-routes-and-structure-the-application">Add Express routes and structure the application</h3>
-<p>Express 4.0 has introduced the <code>app.route()</code> <a href="http://expressjs.com/4x/api.html#app.route" title="Express route method">method</a> which is the recommended approach to handle HTTP verbs. We can start to structure a little bit the application creating a <code>routes.js</code> file under <code>lib</code> folder:</p>
-
-<div><div class="CodeRay">
-  <div class="code"><pre>module.<span class="function">exports</span> = <span class="keyword">function</span>(app) {
-
-    app.route(<span class="string"><span class="delimiter">'</span><span class="content">/</span><span class="delimiter">'</span></span>).get(<span class="keyword">function</span>(req, res, next){
-        res.send(<span class="string"><span class="delimiter">'</span><span class="content">Hello World</span><span class="delimiter">'</span></span>);
-    });
-};
-</pre></div>
-</div>
-</div>
-
-<p>then change <code>server.js</code> as follows:</p>
-
-<div><div class="CodeRay">
-  <div class="code"><pre><span class="keyword">var</span> express = require(<span class="string"><span class="delimiter">'</span><span class="content">express</span><span class="delimiter">'</span></span>),
-    app = express();
-
-require(<span class="string"><span class="delimiter">'</span><span class="content">./lib/routes</span><span class="delimiter">'</span></span>)(app);
-
-<span class="keyword">var</span> server = app.listen(<span class="integer">9001</span>, <span class="keyword">function</span>(){
-    console.log(<span class="string"><span class="delimiter">'</span><span class="content">Express server is listening on port %d</span><span class="delimiter">'</span></span>, server.address().port);
-});
-</pre></div>
-</div>
-</div>
-
-<p>now routes are in a separated files which is loaded by <code>server.js</code>.</p>
-
-<h3 id="add-single-page-web-application">Add Single Page Web Application</h3>
-<p>Returning a message as a response to a <code>GET/</code> is fine, but usually it is better to have a page, for instance <code>index.html</code>, which serves us a <strong>single page application</strong>.</p>
-
-<ul>
-  <li>Modify <code>routes.js</code> in order to call a function able to return our application page.</li>
-</ul>
-
-<div><div class="CodeRay">
-  <div class="code"><pre><span class="keyword">var</span> index = require(<span class="string"><span class="delimiter">'</span><span class="content">./controllers</span><span class="delimiter">'</span></span>);
-
-module.<span class="function">exports</span> = <span class="keyword">function</span>(app) {
-
-    app.route(<span class="string"><span class="delimiter">'</span><span class="content">/</span><span class="delimiter">'</span></span>).get(index.index);
-};
-</pre></div>
-</div>
-</div>
-
-<ul class="language-javascript">
-  <li>Now add the <em>function</em> able to return as a response the render of the <code>index.html</code> page.
-~~~
-exports.index = function(req, res) {
-  res.render(‘index’);
-}
-~~~</li>
-</ul>
-
-<ul>
-  <li>Create the <em>html page</em> which will support the single page web application.</li>
-</ul>
-
-<div><div class="CodeRay">
-  <div class="code"><pre><span class="doctype">&lt;!DOCTYPE html&gt;</span>
-<span class="tag">&lt;html&gt;</span>
-<span class="tag">&lt;head</span> <span class="attribute-name">lang</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">en</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-    <span class="tag">&lt;meta</span> <span class="attribute-name">charset</span>=<span class="string"><span class="delimiter">&quot;</span><span class="content">UTF-8</span><span class="delimiter">&quot;</span></span><span class="tag">&gt;</span>
-    <span class="tag">&lt;title&gt;</span>Popcorn Time<span class="tag">&lt;/title&gt;</span>
-<span class="tag">&lt;/head&gt;</span>
-<span class="tag">&lt;body&gt;</span>
-    <span class="tag">&lt;h1&gt;</span>Popcorn Time<span class="tag">&lt;/h1&gt;</span>
-<span class="tag">&lt;/body&gt;</span>
-<span class="tag">&lt;/html&gt;</span>
-</pre></div>
-</div>
-</div>
-
-<ul>
-  <li>The <code>index.html</code> page cannot still be found by the <strong>web framework</strong>. Everything related to routing, serving resources and then handling requests and responses is managed by <code>expressjs</code>, the web framework. The page <code>index.html</code> is a resources. Configure the web framework to point to a folder containing the views which will be rendered to the user and the <strong>render engine</strong>: <code>ejs</code>.</li>
-</ul>
-
-<div><div class="CodeRay">
-  <div class="code"><pre><span class="keyword">var</span> path = require(<span class="string"><span class="delimiter">'</span><span class="content">path</span><span class="delimiter">'</span></span>);
-
-module.<span class="function">exports</span> = <span class="keyword">function</span>(app) {
-
-    <span class="keyword">var</span> rootpath = path.normalize(__dirname + <span class="string"><span class="delimiter">'</span><span class="content">/../..</span><span class="delimiter">'</span></span>);
-
-    app.set(<span class="string"><span class="delimiter">'</span><span class="content">views</span><span class="delimiter">'</span></span>, rootpath + <span class="string"><span class="delimiter">'</span><span class="content">/app</span><span class="delimiter">'</span></span>);
-
-    app.engine(<span class="string"><span class="delimiter">'</span><span class="content">html</span><span class="delimiter">'</span></span>, require(<span class="string"><span class="delimiter">'</span><span class="content">ejs</span><span class="delimiter">'</span></span>).renderFile);
-    app.set(<span class="string"><span class="delimiter">'</span><span class="content">view engine</span><span class="delimiter">'</span></span>, <span class="string"><span class="delimiter">'</span><span class="content">html</span><span class="delimiter">'</span></span>);
-};
-</pre></div>
-</div>
-</div>
-
-<ul>
-  <li>Add <code>"ejs": "~0.8.4"</code> to <code>package.json</code> file and run <code>npm install</code> to have the render engine available in <code>node_modules</code> folder.</li>
-</ul>
-
-<p>Bla</p>
-
-<div><div class="CodeRay">
-  <div class="code"><pre><span class="keyword">var</span> express = require(<span class="string"><span class="delimiter">'</span><span class="content">express</span><span class="delimiter">'</span></span>),
-    app = express();
-
-require(<span class="string"><span class="delimiter">'</span><span class="content">./lib/routes</span><span class="delimiter">'</span></span>)(app);
-require(<span class="string"><span class="delimiter">'</span><span class="content">./lib/config/express</span><span class="delimiter">'</span></span>)(app);
-
-<span class="keyword">var</span> server = app.listen(<span class="integer">9001</span>, <span class="keyword">function</span>(){
-    console.log(<span class="string"><span class="delimiter">'</span><span class="content">Express server is listening on port %d</span><span class="delimiter">'</span></span>, server.address().port);
-});
-</pre></div>
-</div>
-</div>
-
-<h2 id="continuos-build-integration">Continuos build integration</h2>
->>>>>>> e660e107c87b71ada170316435e9121495bc714a
 
 <p>// todo: how to install them
 - Grunt: task runner
@@ -505,7 +321,6 @@ require(<span class="string"><span class="delimiter">'</span><span class="conten
 <p>Add following two files to the root of the project:</p>
 
 <ul>
-<<<<<<< HEAD
 <li><code>package.json</code>: used by <code>npm</code> to store metadata of projects published as npm module, Grunt is one of them as Grunt plugins.</li>
 <li><code>Gruntfile.js</code>: used to define tasks and load plugins.</li>
 </ul>
@@ -761,257 +576,12 @@ require(<span class="string"><span class="delimiter">'</span><span class="conten
 </span></code></pre></td></tr></table></div></figure>
 
 
-=======
-  <li><code>package.json</code>: used by <code>npm</code> to store metadata of projects published as npm module, Grunt is one of them as Grunt plugins.</li>
-  <li><code>Gruntfile.js</code>: used to define tasks and load plugins.</li>
-</ul>
-
-<h5 id="packagejson">package.json</h5>
-<p>List Grunt and all the Grunt plugins in <code>devDependencies.</code></p>
-
-<div><div class="CodeRay">
-  <div class="code"><pre>{
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">name</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">movie-app</span><span class="delimiter">&quot;</span></span>,
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">version</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">0.0.1</span><span class="delimiter">&quot;</span></span>,
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">dependencies</span><span class="delimiter">&quot;</span></span>: {
-        <span class="key"><span class="delimiter">&quot;</span><span class="content">connect</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">3.1.x</span><span class="delimiter">&quot;</span></span>,
-        <span class="key"><span class="delimiter">&quot;</span><span class="content">serve-static</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">1.4.x</span><span class="delimiter">&quot;</span></span>,
-        <span class="key"><span class="delimiter">&quot;</span><span class="content">express</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">4.0.x</span><span class="delimiter">&quot;</span></span>,
-        <span class="key"><span class="delimiter">&quot;</span><span class="content">mongoose</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">3.9.x</span><span class="delimiter">&quot;</span></span>
-    },
-    <span class="key"><span class="delimiter">&quot;</span><span class="content">devDependencies</span><span class="delimiter">&quot;</span></span>: {
-        <span class="key"><span class="delimiter">&quot;</span><span class="content">grunt</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">~0.4.5</span><span class="delimiter">&quot;</span></span>,
-        <span class="key"><span class="delimiter">&quot;</span><span class="content">load-grunt-tasks</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">~0.2.0</span><span class="delimiter">&quot;</span></span>,
-        <span class="key"><span class="delimiter">&quot;</span><span class="content">grunt-express-server</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">~0.4.19</span><span class="delimiter">&quot;</span></span>,
-        <span class="key"><span class="delimiter">&quot;</span><span class="content">grunt-open</span><span class="delimiter">&quot;</span></span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">~0.2.0</span><span class="delimiter">&quot;</span></span>
-    }
-}
-</pre></div>
-</div>
-</div>
-
-<h5 id="grunt-file-configuration">Grunt file configuration</h5>
-<p>Grunt configuration file is made of four parts</p>
-
-<ol>
-  <li>Wrapper function: when Grunt is run from the CLI, it looks for the configuration file in order to load plugins and run the required task. Grunt</li>
-  <li>Project and tasks configuration: here plugin’s tasks are defined in order to be reused later on. For instance <code>express</code> Grunt plugin has been declared in the <code>package.json</code>, along with the plugin come some tasks which could be configured and used. <code>express</code> plugin task is declared and configured as the <code>open</code> plugin’s task.</li>
-  <li>
-    <p>Load grunt plugins and tasks: for instance <code>express</code> plugin must be declared under <code>devDependencies</code> in <code>package.json</code>, configured in <code>Gruntfile.js</code> but even loaded. This section is done for loading such plugins which define tasks such as  <code>grunt.loadNpmTasks('grunt-express-server');</code>.</p>
-
-    <p>When the project grows there could be many lines each one to load a plugin, this can become quite annoying and even result in a good amount of boiler-plate code. As alternative solution, use <a href="(https://github.com/sindresorhus/load-grunt-tasks)" title="Load grunt task plugin">load-grunt-task</a> plugin in order to automatically load plugins from <code>dependencies</code> and <code>devDependencies</code> in <code>package.json</code>, so just <em>load plugins in one line</em>.</p>
-
-    <p>Do not forget to add <code>"load-grunt-tasks": "~0.2.0",</code> to your <code>package.json</code>.</p>
-  </li>
-  <li>Custom tasks: here define your task as aggregation of tasks defined and configured in section number 2.</li>
-</ol>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>Gruntfile.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-<span class="line-number">15</span>
-<span class="line-number">16</span>
-<span class="line-number">17</span>
-<span class="line-number">18</span>
-<span class="line-number">19</span>
-<span class="line-number">20</span>
-<span class="line-number">21</span>
-<span class="line-number">22</span>
-<span class="line-number">23</span>
-<span class="line-number">24</span>
-<span class="line-number">25</span>
-<span class="line-number">26</span>
-<span class="line-number">27</span>
-<span class="line-number">28</span>
-<span class="line-number">29</span>
-<span class="line-number">30</span>
-<span class="line-number">31</span>
-<span class="line-number">32</span>
-<span class="line-number">33</span>
-<span class="line-number">34</span>
-<span class="line-number">35</span>
-<span class="line-number">36</span>
-<span class="line-number">37</span>
-<span class="line-number">38</span>
-<span class="line-number">39</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="c1">// 1. Wrapper function</span>
-</span><span class="line"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">grunt</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1">// replace step 3</span>
-</span><span class="line">    <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;load-grunt-tasks&#39;</span><span class="p">)(</span><span class="nx">grunt</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1">// 2. Project and tasks configuration</span>
-</span><span class="line">    <span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
-</span><span class="line">        <span class="nx">pkg</span><span class="o">:</span> <span class="nx">grunt</span><span class="p">.</span><span class="nx">file</span><span class="p">.</span><span class="nx">readJSON</span><span class="p">(</span><span class="s1">&#39;package.json&#39;</span><span class="p">),</span>
-</span><span class="line">        <span class="nx">express</span><span class="o">:</span> <span class="p">{</span>
-</span><span class="line">            <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
-</span><span class="line">                <span class="nx">port</span><span class="o">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">PORT</span> <span class="o">||</span> <span class="mi">9000</span>
-</span><span class="line">            <span class="p">},</span>
-</span><span class="line">            <span class="nx">dev</span><span class="o">:</span> <span class="p">{</span>
-</span><span class="line">                <span class="nx">script</span><span class="o">:</span> <span class="s1">&#39;server.js&#39;</span><span class="p">,</span>
-</span><span class="line">                <span class="nx">debug</span><span class="o">:</span> <span class="kc">true</span>
-</span><span class="line">            <span class="p">}</span>
-</span><span class="line">        <span class="p">},</span>
-</span><span class="line">        <span class="nx">open</span><span class="o">:</span> <span class="p">{</span>
-</span><span class="line">            <span class="nx">server</span><span class="o">:</span> <span class="p">{</span>
-</span><span class="line">                <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;http://localhost:&lt;%= express.options.port %&gt;&#39;</span>
-</span><span class="line">            <span class="p">}</span>
-</span><span class="line">        <span class="p">}</span>
-</span><span class="line">    <span class="p">});</span>
-</span><span class="line">
-</span><span class="line">
-</span><span class="line">    <span class="c1">// 3. Load grunt plugins and tasks</span>
-</span><span class="line">
-</span><span class="line">    <span class="c1">// 4. Custom tasks</span>
-</span><span class="line">    <span class="nx">grunt</span><span class="p">.</span><span class="nx">registerTask</span><span class="p">(</span><span class="s1">&#39;serve&#39;</span><span class="p">,</span> <span class="s1">&#39;default is dev environment&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">target</span><span class="p">){</span>
-</span><span class="line">
-</span><span class="line">        <span class="nx">grunt</span><span class="p">.</span><span class="nx">task</span><span class="p">.</span><span class="nx">run</span><span class="p">([</span>
-</span><span class="line">            <span class="s1">&#39;express:dev&#39;</span><span class="p">,</span>
-</span><span class="line">            <span class="s1">&#39;open&#39;</span>
-</span><span class="line">        <span class="p">]);</span>
-</span><span class="line">    <span class="p">});</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h5 id="first-run">First run</h5>
-<p>Before running the <code>Grunt serve</code> task just defined, declared modules have to be downloaded, su run <code>npm install</code> to install modules locally or <code>npm install -g</code> to install modules globally.</p>
-
-<h4 id="user-interface">User interface</h4>
-<ul>
-  <li>AngularJS: UI MVC framework</li>
-</ul>
-
-<h4 id="server-side">Server side</h4>
-<ul>
-  <li>NodeJS: server</li>
-  <li>Express: web application framework for node</li>
-</ul>
-
-<h4 id="database">Database</h4>
-<ul>
-  <li>MongoDB: NoSQL database</li>
-</ul>
-
-<h3 id="project-folder-structure">Project folder structure</h3>
-
-<h3 id="init-grunt-and-bower">Init Grunt and Bower</h3>
-<p>just to have a basic project which can run tests</p>
-
-<h3 id="dependencies">Dependencies</h3>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>package.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="p">{</span>
-</span><span class="line">    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;simple-webapp&quot;</span><span class="p">,</span>
-</span><span class="line">    <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;a simple fullstack web application&quot;</span><span class="p">,</span>
-</span><span class="line">    <span class="s2">&quot;version&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0.1&quot;</span><span class="p">,</span>
-</span><span class="line">    <span class="s2">&quot;private&quot;</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-</span><span class="line">    <span class="s2">&quot;dependencies&quot;</span><span class="o">:</span> <span class="p">{</span>
-</span><span class="line">        <span class="s2">&quot;express&quot;</span><span class="o">:</span> <span class="s2">&quot;4.x&quot;</span>
-</span><span class="line">    <span class="p">}</span>
-</span><span class="line"><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h3 id="mongodb">MongoDB</h3>
-
-<h4 id="model">Model</h4>
-<p>As first thing I want to define the object model should be persisted, retrieved and finally show off in the client user interface. So in ‘../lib/models’ define</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>/lib/models/product.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose&#39;</span><span class="p">),</span>
-</span><span class="line">    <span class="nx">Schema</span>   <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">ProductSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Schema</span><span class="p">({</span>
-</span><span class="line">    <span class="nx">name</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
-</span><span class="line">    <span class="nx">description</span><span class="o">:</span> <span class="nb">String</span>
-</span><span class="line">    <span class="p">});</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Product&#39;</span><span class="p">,</span> <span class="nx">ProductSchema</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-<p>I have decided to use <a href="http://mongoosejs.com/" title="Mongoose home page">mongoose</a> in order to reduce boilerplate code for validation, read/write operation and so on.</p>
-
-<blockquote>
-  <p>With Mongoose, everything is derived from a Schema. Each <a href="http://mongoosejs.com/docs/guide.html" title="Mongoose Schemas">schema</a> maps to a MongoDB collection and defines the shape of the documents within that collection.</p>
-</blockquote>
-
-<p>I have defined a very simple schema for a product with only two fields <code>name</code> and <code>description</code>.</p>
-
-<blockquote>
-  <p>Models are fancy constructors compiled from our Schema definitions.</p>
-</blockquote>
-
-<h4 id="controller">Controller</h4>
-<p>Once done the object should be retrieved from the data source, create a new module file in ‘../lib/controllers’:</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>/lib/controllers/products.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-<span class="line-number">9</span>
-<span class="line-number">10</span>
-<span class="line-number">11</span>
-<span class="line-number">12</span>
-<span class="line-number">13</span>
-<span class="line-number">14</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose&#39;</span><span class="p">),</span>
-</span><span class="line">    <span class="nx">Product</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Product&#39;</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">exports</span><span class="p">.</span><span class="nx">products</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">    <span class="k">return</span> <span class="nx">Product</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">prods</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">            <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">prods</span><span class="p">);</span>
-</span><span class="line">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class="line">            <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
-</span><span class="line">        <span class="p">}</span>
-</span><span class="line">    <span class="p">});</span>
-</span><span class="line"><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
->>>>>>> e660e107c87b71ada170316435e9121495bc714a
 <p>In order to retrieve all the product documents stored in the data source, use static method <code>find</code>. Documents are instances of the model.</p>
 
 <p>The module <code>products.js</code> exports the function <code>products()</code> adding it to the <code>exports</code> object. The function will be added to the root of the module.</p>
 
 <!-- Reference links -->
 
-<<<<<<< HEAD
 
 <h3>Express</h3>
 
@@ -1040,33 +610,6 @@ require(<span class="string"><span class="delimiter">'</span><span class="conten
 
 <h3>NodeJS</h3>
 
-=======
-<h3 id="express">Express</h3>
-
-<h4 id="routes">Routes</h4>
-
-<p>Once the user has required an action on a resource it has to be served according to its name and the <code>HTTP verb</code>. Thus create an instance of <a href="http://expressjs.com/4x/api.html#app.route" title="express route api">route</a> with a specific name and then manage all the <code>HTTP verbs</code> avoiding duplicates in names.</p>
-
-<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>/lib/routes.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
-<span class="line-number">2</span>
-<span class="line-number">3</span>
-<span class="line-number">4</span>
-<span class="line-number">5</span>
-<span class="line-number">6</span>
-<span class="line-number">7</span>
-<span class="line-number">8</span>
-</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
-</span><span class="line">
-</span><span class="line"><span class="kd">var</span> <span class="nx">products</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./controllers/products&#39;</span><span class="p">);</span>
-</span><span class="line">
-</span><span class="line"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span> <span class="p">{</span>
-</span><span class="line">
-</span><span class="line">    <span class="nx">app</span><span class="p">.</span><span class="nx">route</span><span class="p">(</span><span class="s1">&#39;api/products&#39;</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="nx">products</span><span class="p">.</span><span class="nx">products</span><span class="p">);</span>
-</span><span class="line"><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure></notextile></div>
-
-<h3 id="nodejs">NodeJS</h3>
->>>>>>> e660e107c87b71ada170316435e9121495bc714a
 <p>I need something quite simple, when a request is routed some data should be fetched from the database and then sent back in the response to the client.</p>
 
 <p>What I should implement, given a route, is the access to the data source to retrieve the data.</p>
