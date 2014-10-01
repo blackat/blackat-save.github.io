@@ -6,37 +6,38 @@ comments: true
 categories:
 ---
 
-## 01. The application
-The application will allow the user to manage a list of movies, show them, update them, store new ones and delete existing ones. Basically a normal `CRUD` based application but totally written in Javascript.
+## Introduction
+The web application will allow the user to manage a list of movies, show them, update them, store new ones and delete existing ones.
 
-__// todo: better specify the actors into play, the name of the resource that will be introduced later on__
-The first flow will be a request from the `UI` to get the list of movies already stored in the database. The `REST` request will use the _HTTP verb_ `GET`, then `Express.js`, according to a list of configured routes, will call a method on the controller managing the movie resource. The controller will call the database to fetch data.
+This web application will help to show how to structure a full stack Javascript web application and which components are required to make it work.
 
-How to structure a full stack Javascript web application. I will consider these ingredients
+The application will start simple and step by step components will be added such as the database, the testing framework, the task runner and the dependency management.
 
-### Folder structure
+## The Single Page Web Application
+As first step the web application will be composed by
 
+- Node.js the web server
+- Express the web framework
+
+<!-- more -->
+
+### 1.1 Folder structure
+The starting point is the folder structure to organize resources and configuration files.
 
     ├── app
-    │   └── index.html
+    │   └── index.html          # => single html page loading resources
     ├── lib
     │   ├── config
-    │   │   └── express.js
+    │   │   └── express.js      # => configuration file for expressjs framework
     │   ├── controllers
-    │   │   └── index.js
-    │   └── routes.js
-    ├── package.json
-    └── server.js
+    │   │   └── index.js        # => controller to serve the starting page
+    │   └── routes.js           # => router to map REST request with controller
+    ├── package.json            # => set of required nodeJs modules
+    └── server.js               # => boostrap of the server side
 
-## Base web application to scale
-Let's start implementing a basic web application base on `node` and `expressjs`.
+### 1.2 Express Dependency
 
-- Prerequisites
-`node.js` must be installed, check [node] for your platform.
-- Create `package.json`
-This file is used by `npm` to store metadata of projects published as npm module.
-
-{% codeblock lang:json %}
+``` json
 {
     "name": "web-app-101",
     "version": "0.0.1",
@@ -47,11 +48,14 @@ This file is used by `npm` to store metadata of projects published as npm module
 
     }
 }
-{% endcodeblock %}
+```
 
-[express] is web application framework for node able to manage requests and responses, defining routes and much more.
+__Express__ is a web application framework for __Node.js__ used to develop web application totally written in Javascript. The framework provides _high level methods_ way to manage requests mapping a route with the designated controller able to provide data.
 
-- Create `server.js`
+In the `package.json` file add the dependency on the web framework. This file is used by `npm` to store metadata of projects published as npm module and to easily installed them locally running the command `npm install`.
+
+
+### 1.3 Server Configuration
 
 ``` javascript
 var express = require('express'),
@@ -66,34 +70,36 @@ var server = app.listen(9001, function() {
 });
 ```
 
-Express framework module is loaded by `require('express')` node method, then a new application is created invoking `express()`. Express provides _high level_ methods to defines routes and dealing with request and response.
+__Express__ module is loaded by `require('express')` then a new application instance is created invoking `express()`.
 
-A route is defined via `app.VERB` method, where _VERB_ stands for _HTTP VERB_, in this case `GET/`, the _URL_ the route is mapped to and the response to be sent.
+Defined a route via
+
+- `app.VERB` method, where `VERB` stands for `HTTP VERB`. In the example `GET` is the verb;
+- `/` the `URL` the route is mapped to;
+- a function implementation to manage request and response.
 
 Finally _bind_ and _listen_ for connection invoking method `app.listen()`.
 
-- Run the application
-Download modules running `npm install` from the command line, then `node server.js`, open a browser and hit `http://localhost:9001`.
+### 1.4 First Run of the Application
+Run `npm install` in the command line to locally install the declared dependencies. Once done type `node server.js`, open a browser and hit `http://localhost:9001`.
 
 [node]: (http://nodejs.org/download/) [node_installation]
 [express]: (http://expressjs.com/) "express-web-framework"
 
-### Add Express routes and structure the application
-Express 4.0 has introduced the `app.route()` [method](http://expressjs.com/4x/api.html#app.route "Express route method") which is the recommended approach to handle HTTP verbs. We can start to structure a little bit the application creating a `routes.js` file under `lib` folder:
+### 1.5 Separate Express routes
 
-~~~
+``` javascript lib/routes.js
 module.exports = function(app) {
 
     app.route('/').get(function(req, res, next){
         res.send('Hello World');
     });
 };
-~~~
-{:.language-javascript}
+```
 
-then change `server.js` as follows:
+Express 4.0 has introduced the `app.route()` [method](http://expressjs.com/4x/api.html#app.route "Express route method") which is the recommended approach to handle HTTP verbs. Routes are in a separated files which is loaded by `server.js` as follows.
 
-~~~
+``` javascript server.js
 var express = require('express'),
     app = express();
 
@@ -102,38 +108,30 @@ require('./lib/routes')(app);
 var server = app.listen(9001, function(){
     console.log('Express server is listening on port %d', server.address().port);
 });
-~~~
-{:.language-javascript}
+```
 
-now routes are in a separated files which is loaded by `server.js`.
+### 1.6 Return index.html
 
-### Add Single Page Web Application
-Returning a message as a response to a `GET/` is fine, but usually it is better to have a page, for instance `index.html`, which serves us a __single page application__.
-
-- Modify `routes.js` in order to call a function able to return our application page.
-
-~~~
+``` javascript lib/routes.js
 var index = require('./controllers');
 
 module.exports = function(app) {
 
     app.route('/').get(index.index);
 };
-~~~
-{:.language-javascript}
+```
 
+The `html` page will give the life to the single page web application. The function calls the `index` controller method called `index` which returns the page as follows:
 
-- Now add the _function_ able to return as a response the render of the `index.html` page.
-~~~
+``` javascript lib/controllers/index.js
 exports.index = function(req, res) {
     res.render('index');
 }
-~~~
-{:.language-javascript}
+```
 
-- Create the _html page_ which will support the single page web application.
+Then the `html` page to be returned
 
-{% codeblock index.html %}
+``` html app/index.html
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -144,11 +142,12 @@ exports.index = function(req, res) {
     <h1>Popcorn Time</h1>
 </body>
 </html>
-{% endcodeblock %}
+```
 
-- The `index.html` page cannot still be found by the __web framework__. Everything related to routing, serving resources and then handling requests and responses is managed by `expressjs`, the web framework. The page `index.html` is a resources. Configure the web framework to point to a folder containing the views which will be rendered to the user and the __render engine__: `ejs`.
+### 1.7 Express Configuration and the Render Engine
+The `index.html` page cannot still be found by express. Configure the web framework to render and serve views from a given folder.
 
-~~~
+``` javascript
 var path = require('path');
 
 module.exports = function(app) {
@@ -160,15 +159,28 @@ module.exports = function(app) {
     app.engine('html', require('ejs').renderFile);
     app.set('view engine', 'html');
 };
-~~~
-{:.language-javascript}
+```
 
-- Add `"ejs": "~0.8.4"` to `package.json` file and run `npm install` to have the render engine available in `node_modules` folder.
+Finally add `ejs` render engine for `html` page as a dependency
 
+``` json
+{
+    "name": "web-app-101",
+    "version": "0.0.1",
+    "dependencies": {
+        "express": "4.0.x",
+        "ejs": "~0.8.4"
+    },
+    "devDependencies": {
 
-Bla
+    }
+}
+```
 
-~~~
+### 1.8 Update Server with Express Configuration
+Update the server requiring the express configuration
+
+``` javascript server.js
 var express = require('express'),
     app = express();
 
@@ -178,8 +190,21 @@ require('./lib/config/express')(app);
 var server = app.listen(9001, function(){
     console.log('Express server is listening on port %d', server.address().port);
 });
-~~~
-{:.language-javascript}
+```
+
+then run `npm install`, `node server.js` and check the result in the browser.
+
+## 2 Web Application features and Look & Feel
+In this second step some features and look & feel will be added to the web application through
+
+- Angular the ui framework
+- Bootstrap the css framework
+
+### 2.1 Folder Structure
+
+
+
+
 
 
 ## Continuos build integration
@@ -296,20 +321,6 @@ Before running the `Grunt serve` task just defined, declared modules have to be 
 just to have a basic project which can run tests
 
 
-### Dependencies
-
-```javascript package.json
-{
-    "name": "simple-webapp",
-    "description": "a simple fullstack web application",
-    "version": "0.0.1",
-    "private": true,
-    "dependencies": {
-        "express": "4.x"
-    }
-}
-```
-
 ### MongoDB
 
 #### Model
@@ -335,6 +346,25 @@ I have decided to use [mongoose] [mongoose] in order to reduce boilerplate code 
 I have defined a very simple schema for a product with only two fields `name` and `description`.
 
 >Models are fancy constructors compiled from our Schema definitions.
+
+#### Routes
+
+Once the user has required an action on a resource it has to be served according to its name and the `HTTP verb`. Thus create an instance of [route] with a specific name and then manage all the `HTTP verbs` avoiding duplicates in names.
+
+``` javascript /lib/routes.js
+'use strict';
+
+var products = require('./controllers/products');
+
+module.exports = function(app) {
+
+    app.route('api/products').get(products.products);
+};
+```
+
+[route]: http://expressjs.com/4x/api.html#app.route "express route api"
+
+
 
 #### Controller
 Once done the object should be retrieved from the data source, create a new module file in '../lib/controllers':
@@ -364,25 +394,6 @@ The module `products.js` exports the function `products()` adding it to the `exp
 <!-- Reference links -->
 [mongoose]: http://mongoosejs.com/ "Mongoose home page"
 [mongoose_schema]: http://mongoosejs.com/docs/guide.html "Mongoose Schemas"
-
-### Express
-
-#### Routes
-
-Once the user has required an action on a resource it has to be served according to its name and the `HTTP verb`. Thus create an instance of [route] with a specific name and then manage all the `HTTP verbs` avoiding duplicates in names.
-
-``` javascript /lib/routes.js
-'use strict';
-
-var products = require('./controllers/products');
-
-module.exports = function(app) {
-
-    app.route('api/products').get(products.products);
-};
-```
-
-[route]: http://expressjs.com/4x/api.html#app.route "express route api"
 
 ### NodeJS
 I need something quite simple, when a request is routed some data should be fetched from the database and then sent back in the response to the client.
