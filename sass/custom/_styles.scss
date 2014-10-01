@@ -1,19 +1,6 @@
 // This File is imported last, and will override other styles in the cascade
 // Add styles here to make changes without digging in too much
 
-/* overrides of the lousy styles from _syntax.scss */
-.CodeRay pre {
-  background: none;
-  color: #000;
-}
-
-/* fixes issue where the whole line wouldn't get colored in a diff */
-.CodeRay span.insert, .CodeRay span.change, .CodeRay span.delete {
-        width: auto;
-}
-
-@import "coderay";
-
 body {
     line-height: 1.7em;
     font-size: 1em;
@@ -32,9 +19,63 @@ html {
     background: none;
 }
 
-pre {
-  font-size: 13px;
-  border-radius: none;
-  border: none;
-  box-shadow: none;
+figure.code, .gist-file, pre {
+    box-shadow: none !important;
 }
+
+.highlight, .gist-highlight {
+    background: none !important;
+}
+
+.highlight code, pre {
+    background: #f8f8f8 !important;
+}
+
+.highlight .line-numbers, html .gist .gist-file .gist-syntax .highlight .line_numbers {
+    background: #f8f8f8 !important;
+    border-right: 1px solid #eee !important;
+    text-shadow: none !important;
+    font-size: 12px;
+}
+
+.highlight .line-numbers span, html .gist .gist-file .gist-syntax .highlight .line_numbers span {
+    color: #aaa !important;
+    font-size: 12px;
+}
+
+.highlight {
+    -webkit-border-radius: 4px !important;
+    -moz-border-radius: 4px !important;
+    border-radius: 4px !important;
+}
+
+.highlight,html .gist .gist-file .gist-syntax .gist-highlight {
+    border: 1px solid #e7e7e7 !important;
+}
+
+.code-title, html .gist .gist-file .gist-meta a[href*='#file'], h3.filename, figure.code figcaption {
+    border: 0px;
+}
+
+pre {
+    border: 1px solid #eee !important;
+    font-size: 12px;
+}
+
+div.highlight pre {
+    font-size: 13px;
+    border-radius: none;
+    border: 0px;
+    box-shadow: none;
+    font-size: 12px;
+}
+
+li code {
+    font-size: 12px;
+}
+
+.highlight code {
+    background: #f8f8f8 !important;
+}
+
+@import "github_style";

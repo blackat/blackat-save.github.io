@@ -6,13 +6,27 @@ comments: true
 categories:
 ---
 
-## The application
+## 01. The application
 The application will allow the user to manage a list of movies, show them, update them, store new ones and delete existing ones. Basically a normal `CRUD` based application but totally written in Javascript.
 
 __// todo: better specify the actors into play, the name of the resource that will be introduced later on__
 The first flow will be a request from the `UI` to get the list of movies already stored in the database. The `REST` request will use the _HTTP verb_ `GET`, then `Express.js`, according to a list of configured routes, will call a method on the controller managing the movie resource. The controller will call the database to fetch data.
 
 How to structure a full stack Javascript web application. I will consider these ingredients
+
+### Folder structure
+
+
+    ├── app
+    │   └── index.html
+    ├── lib
+    │   ├── config
+    │   │   └── express.js
+    │   ├── controllers
+    │   │   └── index.js
+    │   └── routes.js
+    ├── package.json
+    └── server.js
 
 ## Base web application to scale
 Let's start implementing a basic web application base on `node` and `expressjs`.
@@ -22,7 +36,7 @@ Let's start implementing a basic web application base on `node` and `expressjs`.
 - Create `package.json`
 This file is used by `npm` to store metadata of projects published as npm module.
 
-~~~
+{% codeblock lang:json %}
 {
     "name": "web-app-101",
     "version": "0.0.1",
@@ -33,14 +47,13 @@ This file is used by `npm` to store metadata of projects published as npm module
 
     }
 }
-~~~
-{:.language-json}
+{% endcodeblock %}
 
 [express] is web application framework for node able to manage requests and responses, defining routes and much more.
 
 - Create `server.js`
 
-~~~
+``` javascript
 var express = require('express'),
     app = express();
 
@@ -51,8 +64,7 @@ app.get('/', function(req, res) {
 var server = app.listen(9001, function() {
     console.log('Express server is listening on port %d', server.address().port);
 });
-~~~
-{:.language-javascript}
+```
 
 Express framework module is loaded by `require('express')` node method, then a new application is created invoking `express()`. Express provides _high level_ methods to defines routes and dealing with request and response.
 
@@ -121,7 +133,7 @@ exports.index = function(req, res) {
 
 - Create the _html page_ which will support the single page web application.
 
-~~~
+{% codeblock index.html %}
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -132,8 +144,7 @@ exports.index = function(req, res) {
     <h1>Popcorn Time</h1>
 </body>
 </html>
-~~~
-{:.language-html}
+{% endcodeblock %}
 
 - The `index.html` page cannot still be found by the __web framework__. Everything related to routing, serving resources and then handling requests and responses is managed by `expressjs`, the web framework. The page `index.html` is a resources. Configure the web framework to point to a folder containing the views which will be rendered to the user and the __render engine__: `ejs`.
 
