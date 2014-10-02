@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
+  <title><![CDATA[Contrast Of Beauty]]></title>
   <link href="http://blackat.github.io/atom.xml" rel="self"/>
   <link href="http://blackat.github.io/"/>
-  <updated>2014-10-01T23:20:05+02:00</updated>
+  <updated>2014-10-02T08:43:24+02:00</updated>
   <id>http://blackat.github.io/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[black@t]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
@@ -68,7 +68,7 @@
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 </pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;web-app-101&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;popcorn-time-backend&quot;</span><span class="p">,</span>
 </span><span class='line'>    <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.0.1&quot;</span><span class="p">,</span>
 </span><span class='line'>    <span class="nt">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span>
 </span><span class='line'>        <span class="nt">&quot;express&quot;</span><span class="p">:</span> <span class="s2">&quot;4.0.x&quot;</span>
@@ -221,7 +221,7 @@
 
 <p>The <code>index.html</code> page cannot still be found by express. Configure the web framework to render and serve views from a given folder.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>lib/config/express.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -248,7 +248,7 @@
 
 <p>Finally add <code>ejs</code> render engine for <code>html</code> page as a dependency</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>package.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -260,7 +260,7 @@
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 </pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;web-app-101&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;popcorn-time-backend&quot;</span><span class="p">,</span>
 </span><span class='line'>    <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.0.1&quot;</span><span class="p">,</span>
 </span><span class='line'>    <span class="nt">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span>
 </span><span class='line'>        <span class="nt">&quot;express&quot;</span><span class="p">:</span> <span class="s2">&quot;4.0.x&quot;</span><span class="p">,</span>
@@ -311,6 +311,36 @@
 
 
 <h3>2.1 Folder Structure</h3>
+
+<pre><code>├── app
+│   ├── favicon.ico
+│   ├── fonts
+│   │   └── Lobster_1.3.otf
+│   ├── images
+│   │   ├── play.png
+│   │   └── popcorn.png
+│   ├── mocks
+│   │   └── movies.json
+│   ├── package.json            # =&gt; dependency of the frontend
+│   ├── scripts
+│   │   ├── controllers
+│   │   │   └── controllers.js  # =&gt; angular controllers
+│   │   ├── directives
+│   │   └── services
+│   │       └── services.js     # =&gt; angular REST service
+│   ├── styles
+│   │   └── style.less          # =&gt; less style sheet
+│   └── views
+│       └── index.html          # =&gt; single page of the web application
+├── lib
+│   ├── config
+│   │   └── express.js
+│   ├── controllers
+│   │   └── index.js
+│   └── routes.js
+├── package.json
+└── server.js
+</code></pre>
 
 <h2>Continuos build integration</h2>
 
