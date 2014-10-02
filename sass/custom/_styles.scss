@@ -1,6 +1,15 @@
 // This File is imported last, and will override other styles in the cascade
 // Add styles here to make changes without digging in too much
 
+/*
+ * Import Github style sheet.
+ */
+@import "github_style";
+
+
+/*
+ * Style the body.
+ */
 body {
     line-height: 1.7em;
     font-size: 1em;
@@ -19,6 +28,56 @@ html {
     background: none;
 }
 
+
+/*
+ * Style the header.
+ */
+body>header {
+    background: none !important;
+    border-bottom: 1px solid #eee;
+}
+
+body>header h1 a {
+    color: #2b2b2b !important;
+}
+
+body>header h2 {
+    font-family: 'Sorts Mill Goudy', serif;
+    font-Style: italic;
+}
+
+/*
+ * Style the nav bar.
+ */
+body>nav {
+    background: none !important;
+    background-color: none !important;
+    border: none;
+}
+
+body>nav a {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.4em;
+}
+
+body>nav li+li, a {
+    border-left: none !important;
+}
+
+body>nav form .search {
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    -webkit-border-radius: 4px !important;
+    -moz-border-radius: 4px !important;
+    border-radius: 4px !important;
+    background-color: white !important;
+    border: 1px solid #eee;
+}
+
+/*
+ * Style the code block.
+ */
 figure.code, .gist-file, pre {
     box-shadow: none !important;
 }
@@ -50,7 +109,7 @@ figure.code, .gist-file, pre {
 }
 
 .highlight,html .gist .gist-file .gist-syntax .gist-highlight {
-    border: 1px solid #e7e7e7 !important;
+    border: 1px solid #eee !important;
 }
 
 .code-title, html .gist .gist-file .gist-meta a[href*='#file'], h3.filename, figure.code figcaption {
@@ -78,4 +137,11 @@ p code, li code {
     background: #f8f8f8 !important;
 }
 
-@import "github_style";
+// figcaption
+figure.code figcaption {
+    font-family: 'Sorts Mill Goudy', serif;
+    font-style: italic;
+    font-size: 1em;
+    background: none;
+    text-shadow: none;
+}

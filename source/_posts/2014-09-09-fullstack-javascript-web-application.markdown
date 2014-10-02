@@ -39,7 +39,7 @@ The starting point is the folder structure to organize resources and configurati
 
 ``` json
 {
-    "name": "web-app-101",
+    "name": "popcorn-time-backend",
     "version": "0.0.1",
     "dependencies": {
         "express": "4.0.x"
@@ -147,7 +147,7 @@ Then the `html` page to be returned
 ### 1.7 Express Configuration and the Render Engine
 The `index.html` page cannot still be found by express. Configure the web framework to render and serve views from a given folder.
 
-``` javascript
+``` javascript lib/config/express.js
 var path = require('path');
 
 module.exports = function(app) {
@@ -163,9 +163,9 @@ module.exports = function(app) {
 
 Finally add `ejs` render engine for `html` page as a dependency
 
-``` json
+``` json package.json
 {
-    "name": "web-app-101",
+    "name": "popcorn-time-backend",
     "version": "0.0.1",
     "dependencies": {
         "express": "4.0.x",
@@ -202,6 +202,34 @@ In this second step some features and look & feel will be added to the web appli
 
 ### 2.1 Folder Structure
 
+    ├── app
+    │   ├── favicon.ico
+    │   ├── fonts
+    │   │   └── Lobster_1.3.otf
+    │   ├── images
+    │   │   ├── play.png
+    │   │   └── popcorn.png
+    │   ├── mocks
+    │   │   └── movies.json
+    │   ├── package.json            # => dependency of the frontend
+    │   ├── scripts
+    │   │   ├── controllers
+    │   │   │   └── controllers.js  # => angular controllers
+    │   │   ├── directives
+    │   │   └── services
+    │   │       └── services.js     # => angular REST service
+    │   ├── styles
+    │   │   └── style.less          # => less style sheet
+    │   └── views
+    │       └── index.html          # => single page of the web application
+    ├── lib
+    │   ├── config
+    │   │   └── express.js
+    │   ├── controllers
+    │   │   └── index.js
+    │   └── routes.js
+    ├── package.json
+    └── server.js
 
 
 
