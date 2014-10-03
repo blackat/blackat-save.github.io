@@ -4,7 +4,7 @@
   <title><![CDATA[Contrast Of Beauty]]></title>
   <link href="http://blackat.github.io/atom.xml" rel="self"/>
   <link href="http://blackat.github.io/"/>
-  <updated>2014-10-02T08:43:24+02:00</updated>
+  <updated>2014-10-03T19:54:31+02:00</updated>
   <id>http://blackat.github.io/</id>
   <author>
     <name><![CDATA[black@t]]></name>
@@ -18,15 +18,17 @@
     <link href="http://blackat.github.io/blog/2014/09/09/fullstack-javascript-web-application/"/>
     <updated>2014-09-09T22:13:06+02:00</updated>
     <id>http://blackat.github.io/blog/2014/09/09/fullstack-javascript-web-application</id>
-    <content type="html"><![CDATA[<h2>Introduction</h2>
+    <content type="html"><![CDATA[<h2>The Single Page Web Application</h2>
 
 <p>The web application will allow the user to manage a list of movies, show them, update them, store new ones and delete existing ones.</p>
+
+<p><img class="center" src="http://blackat.github.io/images/posts/popcorn-time-screenshot.png"></p>
 
 <p>This web application will help to show how to structure a full stack Javascript web application and which components are required to make it work.</p>
 
 <p>The application will start simple and step by step components will be added such as the database, the testing framework, the task runner and the dependency management.</p>
 
-<h2>The Single Page Web Application</h2>
+<h2>Web Application Scaffolding</h2>
 
 <p>As first step the web application will be composed by</p>
 
@@ -44,7 +46,8 @@
 <p>The starting point is the folder structure to organize resources and configuration files.</p>
 
 <pre><code>├── app
-│   └── index.html          # =&gt; single html page loading resources
+│   └── views
+│       └── index.html              # =&gt; single page of the web application
 ├── lib
 │   ├── config
 │   │   └── express.js      # =&gt; configuration file for expressjs framework
@@ -238,7 +241,7 @@
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">var</span> <span class="nx">rootpath</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">normalize</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">&#39;/../..&#39;</span><span class="p">);</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="nx">app</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;views&#39;</span><span class="p">,</span> <span class="nx">rootpath</span> <span class="o">+</span> <span class="s1">&#39;/app&#39;</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">app</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;views&#39;</span><span class="p">,</span> <span class="nx">rootpath</span> <span class="o">+</span> <span class="s1">&#39;/app/views&#39;</span><span class="p">);</span>
 </span><span class='line'>
 </span><span class='line'>    <span class="nx">app</span><span class="p">.</span><span class="nx">engine</span><span class="p">(</span><span class="s1">&#39;html&#39;</span><span class="p">,</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;ejs&#39;</span><span class="p">).</span><span class="nx">renderFile</span><span class="p">);</span>
 </span><span class='line'>    <span class="nx">app</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;view engine&#39;</span><span class="p">,</span> <span class="s1">&#39;html&#39;</span><span class="p">);</span>
@@ -319,19 +322,19 @@
 │   ├── images
 │   │   ├── play.png
 │   │   └── popcorn.png
-│   ├── mocks
-│   │   └── movies.json
-│   ├── package.json            # =&gt; dependency of the frontend
+│   ├── package.json                # =&gt; dependency modules of the frontend
 │   ├── scripts
 │   │   ├── controllers
-│   │   │   └── controllers.js  # =&gt; angular controllers
+│   │   │   ├── controllers.js      # =&gt; angular controllers
+│   │   │   └── xeditable.min.js    # =&gt; angular xeditable
 │   │   ├── directives
 │   │   └── services
-│   │       └── services.js     # =&gt; angular REST service
+│   │       └── services.js         # =&gt; angular REST services
 │   ├── styles
-│   │   └── style.less          # =&gt; less style sheet
+│   │   ├── style.less              # =&gt; less style sheet
+│   │   └── xeditable.css
 │   └── views
-│       └── index.html          # =&gt; single page of the web application
+│       └── index.html              # =&gt; single page of the web application
 ├── lib
 │   ├── config
 │   │   └── express.js
@@ -339,8 +342,46 @@
 │   │   └── index.js
 │   └── routes.js
 ├── package.json
+├── popcorn-time-express-angular.iml
 └── server.js
 </code></pre>
+
+<p>Some folders have been added in order to better organize the frontend code, images, styles and so on.</p>
+
+<h3>2.2 Serve Static Resources</h3>
+
+<figure class='code'><figcaption><span>lib/config/express.js</span> — <a href='https://github.com/blackat/popcorn-time-express-angular/blob/master/lib/config/express.js'>Link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;path&#39;</span><span class="p">),</span>
+</span><span class='line'>    <span class="nx">express</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;express&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">rootpath</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">normalize</span><span class="p">(</span><span class="nx">__dirname</span> <span class="o">+</span> <span class="s1">&#39;/../..&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">app</span><span class="p">.</span><span class="nx">use</span><span class="p">(</span><span class="nx">express</span><span class="p">.</span><span class="kr">static</span><span class="p">(</span><span class="s1">&#39;app&#39;</span><span class="p">));</span>
+</span><span class='line'>    <span class="nx">app</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;views&#39;</span><span class="p">,</span> <span class="nx">rootpath</span> <span class="o">+</span> <span class="s1">&#39;/app/views&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">app</span><span class="p">.</span><span class="nx">engine</span><span class="p">(</span><span class="s1">&#39;html&#39;</span><span class="p">,</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;ejs&#39;</span><span class="p">).</span><span class="nx">renderFile</span><span class="p">);</span>
+</span><span class='line'>    <span class="nx">app</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;view engine&#39;</span><span class="p">,</span> <span class="s1">&#39;html&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <h2>Continuos build integration</h2>
 
