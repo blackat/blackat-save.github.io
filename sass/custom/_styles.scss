@@ -137,11 +137,21 @@ p code, li code {
     background: #f8f8f8 !important;
 }
 
-// figcaption
+/*
+ * Style the block code caption
+ */
 figure.code figcaption {
     font-family: 'Sorts Mill Goudy', serif;
     font-style: italic;
     font-size: 1em;
     background: none;
     text-shadow: none;
+}
+
+figure.code figcaption a {
+    text-shadow: none;
+    color: red !important;
+    right: 0 !important;
+    padding-left: 0px !important;
+    position: relative !important;
 }

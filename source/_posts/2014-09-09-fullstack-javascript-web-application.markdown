@@ -6,14 +6,16 @@ comments: true
 categories:
 ---
 
-## Introduction
+## The Single Page Web Application
 The web application will allow the user to manage a list of movies, show them, update them, store new ones and delete existing ones.
+
+{% img center /images/posts/popcorn-time-screenshot.png %}
 
 This web application will help to show how to structure a full stack Javascript web application and which components are required to make it work.
 
 The application will start simple and step by step components will be added such as the database, the testing framework, the task runner and the dependency management.
 
-## The Single Page Web Application
+## Web Application Scaffolding
 As first step the web application will be composed by
 
 - Node.js the web server
@@ -25,7 +27,8 @@ As first step the web application will be composed by
 The starting point is the folder structure to organize resources and configuration files.
 
     ├── app
-    │   └── index.html          # => single html page loading resources
+    │   └── views
+    │       └── index.html              # => single page of the web application
     ├── lib
     │   ├── config
     │   │   └── express.js      # => configuration file for expressjs framework
@@ -154,7 +157,7 @@ module.exports = function(app) {
 
     var rootpath = path.normalize(__dirname + '/../..');
 
-    app.set('views', rootpath + '/app');
+    app.set('views', rootpath + '/app/views');
 
     app.engine('html', require('ejs').renderFile);
     app.set('view engine', 'html');
@@ -209,19 +212,19 @@ In this second step some features and look & feel will be added to the web appli
     │   ├── images
     │   │   ├── play.png
     │   │   └── popcorn.png
-    │   ├── mocks
-    │   │   └── movies.json
-    │   ├── package.json            # => dependency of the frontend
+    │   ├── package.json                # => dependency modules of the frontend
     │   ├── scripts
     │   │   ├── controllers
-    │   │   │   └── controllers.js  # => angular controllers
+    │   │   │   ├── controllers.js      # => angular controllers
+    │   │   │   └── xeditable.min.js    # => angular xeditable
     │   │   ├── directives
     │   │   └── services
-    │   │       └── services.js     # => angular REST service
+    │   │       └── services.js         # => angular REST services
     │   ├── styles
-    │   │   └── style.less          # => less style sheet
+    │   │   ├── style.less              # => less style sheet
+    │   │   └── xeditable.css
     │   └── views
-    │       └── index.html          # => single page of the web application
+    │       └── index.html              # => single page of the web application
     ├── lib
     │   ├── config
     │   │   └── express.js
@@ -229,10 +232,31 @@ In this second step some features and look & feel will be added to the web appli
     │   │   └── index.js
     │   └── routes.js
     ├── package.json
+    ├── popcorn-time-express-angular.iml
     └── server.js
 
+Some folders have been added in order to better organize the frontend code, images, styles and so on.
 
 
+### 2.2 Serve Static Resources
+
+``` javascript lib/config/express.js https://github.com/blackat/popcorn-time-express-angular/blob/master/lib/config/express.js
+'use strict';
+
+var path = require('path'),
+    express = require('express');
+
+module.exports = function(app) {
+
+    var rootpath = path.normalize(__dirname + '/../..');
+
+    app.use(express.static('app'));
+    app.set('views', rootpath + '/app/views');
+
+    app.engine('html', require('ejs').renderFile);
+    app.set('view engine', 'html');
+};
+```
 
 
 ## Continuos build integration
