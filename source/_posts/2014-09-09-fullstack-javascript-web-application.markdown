@@ -3,7 +3,7 @@ layout: post
 title: "Fullstack Javascript Web Application Part 1"
 date: 2014-09-09 22:13:06 +0200
 comments: true
-categories:
+categories: [javascript, monmgodb, grunt, bower, webapp, fullstack]
 ---
 
 ## Introduction

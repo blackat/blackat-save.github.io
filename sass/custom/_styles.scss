@@ -76,6 +76,37 @@ body>nav form .search {
 }
 
 /*
+ * Style link <a>.
+ */
+a:link, a:active, a:visited {
+    color: #d01040;
+    text-decoration: none !important;
+}
+
+/*
+ * Style the table.
+ */
+table {
+    margin-bottom: 20px;
+}
+
+td, th {
+    padding: 5px 15px 5px 5px;
+}
+
+th {
+    color: red;
+}
+
+tr {
+    border: 1px solid #eee;
+}
+
+thead {
+    background-color: #eee;
+}
+
+/*
  * Style the code block.
  */
 figure.code, .gist-file, pre {
@@ -135,6 +166,14 @@ p code, li code {
 
 .highlight code {
     background: #f8f8f8 !important;
+}
+
+.highlight td, th {
+    padding: 0px;
+}
+
+.highlight table {
+    margin-bottom: 0px;
 }
 
 /*

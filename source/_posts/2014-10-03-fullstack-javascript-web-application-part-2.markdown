@@ -3,23 +3,24 @@ layout: post
 title: "Fullstack Javascript Web Application Part 2"
 date: 2014-10-03 23:52:35 +0200
 comments: true
-categories:
+categories: [javascript, monmgodb, grunt, bower, webapp, fullstack, jasmine, karma]
 ---
 
 ## Introduction
-The single page web application will be enriched with a database support, a build system with dependencies management and a test framework.
+The single page web application will be enriched with a database support, a build system with dependencies management and a testing framework.
 
-Step by step __mongodb__ with a persistent model will be added and configured, __Grunt__ task runner and __Bower__ package management system will be configured. Finally __Jasmine__ and __Karma__ will support tests and their execution.
+[Grunt] task runner and [Bower] package management system will be configured. Then [Mongodb] with a persistent model will be added, finally [Jasmine] and [Karma] will support tests and their execution.
 <!-- more -->
 
-## 1. Continuos build integration
-__Grunt__ is a _task runner_, means it runs pre-defined tasks and custom tasks defined by the user in order to achieve a certain goal such as the deployment in production, running unit and end-to-end (e2e) tests and so on.
 
-__Bower__ is a package management system quite widespread in the javascript community added to manage packages for client-side programming. It depends on _Node.js_ and _npm_.
+## 1. Continuos build integration
+[Grunt] is a _task runner_, means it runs pre-defined tasks and custom tasks defined by the user in order to achieve a certain goal such as the deployment in production, running unit and end-to-end (e2e) tests and so on.
+
+[Bower] is a package management system quite widespread in the javascript community added to manage packages for client-side programming. It depends on _Node.js_ and _npm_.
 
 
 ### 1.1 Grunt Task Runner
-``` json package.json
+``` json package.json https://github.com/blackat/popcorn-time-express-angular-mongodb-grunt/blob/master/package.json
 {
     "name": "popcorn-time-backend",
     "description": "a web application based on node, express, mongodb and grunt task runner with bower dependencies manager",
@@ -297,10 +298,6 @@ module.exports = function(app) {
 };
 ```
 
-[route]: http://expressjs.com/4x/api.html#app.route "express route api"
-
-
-
 #### Controller
 Once done the object should be retrieved from the data source, create a new module file in '../lib/controllers':
 
@@ -326,11 +323,71 @@ In order to retrieve all the product documents stored in the data source, use st
 The module `products.js` exports the function `products()` adding it to the `exports` object. The function will be added to the root of the module.
 
 
-<!-- Reference links -->
+#### RESTful Backend
+In order to better interact with the frontend, a RESTful backend has to be provided by means of _REST endpoints_ as follows:
+
+
+|Url            | HTTP Verb | POST Body   | Result
+|---------------|-----------|-------------|--------------------------|
+|api/movies     | GET       | empty       | return all the movies    |
+|api/movies     | POST      | JSON String | create a new movie       |
+|api/movies/:id | GET       | empty       | return a single movie    |
+|api/movies/:id | PUT       | JSON String | update an existing movie |
+|api/movies/:id | DELETE    | empty       | delete an existing entry |
+
+
+
+## 3. Morgan the Logger
+
+
+## 4. Angular
+A nice way to implement _CRUD operations_ in [Angular] is using `$resource` factory which helps to interact with a standard _REST endpoints_. In `bower.json` the module `angular-resource` is already present, then it will be injected into 'index.html' by [Bower].
+
+
+### 4.1 Consuming a RESTful service
+```javascript /app/scripts/services/movieServices.js
+'use strict';
+
+var  movieServices = angular.module('movieApp.movieServices', ['ngResource']);
+
+movieServices.factory('Movie', function($resource){
+    return $resource('movies/movies/:id', {id:'@_id'});
+});
+```
+Module `ngResource` needs to be installed and declared in order to use its __service__ `$resource`. The returned resources has __action methods__ providing higher-level behaviors than the low level `$http`.
+
+According to Angular  [api](https://docs.angularjs.org/api/ngResource/service/$resource) a parametrized URL has to be specified, it is the _full endpoint_ address which covers all the URLs for basic CRUD operations.
+
+    $resource(url, [paramDefaults], [actions], options);
+
+`:id` is the parameter and `{id:@_id}` is the name of the parameter in the `data` object provided when the method will be called, so it means extract the value of parameter `data._id` and assign it to `id` parameter.
+
+The returned object has a _default set_ of __resource actions__ which can be extended with custom `actions`.
+
+    {
+        'get':    {method:'GET'},
+        'save':   {method:'POST'},
+        'query':  {method:'GET', isArray:true},
+        'remove': {method:'DELETE'},
+        'delete': {method:'DELETE'}
+    };
+
+
+
+## 5. Testing
+
+ - unit test the RESTful api, user [SuperTest](https://github.com/visionmedia/supertest)
+  - Jasmine
+  - Karma
+  - Mongodb? integration test?
+
+<!-- Links -->
+[Grunt]:    http://gruntjs.com/ "Grunt homepage"
+[Bower]:    bower.io    "Bower homepage"
+[Mongodb]:  http://www.mongodb.org/ "MongoDB homepage"
+[Jasmine]:  http://jasmine.github.io/   "Jasmine homepage"
+[Karma]:    http://karma-runner.github.io/0.12/index.html "Karma homepage"
 [mongoose]: http://mongoosejs.com/ "Mongoose home page"
 [mongoose_schema]: http://mongoosejs.com/docs/guide.html "Mongoose Schemas"
-
-### NodeJS
-I need something quite simple, when a request is routed some data should be fetched from the database and then sent back in the response to the client.
-
-What I should implement, given a route, is the access to the data source to retrieve the data.
+[route]: http://expressjs.com/4x/api.html#app.route "express route api"
+[Angular]: https://angularjs.org/
