@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Bower | Contrast Of Beauty]]></title>
   <link href="http://blackat.github.io/blog/categories/bower/atom.xml" rel="self"/>
   <link href="http://blackat.github.io/"/>
-  <updated>2014-12-13T20:45:19+01:00</updated>
+  <updated>2014-12-13T20:47:29+01:00</updated>
   <id>http://blackat.github.io/</id>
   <author>
     <name><![CDATA[black@t]]></name>
@@ -18,9 +18,7 @@
     <link href="http://blackat.github.io/blog/2014/10/03/fullstack-javascript-web-application-part-2/"/>
     <updated>2014-10-03T23:52:35+02:00</updated>
     <id>http://blackat.github.io/blog/2014/10/03/fullstack-javascript-web-application-part-2</id>
-    <content type="html"><![CDATA[<h2>Introduction</h2>
-
-<p>The single page web application will be enriched with a database support, a build system with dependencies management and a testing framework.</p>
+    <content type="html"><![CDATA[<p>The single page web application will be enriched with a database support, a build system with dependencies management and a testing framework.</p>
 
 <p><a href="http://gruntjs.com/" title="Grunt homepage">Grunt</a> task runner and <a href="bower.io" title="Bower homepage">Bower</a> package management system will be configured. Then <a href="http://www.mongodb.org/" title="MongoDB homepage">Mongodb</a> with a persistent model will be added, finally <a href="http://jasmine.github.io/" title="Jasmine homepage">Jasmine</a> and <a href="http://karma-runner.github.io/0.12/index.html" title="Karma homepage">Karma</a> will support tests and their execution.</p>
 
@@ -527,9 +525,7 @@ movieServices.factory('Movie', function($resource){
     <link href="http://blackat.github.io/blog/2014/09/09/fullstack-javascript-web-application/"/>
     <updated>2014-09-09T22:13:06+02:00</updated>
     <id>http://blackat.github.io/blog/2014/09/09/fullstack-javascript-web-application</id>
-    <content type="html"><![CDATA[<h2>Introduction</h2>
-
-<p>The web application will allow the user to manage a list of movies, show them, update them, store new ones and delete existing ones.</p>
+    <content type="html"><![CDATA[<p>The web application will allow the user to manage a list of movies, show them, update them, store new ones and delete existing ones.</p>
 
 <p><img class="center" src="/images/posts/popcorn-time-screenshot.png"></p>
 
