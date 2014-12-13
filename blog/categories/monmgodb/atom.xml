@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Monmgodb | Contrast Of Beauty]]></title>
   <link href="http://blackat.github.io/blog/categories/monmgodb/atom.xml" rel="self"/>
   <link href="http://blackat.github.io/"/>
-  <updated>2014-12-13T20:43:02+01:00</updated>
+  <updated>2014-12-13T20:45:19+01:00</updated>
   <id>http://blackat.github.io/</id>
   <author>
     <name><![CDATA[black@t]]></name>
@@ -537,6 +537,9 @@ movieServices.factory('Movie', function($resource){
 
 <p>The application will start simple and step by step components will be added such as the database, the testing framework, the task runner and the dependency management.</p>
 
+<!-- more -->
+
+
 <h2>1. Single Page Web Application Scaffolding</h2>
 
 <p>As first step the web application will be composed by</p>
@@ -545,9 +548,6 @@ movieServices.factory('Movie', function($resource){
 <li>Node.js the web server</li>
 <li>Express the web framework</li>
 </ul>
-
-
-<!-- more -->
 
 
 <h3>1.1 Folder structure</h3>
