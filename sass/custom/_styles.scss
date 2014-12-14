@@ -1,15 +1,15 @@
 // This File is imported last, and will override other styles in the cascade
 // Add styles here to make changes without digging in too much
 
-/*
+/***********************************
  * Import Github style sheet.
- */
+ ***********************************/
 @import "github_style";
 
 
-/*
+/***********************************
  * Style the body.
- */
+ ***********************************/
 body {
     line-height: 1.7em;
     font-size: 1em;
@@ -29,9 +29,9 @@ html {
 }
 
 
-/*
+/***********************************
  * Style the header.
- */
+ ***********************************/
 body>header {
     background: none !important;
     border-bottom: 1px solid #eee;
@@ -51,9 +51,9 @@ time {
     color: #A8A39D !important;
 }
 
-/*
+/***********************************
  * Style the nav bar.
- */
+ ***********************************/
 body>nav {
     background: none !important;
     background-color: none !important;
@@ -112,9 +112,9 @@ a:link, a:active, a:visited {
     text-decoration: none !important;
 }
 
-/*
+/***********************************
  * Style the table.
- */
+ ***********************************/
 table {
     margin-bottom: 20px;
 }
@@ -135,9 +135,9 @@ thead {
     background-color: #eee;
 }
 
-/*
+/***********************************
  * Style the code block.
- */
+ ***********************************/
 figure.code, .gist-file, pre {
     box-shadow: none !important;
 }
@@ -205,9 +205,9 @@ p code, li code {
     margin-bottom: 0px;
 }
 
-/*
+/***********************************
  * Style the block code caption
- */
+ ***********************************/
 figure.code figcaption {
     font-family: 'Sorts Mill Goudy', serif;
     font-style: italic;
@@ -224,10 +224,24 @@ figure.code figcaption a {
     position: relative !important;
 }
 
+/***********************************
+ * Style the footer
+ ***********************************/
+body>footer {
+    background: none !important;
+    background-color: #E2DDD9 !important;
+    text-shadow: none;
+    color: #A8A39D !important;
+    border-top: none;
+}
 
-/*
+.credit a {
+    color: #8D7966 !important;
+}
+
+/***********************************
  * Style Plunkr block code
- */
+ ***********************************/
 .header {
     background-color: #ffffff;
 }
