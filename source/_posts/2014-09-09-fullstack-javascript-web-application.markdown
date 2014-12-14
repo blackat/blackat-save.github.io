@@ -6,7 +6,6 @@ comments: true
 categories: [javascript, monmgodb, grunt, bower, webapp, fullstack]
 ---
 
-## Introduction
 The web application will allow the user to manage a list of movies, show them, update them, store new ones and delete existing ones.
 
 {% img center /images/posts/popcorn-time-screenshot.png %}
@@ -15,13 +14,13 @@ This web application will help to show how to structure a full stack Javascript 
 
 The application will start simple and step by step components will be added such as the database, the testing framework, the task runner and the dependency management.
 
+<!-- more -->
+
 ## 1. Single Page Web Application Scaffolding
 As first step the web application will be composed by
 
 - Node.js the web server
 - Express the web framework
-
-<!-- more -->
 
 ### 1.1 Folder structure
 The starting point is the folder structure to organize resources and configuration files.

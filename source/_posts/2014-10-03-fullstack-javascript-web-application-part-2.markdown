@@ -6,7 +6,6 @@ comments: true
 categories: [javascript, monmgodb, grunt, bower, webapp, fullstack, jasmine, karma]
 ---
 
-## Introduction
 The single page web application will be enriched with a database support, a build system with dependencies management and a testing framework.
 
 [Grunt] task runner and [Bower] package management system will be configured. Then [Mongodb] with a persistent model will be added, finally [Jasmine] and [Karma] will support tests and their execution.
