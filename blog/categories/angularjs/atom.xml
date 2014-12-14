@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Angularjs | Contrast Of Beauty]]></title>
   <link href="http://blackat.github.io/blog/categories/angularjs/atom.xml" rel="self"/>
   <link href="http://blackat.github.io/"/>
-  <updated>2014-12-13T20:47:29+01:00</updated>
+  <updated>2014-12-14T09:50:22+01:00</updated>
   <id>http://blackat.github.io/</id>
   <author>
     <name><![CDATA[black@t]]></name>
@@ -62,6 +62,49 @@
 </code></pre>
 
 <p>In the <code>index.html</code> a minimal form has been implemented to allow login and registration of the user. Just to make the UI a bit more fancy and easy to develop, Boostrap and AngularJS frameworks have been added.</p>
+
+<h4>2.1 Kii JavaScript SDK</h4>
+
+<p>The SDK has been used to perform <em>login</em> and <em>registration</em> action.</p>
+
+<pre><code class="javascript js/script.js https://github.com/blackat/kii-sdk-js-101/blob/master/js/script.js">$scope.login = function () {
+
+    KiiUser.authenticate($scope.user.username, $scope.user.password, {
+        // Called on successful registration
+        success: function (theUser) {
+
+        },
+
+        // Called on a failed authentication
+        failure: function (theUser, errorString) {
+
+        }
+    })
+};
+</code></pre>
+
+<p>Some details has been remove just to focus on the <code>authenticate</code> function. Once the credential has been sent to the cloud one of the two functions will be called according to the outcome of the authentication.</p>
+
+<p>The registration function is a bit different, a new <code>KiiUser</code> object has to be created with the data coming from the <code>form</code> and then the function <code>register</code> has to be called. As for the <code>login</code> function two callbacks are available to manage possible process outcomes.</p>
+
+<pre><code class="javascript js/script.js https://github.com/blackat/kii-sdk-js-101/blob/master/js/script.js">$scope.register = function () {
+
+    // Create the KiiUser object
+    var user = KiiUser.userWithUsername($scope.user.username, $scope.user.password);
+
+    // Register the user, defining callbacks for when the process completes
+    user.register({
+        // Called on successful registration
+        success: function (theUser) {
+
+        },
+        // Called on a failed registration
+        failure: function (theUser, errorString) {
+
+        }
+    });
+};
+</code></pre>
 
 <h3>3. Local test with node.js</h3>
 

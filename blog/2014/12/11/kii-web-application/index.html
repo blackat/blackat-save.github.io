@@ -131,6 +131,82 @@
 
 <p>In the <code>index.html</code> a minimal form has been implemented to allow login and registration of the user. Just to make the UI a bit more fancy and easy to develop, Boostrap and AngularJS frameworks have been added.</p>
 
+<h4>2.1 Kii JavaScript SDK</h4>
+
+<p>The SDK has been used to perform <em>login</em> and <em>registration</em> action.</p>
+
+<figure class='code'><figcaption><span>js/script.js</span> — <a href='https://github.com/blackat/kii-sdk-js-101/blob/master/js/script.js'>Link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$scope</span><span class="p">.</span><span class="nx">login</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">KiiUser</span><span class="p">.</span><span class="nx">authenticate</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">username</span><span class="p">,</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">password</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// Called on successful registration</span>
+</span><span class='line'>        <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">theUser</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// Called on a failed authentication</span>
+</span><span class='line'>        <span class="nx">failure</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">theUser</span><span class="p">,</span> <span class="nx">errorString</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">})</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Some details has been remove just to focus on the <code>authenticate</code> function. Once the credential has been sent to the cloud one of the two functions will be called according to the outcome of the authentication.</p>
+
+<p>The registration function is a bit different, a new <code>KiiUser</code> object has to be created with the data coming from the <code>form</code> and then the function <code>register</code> has to be called. As for the <code>login</code> function two callbacks are available to manage possible process outcomes.</p>
+
+<figure class='code'><figcaption><span>js/script.js</span> — <a href='https://github.com/blackat/kii-sdk-js-101/blob/master/js/script.js'>Link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$scope</span><span class="p">.</span><span class="nx">register</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Create the KiiUser object</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">KiiUser</span><span class="p">.</span><span class="nx">userWithUsername</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">username</span><span class="p">,</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">password</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Register the user, defining callbacks for when the process completes</span>
+</span><span class='line'>    <span class="nx">user</span><span class="p">.</span><span class="nx">register</span><span class="p">({</span>
+</span><span class='line'>        <span class="c1">// Called on successful registration</span>
+</span><span class='line'>        <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">theUser</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="c1">// Called on a failed registration</span>
+</span><span class='line'>        <span class="nx">failure</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">theUser</span><span class="p">,</span> <span class="nx">errorString</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
 <h3>3. Local test with node.js</h3>
 
 <p>In order to locally test in a browser the application <code>node.js</code> can be used. Download and install <a href="http://nodejs.org/download/" target="_blank">node.js</a>. On mac use <a href="http://brew.sh/"target="_blank">homebrew</a></p>
