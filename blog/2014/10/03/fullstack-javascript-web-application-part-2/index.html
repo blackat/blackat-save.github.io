@@ -9,7 +9,7 @@
   <meta name="author" content="black@t">
 
   
-  <meta name="description" content="Introduction The single page web application will be enriched with a database support, a build system with dependencies management and a test &hellip;">
+  <meta name="description" content="The single page web application will be enriched with a database support, a build system with dependencies management and a testing framework. Grunt &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -29,7 +29,7 @@
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,700,600' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Sorts+Mill+Goudy:400,400italic' rel='stylesheet' type='text/css'>
 
   
@@ -86,24 +86,22 @@
   </header>
 
 
-<div class="entry-content"><h2>Introduction</h2>
+<div class="entry-content"><p>The single page web application will be enriched with a database support, a build system with dependencies management and a testing framework.</p>
 
-<p>The single page web application will be enriched with a database support, a build system with dependencies management and a test framework.</p>
-
-<p>Step by step <strong>mongodb</strong> with a persistent model will be added and configured, <strong>Grunt</strong> task runner and <strong>Bower</strong> package management system will be configured. Finally <strong>Jasmine</strong> and <strong>Karma</strong> will support tests and their execution.</p>
+<p><a href="http://gruntjs.com/" title="Grunt homepage">Grunt</a> task runner and <a href="bower.io" title="Bower homepage">Bower</a> package management system will be configured. Then <a href="http://www.mongodb.org/" title="MongoDB homepage">Mongodb</a> with a persistent model will be added, finally <a href="http://jasmine.github.io/" title="Jasmine homepage">Jasmine</a> and <a href="http://karma-runner.github.io/0.12/index.html" title="Karma homepage">Karma</a> will support tests and their execution.</p>
 
 <!-- more -->
 
 
 <h2>1. Continuos build integration</h2>
 
-<p><strong>Grunt</strong> is a <em>task runner</em>, means it runs pre-defined tasks and custom tasks defined by the user in order to achieve a certain goal such as the deployment in production, running unit and end-to-end (e2e) tests and so on.</p>
+<p><a href="http://gruntjs.com/" title="Grunt homepage">Grunt</a> is a <em>task runner</em>, means it runs pre-defined tasks and custom tasks defined by the user in order to achieve a certain goal such as the deployment in production, running unit and end-to-end (e2e) tests and so on.</p>
 
-<p><strong>Bower</strong> is a package management system quite widespread in the javascript community added to manage packages for client-side programming. It depends on <em>Node.js</em> and <em>npm</em>.</p>
+<p><a href="bower.io" title="Bower homepage">Bower</a> is a package management system quite widespread in the javascript community added to manage packages for client-side programming. It depends on <em>Node.js</em> and <em>npm</em>.</p>
 
 <h3>1.1 Grunt Task Runner</h3>
 
-<figure class='code'><figcaption><span>package.json</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>package.json</span> — <a href='https://github.com/blackat/popcorn-time-express-angular-mongodb-grunt/blob/master/package.json'>Link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -624,14 +622,111 @@
 
 <p>The module <code>products.js</code> exports the function <code>products()</code> adding it to the <code>exports</code> object. The function will be added to the root of the module.</p>
 
-<!-- Reference links -->
+<h4>RESTful Backend</h4>
+
+<p>In order to better interact with the frontend, a RESTful backend has to be provided by means of <em>REST endpoints</em> as follows:</p>
+
+<table>
+<thead>
+<tr>
+<th>Url            </th>
+<th> HTTP Verb </th>
+<th> POST Body   </th>
+<th> Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>api/movies     </td>
+<td> GET       </td>
+<td> empty       </td>
+<td> return all the movies    </td>
+</tr>
+<tr>
+<td>api/movies     </td>
+<td> POST      </td>
+<td> JSON String </td>
+<td> create a new movie       </td>
+</tr>
+<tr>
+<td>api/movies/:id </td>
+<td> GET       </td>
+<td> empty       </td>
+<td> return a single movie    </td>
+</tr>
+<tr>
+<td>api/movies/:id </td>
+<td> PUT       </td>
+<td> JSON String </td>
+<td> update an existing movie </td>
+</tr>
+<tr>
+<td>api/movies/:id </td>
+<td> DELETE    </td>
+<td> empty       </td>
+<td> delete an existing entry </td>
+</tr>
+</tbody>
+</table>
 
 
-<h3>NodeJS</h3>
+<h2>3. Morgan the Logger</h2>
 
-<p>I need something quite simple, when a request is routed some data should be fetched from the database and then sent back in the response to the client.</p>
+<h2>4. Angular</h2>
 
-<p>What I should implement, given a route, is the access to the data source to retrieve the data.</p>
+<p>A nice way to implement <em>CRUD operations</em> in <a href="https://angularjs.org/">Angular</a> is using <code>$resource</code> factory which helps to interact with a standard <em>REST endpoints</em>. In <code>bower.json</code> the module <code>angular-resource</code> is already present, then it will be injected into &lsquo;index.html&rsquo; by <a href="bower.io" title="Bower homepage">Bower</a>.</p>
+
+<h3>4.1 Consuming a RESTful service</h3>
+
+<figure class='code'><figcaption><span>/app/scripts/services/movieServices.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span>  <span class="nx">movieServices</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;movieApp.movieServices&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;ngResource&#39;</span><span class="p">]);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">movieServices</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="s1">&#39;Movie&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$resource</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">$resource</span><span class="p">(</span><span class="s1">&#39;movies/movies/:id&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">id</span><span class="o">:</span><span class="s1">&#39;@_id&#39;</span><span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Module <code>ngResource</code> needs to be installed and declared in order to use its <strong>service</strong> <code>$resource</code>. The returned resources has <strong>action methods</strong> providing higher-level behaviors than the low level <code>$http</code>.</p>
+
+<p>According to Angular  <a href="https://docs.angularjs.org/api/ngResource/service/$resource">api</a> a parametrized URL has to be specified, it is the <em>full endpoint</em> address which covers all the URLs for basic CRUD operations.</p>
+
+<pre><code>$resource(url, [paramDefaults], [actions], options);
+</code></pre>
+
+<p><code>:id</code> is the parameter and <code>{id:@_id}</code> is the name of the parameter in the <code>data</code> object provided when the method will be called, so it means extract the value of parameter <code>data._id</code> and assign it to <code>id</code> parameter.</p>
+
+<p>The returned object has a <em>default set</em> of <strong>resource actions</strong> which can be extended with custom <code>actions</code>.</p>
+
+<pre><code>{
+    'get':    {method:'GET'},
+    'save':   {method:'POST'},
+    'query':  {method:'GET', isArray:true},
+    'remove': {method:'DELETE'},
+    'delete': {method:'DELETE'}
+};
+</code></pre>
+
+<h2>5. Testing</h2>
+
+<ul>
+<li>unit test the RESTful api, user <a href="https://github.com/visionmedia/supertest">SuperTest</a></li>
+<li>Jasmine</li>
+<li>Karma</li>
+<li>Mongodb? integration test?</li>
+</ul>
+
+
+<!-- Links -->
+
 </div>
 
 
@@ -652,7 +747,7 @@
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/bower/'>bower</a>, <a class='category' href='/blog/categories/fullstack/'>fullstack</a>, <a class='category' href='/blog/categories/grunt/'>grunt</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/monmgodb/'>monmgodb</a>, <a class='category' href='/blog/categories/webapp/'>webapp</a>
+    <a class='category' href='/blog/categories/bower/'>bower</a>, <a class='category' href='/blog/categories/fullstack/'>fullstack</a>, <a class='category' href='/blog/categories/grunt/'>grunt</a>, <a class='category' href='/blog/categories/jasmine/'>jasmine</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/karma/'>karma</a>, <a class='category' href='/blog/categories/monmgodb/'>monmgodb</a>, <a class='category' href='/blog/categories/webapp/'>webapp</a>
   
 </span>
 
@@ -673,6 +768,8 @@
         <a class="basic-alignment left" href="/blog/2014/09/09/fullstack-javascript-web-application/" title="Previous Post: Fullstack Javascript Web Application Part 1">&laquo; Fullstack Javascript Web Application Part 1</a>
       
       
+        <a class="basic-alignment right" href="/blog/2014/12/11/kii-web-application/" title="Next Post: kii web application">kii web application &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -684,6 +781,10 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/12/11/kii-web-application/">Kii Web Application</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/10/03/fullstack-javascript-web-application-part-2/">Fullstack Javascript Web Application Part 2</a>
