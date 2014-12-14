@@ -38,12 +38,17 @@ body>header {
 }
 
 body>header h1 a {
-    color: #2b2b2b !important;
+    color: #8D7966 !important;
 }
 
 body>header h2 {
     font-family: 'Sorts Mill Goudy', serif;
     font-Style: italic;
+    color: #A8A39D !important;
+}
+
+time {
+    color: #A8A39D !important;
 }
 
 /*
@@ -58,6 +63,30 @@ body>nav {
 body>nav a {
     font-family: 'Open Sans', sans-serif;
     font-size: 1.4em;
+}
+
+p {
+    font-size: 1.1em;
+}
+
+p>em {
+    font-size: 0.9em !important;
+    color: #8D7966 !important;
+}
+
+p>strong {
+    font-size: 0.9em !important;
+    color: #8D7966 !important;
+}
+
+blockquote {
+    border-left: 4px solid #E2DDD9 !important;
+    background-color: #F8F1E9 !important;
+}
+
+blockquote>p {
+    color: #A8A39D !important;
+    font-size: 0.8em;
 }
 
 body>nav li+li, a {
@@ -122,14 +151,14 @@ figure.code, .gist-file, pre {
 }
 
 .highlight .line-numbers, html .gist .gist-file .gist-syntax .highlight .line_numbers {
-    background: #f8f8f8 !important;
-    border-right: 1px solid #eee !important;
+    background: #D8C8B8 !important;
+    border-right: 1px solid #D8C8B8 !important;
     text-shadow: none !important;
     font-size: 12px;
 }
 
 .highlight .line-numbers span, html .gist .gist-file .gist-syntax .highlight .line_numbers span {
-    color: #aaa !important;
+    color: #8D7966 !important;
     font-size: 12px;
 }
 

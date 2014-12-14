@@ -44,6 +44,49 @@ The application is the same application has been implemented in <a href="http://
 
 In the ``index.html`` a minimal form has been implemented to allow login and registration of the user. Just to make the UI a bit more fancy and easy to develop, Boostrap and AngularJS frameworks have been added.
 
+#### 2.1 Kii JavaScript SDK
+The SDK has been used to perform _login_ and _registration_ action.
+
+```javascript js/script.js https://github.com/blackat/kii-sdk-js-101/blob/master/js/script.js
+$scope.login = function () {
+
+    KiiUser.authenticate($scope.user.username, $scope.user.password, {
+        // Called on successful registration
+        success: function (theUser) {
+
+        },
+
+        // Called on a failed authentication
+        failure: function (theUser, errorString) {
+
+        }
+    })
+};
+```
+Some details has been remove just to focus on the ``authenticate`` function. Once the credential has been sent to the cloud one of the two functions will be called according to the outcome of the authentication.
+
+The registration function is a bit different, a new ``KiiUser`` object has to be created with the data coming from the ``form`` and then the function ``register`` has to be called. As for the ``login`` function two callbacks are available to manage possible process outcomes.
+
+```javascript js/script.js https://github.com/blackat/kii-sdk-js-101/blob/master/js/script.js
+$scope.register = function () {
+
+    // Create the KiiUser object
+    var user = KiiUser.userWithUsername($scope.user.username, $scope.user.password);
+
+    // Register the user, defining callbacks for when the process completes
+    user.register({
+        // Called on successful registration
+        success: function (theUser) {
+
+        },
+        // Called on a failed registration
+        failure: function (theUser, errorString) {
+
+        }
+    });
+};
+```
+
 ### 3. Local test with node.js
 In order to locally test in a browser the application ``node.js`` can be used. Download and install <a href="http://nodejs.org/download/" target="_blank">node.js</a>. On mac use <a href="http://brew.sh/"target="_blank">homebrew</a>
 
