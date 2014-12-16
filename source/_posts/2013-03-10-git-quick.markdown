@@ -1,0 +1,82 @@
+---
+layout: post
+title: "Git Quick"
+date: 2013-03-10 18:44
+comments: true
+categories: [git, vcs]
+---
+![Alt text](http://git-scm.com/images/logo@2x.png)
+##Intro
+I have prepared some small projects I need to share and to use for this blog and I have had to load them on `GitHub`. Well I am pretty new to it and I would like to have an easy and quick (for the time being) guide to pull my code to the repository.
+<!-- more -->
+##Git Jargon
+Some reserved words in the `Git` galaxy.
+
+* __Repository.__ It can be local or remote according to how the version control system has been defined.
+	* __origin__ is the remote repository
+	* __master__ is the initial local repository
+
+##Configuring Git
+The configuration has the main goal to be recognized by `GitHub` when files are pulled from the local repository (master) to the remote one (the origin).
+To do this:
+
+* Create and `SSH-key`
+* Provide the `SSH-key` to `Git`
+* Introduce yourself to `Git`
+
+For these steps just follow the excellent guide provided by `GitHub` [[3]]
+
+If you get the error `Permission denied (publickey).` running `git push origin master` please check [[4]].
+
+
+##Add Stuff to GitHub
+Here step by step what I have done
+
+1. Create a repository on `GitHub`
+2. Select on `Github` the `SSH` access to the repository and see
+{% codeblock lang:bat %}
+git@github.com:blackat/springfoos.git
+{% endcodeblock %}
+3. Instance Git inside the local repository
+{% codeblock lang:bat %}
+MacBook:springfoos blackcat$ git init
+{% endcodeblock %}
+4. Add all the files to the current stage
+{% codeblock lang:bat %}
+MacBook:springfoos blackcat$ git add .
+{% endcodeblock %}
+5. Check the status of the current stage verifying that all the files will be added during the commit
+{% codeblock lang:bat %}
+MacBook:springfoos blackcat$ git status
+{% endcodeblock %}
+6. Commit the current stage to your local repository
+{% codeblock lang:bat %}
+MacBook:springfoos blackcat$ git commit -m 'First commit of the project'
+{% endcodeblock %}
+7. Connect your local repository to the remote one
+{% codeblock lang:bat %}
+MacBook:springfoos blackcat$ git remote add origin git@github.com:blackat/springfoos.git
+{% endcodeblock %}
+8. Check that the remote repository has been added in `./.git/config` file
+{% codeblock lang:bat %}
+[remote "origin"]
+	url = git@github.com:blackat/springfoos.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+{% endcodeblock %}
+9. If ready to push commits to the remote repository, the origin, run
+{% codeblock lang:bat %}
+MacBook:springfoos blackcat$ git push origin master
+{% endcodeblock %}
+
+##More information
+* Introduction to Git [[1]]
+* Bitbucket 101 [[2]]
+* Generating SSH-key [[3]]
+* Git - fast version control [[5]]
+
+<!-- Reference -->
+[1]: http://learn.github.com/p/intro.html
+[2]: https://confluence.atlassian.com/display/BITBUCKET/Bitbucket+101
+[3]: https://help.github.com/articles/generating-ssh-keys
+[4]: https://help.github.com/articles/error-permission-denied-publickey
+[5]: http://git-scm.com/
