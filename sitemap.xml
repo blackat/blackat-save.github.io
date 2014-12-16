@@ -26,19 +26,185 @@
     <priority>0.8</priority>
   </url>
   
+  <url>
+    <loc>http://blackat.github.io/blog/2013/05/31/synchronizers/</loc>
+    
+    <lastmod>2013-05-31T05:54:00+02:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://blackat.github.io/blog/2013/05/21/factory-pattern/</loc>
+    
+    <lastmod>2013-05-21T22:17:00+02:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://blackat.github.io/blog/2013/05/08/spring-framework-testing/</loc>
+    
+    <lastmod>2013-05-08T16:48:00+02:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://blackat.github.io/blog/2013/03/28/mvc-pattern/</loc>
+    
+    <lastmod>2013-03-28T22:42:00+01:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://blackat.github.io/blog/2013/03/28/command-pattern/</loc>
+    
+    <lastmod>2013-03-28T18:26:00+01:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://blackat.github.io/blog/2013/03/27/facade-pattern/</loc>
+    
+    <lastmod>2013-03-27T08:02:00+01:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://blackat.github.io/blog/2013/03/27/adapter-pattern/</loc>
+    
+    <lastmod>2013-03-27T08:01:00+01:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://blackat.github.io/blog/2013/03/26/template-pattern/</loc>
+    
+    <lastmod>2013-03-26T01:00:00+01:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://blackat.github.io/blog/2013/03/25/observer-pattern/</loc>
+    
+    <lastmod>2013-03-25T23:25:00+01:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://blackat.github.io/blog/2013/03/25/strategy-pattern/</loc>
+    
+    <lastmod>2013-03-25T20:21:00+01:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://blackat.github.io/blog/2013/03/22/protection-proxy-pattern/</loc>
+    
+    <lastmod>2013-03-22T19:38:00+01:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://blackat.github.io/blog/2013/03/22/remote-proxy-pattern/</loc>
+    
+    <lastmod>2013-03-22T19:36:00+01:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://blackat.github.io/blog/2013/03/22/virtual-proxy-pattern/</loc>
+    
+    <lastmod>2013-03-22T19:35:00+01:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://blackat.github.io/blog/2013/03/20/proxy-pattern/</loc>
+    
+    <lastmod>2013-03-20T23:00:00+01:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://blackat.github.io/blog/2013/03/15/composite-pattern/</loc>
+    
+    <lastmod>2013-03-15T23:45:00+01:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://blackat.github.io/blog/2013/03/15/iterator-pattern/</loc>
+    
+    <lastmod>2013-03-15T23:05:00+01:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://blackat.github.io/blog/2013/03/14/singleton-pattern/</loc>
+    
+    <lastmod>2013-03-14T20:58:00+01:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://blackat.github.io/blog/2013/03/12/decorator-pattern/</loc>
+    
+    <lastmod>2013-03-12T20:34:00+01:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://blackat.github.io/blog/2013/03/10/git-quick/</loc>
+    
+    <lastmod>2013-03-10T18:44:00+01:00</lastmod>
+    
+    <priority>0.8</priority>
+  </url>
+  
   
   <url>
     <loc>http://blackat.github.io/blog/archives/</loc>
-    <lastmod>2014-12-14T12:09:07+01:00</lastmod>
+    <lastmod>2014-12-16T21:07:18+01:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://blackat.github.io/</loc>
-    <lastmod>2014-12-14T12:09:07+01:00</lastmod>
+    <lastmod>2014-12-16T21:07:18+01:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://blackat.github.io/oo-design-principles/</loc>
+    <lastmod>2014-12-16T21:07:18+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>http://blackat.github.io/design-patterns/</loc>
+    <lastmod>2014-12-16T21:07:18+01:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
   </url>
   
   

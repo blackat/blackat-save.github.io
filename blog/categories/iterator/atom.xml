@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Iterator | Contrast Of Beauty]]></title>
+  <link href="http://blackat.github.io/blog/categories/iterator/atom.xml" rel="self"/>
+  <link href="http://blackat.github.io/"/>
+  <updated>2014-12-16T21:07:18+01:00</updated>
+  <id>http://blackat.github.io/</id>
+  <author>
+    <name><![CDATA[black@t]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Iterator Pattern]]></title>
+    <link href="http://blackat.github.io/blog/2013/03/15/iterator-pattern/"/>
+    <updated>2013-03-15T23:05:00+01:00</updated>
+    <id>http://blackat.github.io/blog/2013/03/15/iterator-pattern</id>
+    <content type="html"><![CDATA[<p><blockquote><p>The Iterator Pattern provides a way to access the elements of an aggregates object sequentially without exposing its underlying representation.</p><footer><strong>Bates and Sierra</strong> <cite><a href="http://shop.oreilly.com/product/9780596007126.do">http://shop.oreilly.com/product/9780596007126.do</a> Head First Design Patterns</cite></footer></blockquote></p>
+
+<!-- more -->
+
+
+<h2>Class Diagram</h2>
+
+<p><img src="/images/posts/design-patterns/iterator.jpg"></p>
+
+<h2>Key Points</h2>
+
+<ul>
+<li><strong>Encapsulate what varies.</strong> <code>Iterator</code>
+
+<ul>
+<li>knows how to iterate over a collection of item;</li>
+<li>hides the collection implementation details;</li>
+<li>depends on the collection and how to iterate over it.</li>
+</ul>
+</li>
+<li><strong>Single Responsibility Principle.</strong>
+
+<ul>
+<li>A class should have only one reason to change.</li>
+<li>Every responsibility of a class is an area of potential change.</li>
+</ul>
+</li>
+<li><strong>Cohesion.</strong>
+
+<ul>
+<li>General concept related to <em>Single Responsibility Principle</em>.</li>
+<li>Measure how closely a class or a module supports a single responsibility.</li>
+<li><em>High cohesion:</em> the class is designed around a set of related functions and is more maintainable.</li>
+<li><em>Low cohesion:</em> the class is design around a set of unrelated functions and is less maintainable.</li>
+</ul>
+</li>
+<li><strong>Standard Interface.</strong> The <code>Iterator</code> is a well known interface and interact
+
+<ul>
+<li>in the same way with all the collections;</li>
+<li>without knowing collection implementation details, decouples the client from the implementation details.</li>
+</ul>
+</li>
+<li><strong>Other Interfaces.</strong> There are also
+
+<ul>
+<li><code>ListIterator</code> allows to get also the previous item</li>
+<li><code>Enumarate</code> old interface</li>
+</ul>
+</li>
+<li><strong>Polymorphic Iteration.</strong> The <code>Iterator</code> code iterate over any collection as long as it supports the interface.</li>
+<li><strong>for/in</strong> Statement to iterate over a collection without explicitly creating an iterator.</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>
