@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Composite | Contrast Of Beauty]]></title>
+  <link href="http://blackat.github.io/blog/categories/composite/atom.xml" rel="self"/>
+  <link href="http://blackat.github.io/"/>
+  <updated>2014-12-16T21:39:36+01:00</updated>
+  <id>http://blackat.github.io/</id>
+  <author>
+    <name><![CDATA[black@t]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Composite Pattern]]></title>
+    <link href="http://blackat.github.io/blog/2013/03/15/composite-pattern/"/>
+    <updated>2013-03-15T23:45:00+01:00</updated>
+    <id>http://blackat.github.io/blog/2013/03/15/composite-pattern</id>
+    <content type="html"><![CDATA[<p><blockquote><p>The Composite Pattern allows you to compose objects into tree structures to represent part-whole hierarchies. Composite lets client treat individual objects and composition of objects uniformly.</p><footer><strong>Bates and Sierra</strong> <cite><a href="http://shop.oreilly.com/product/9780596007126.do">http://shop.oreilly.com/product/9780596007126.do</a> Head First Design Patterns</cite></footer></blockquote></p>
+
+<!-- more -->
+
+
+<h2>Class Diagram</h2>
+
+<p><img src="/images/posts/design-patterns/composite.jpg"></p>
+
+<p><code>Client</code> uses the <code>Component</code> to manipulate objects.</p>
+
+<p><code>Component</code> defines an interface both for the composite and for the leaf which are element of the collection. It might implement a default behavior for methods.</p>
+
+<p><code>Leaf</code> has no children and inherits methods and override what make sense for the class itself.</p>
+
+<p><code>Composite</code> has children, the <code>Components</code>, which can be <code>Component</code> or <code>Leaf</code> type and inherits methods and override what make sense for the class itself.</p>
+
+<h2>Key Points</h2>
+
+<ul>
+<li><p><strong>New Approach.</strong> Not necessarily related to iterators.</p></li>
+<li><p><strong>Trees.</strong> Build object structures in the form of <em>trees</em> containing both nodes and leaves.</p>
+
+<ul>
+<li>Same operations are applied over both composite and leaves.</li>
+<li>Ignore the differences between nodes and leaves.</li>
+</ul>
+</li>
+<li><p><strong>Part-whole Hierarchy.</strong> Node with children and leaves are in the same structure.</p>
+
+<ul>
+<li>Tree of objects made of parts, nodes and leaves, but threaten as a whole.</li>
+</ul>
+</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

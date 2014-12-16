@@ -1,0 +1,292 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Template Pattern - Contrast Of Beauty</title>
+  <meta name="author" content="black@t">
+
+  
+  <meta name="description" content="The Template Method Pattern defines the skeleton of an algorithm in an operation, deferring some steps to subclasses. Template Method lets subclasses &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blackat.github.io/blog/2013/03/26/template-pattern">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Contrast Of Beauty" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,700,600' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Sorts+Mill+Goudy:400,400italic' rel='stylesheet' type='text/css'>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Contrast Of Beauty</a></h1>
+  
+    <h2>I am just curious</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blackat.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/oo-design-principles">Design Principles</a></li>
+  <li><a href="/design-patterns">Design Patterns</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Template Pattern</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-03-26T01:00:00+01:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>1:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><blockquote><p>The Template Method Pattern defines the skeleton of an algorithm in an operation, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm&#8217;s structure.</p><footer><strong>Bates and Sierra,</strong> <cite><a href='http://shop.oreilly.com/product/9780596007126.do'>Head First Design Patterns</a></cite></footer></blockquote>
+
+
+<!-- more -->
+
+
+<h2>Class diagram</h2>
+
+<p><img src="/images/posts/design-patterns/template_method.png"></p>
+
+<p>The abstract class contains the <em>template method</em> and <em>abstract</em> versions of the operations used in the template method. Each method, abstract or concrete, is a step of an algorithm which could varies.</p>
+
+<p>The template methods use the <code>primitiveOperations</code> to implement an algorithm <em>decoupling</em> from the actual implementation of these operations.</p>
+
+<p>The concrete class implements all the abstract operations called by the template method.</p>
+
+<h2>Design Principle</h2>
+
+<p><a href="/oo-design-principles/index.html#hollywood_principle">The Hollywood Principle.</a></p>
+
+<h2>Scenario</h2>
+
+<p>An algorithm is made of steps useful to accomplish some tasks. It can be imagined as a recipe which is a set of instruction to prepare a dish. Some recipes could have some instructions in common so it should be better to avoid <em>code duplication</em>.</p>
+
+<h2>Key Points</h2>
+
+<ul>
+<li><strong>Template method.</strong> It defines the skeleton of an algorithm <em>deferring</em> some steps to subclasses. It lets subclasses <em>redefine</em> some steps without changing the algorithm&rsquo;s structure.</li>
+<li><strong>Abstract class.</strong>_
+
+<ul>
+<li>It is a template of methods for an algorithm which could implemented in slightly different ways in some of the steps.</li>
+<li>It is made to be extended and abstract methods to be implemented. So the abstract class collect all the all the <em>common</em> methods or instructions different algorithms.</li>
+<li>It reduces the dependencies in the system.</li>
+</ul>
+</li>
+<li><strong>Abstract methods.</strong> They point out that they are just <em>placeholders</em> because they are in common with all the algorithms but their <em>implementation differ</em> from algorithm to algorithm.</li>
+<li><strong>Concrete methods.</strong> Concrete meaning that their <em>implementation is the same and in common</em> among algorithms.</li>
+<li><strong>Inheritance.</strong> It allows all the subclasses, the <em>algorithms</em>, to have the <em>same behaviors</em> of the superclass, if they are <em>abstract</em> they could change across subclasses.</li>
+<li><strong>Interfaces.</strong> They don&rsquo;t have code so <em>no code reuse</em>.</li>
+<li><strong>Concrete class.</strong> Concrete implementation is a working algorithm which implements each <em>abstract method</em> and <em>could add some other algorithm specific methods</em>.</li>
+<li><strong>Hook methods.</strong>
+
+<ul>
+<li>They are concrete methods <em>doing nothing by default</em>, they are <em>optional steps of the algorithm</em> and the subclasses are not obliged to override them. The subclass can hook its own code into the algorithm, <em>an optional part of the algorithm</em>.</li>
+<li>They could also be used to <em>conditionally control</em>, using conditional statements, the flow of the algorithm in the abstract class.</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Template method vs. Strategy</h2>
+
+<ul>
+<li><strong>Focus on</strong>
+
+<ul>
+<li>Strategy and Template both encapsulate algorithms, one by <em>inheritance</em> and one by <em>composition</em>.</li>
+</ul>
+</li>
+<li><strong>Template</strong>
+
+<ul>
+<li>Define the <em>outline of an algorithm</em> and let my <em>subclasses</em> do some of the work.</li>
+<li><em>Keep the control</em> over the algorithm&rsquo;s structure and allow be different implementations of individual steps.</li>
+<li>Provide method for <em>code reuse</em> allowing <em>subclasses</em> to specify behavior.</li>
+<li>Depend on method implemented in the superclass.</li>
+</ul>
+</li>
+<li><strong>Strategy</strong>
+
+<ul>
+<li>Define a <em>family of algorithms</em> and make them <em>interchangeable</em>.</li>
+<li>Each algorithm is encapsulated so the client can use different algorithms easily.</li>
+<li><em>Not use inheritance</em> for algorithm implementations.</li>
+<li>Clients use algorithm implementation through <em>object composition</em>.</li>
+<li>Clients can change algorithm at <em>runtime</em> by using different <em>strategy object</em>.</li>
+<li>Not depend on any superclass.</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Template Method in Action</h2>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">black@t</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2013-03-26T01:00:00+01:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>26</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>1:00 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/design-patterns/'>design patterns</a>, <a class='category' href='/blog/categories/java/'>java</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blackat.github.io/blog/2013/03/26/template-pattern/" data-via="" data-counturl="http://blackat.github.io/blog/2013/03/26/template-pattern/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/03/25/observer-pattern/" title="Previous Post: Observer Pattern">&laquo; Observer Pattern</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/03/27/adapter-pattern/" title="Next Post: Adapter Pattern">Adapter Pattern &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/12/11/kii-web-application/">Kii Web Application</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/03/fullstack-javascript-web-application-part-2/">Fullstack Javascript Web Application Part 2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/09/fullstack-javascript-web-application/">Fullstack Javascript Web Application Part 1</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/31/synchronizers/">Synchronizers</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/21/factory-pattern/">Factory Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - black@t -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

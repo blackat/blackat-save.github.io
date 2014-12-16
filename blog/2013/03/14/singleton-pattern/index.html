@@ -1,0 +1,432 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Singleton Pattern - Contrast Of Beauty</title>
+  <meta name="author" content="black@t">
+
+  
+  <meta name="description" content="The Singleton Pattern ensures a class has only one instance and provides a global point of access to it.Bates and Sierra, Head First Design Patterns &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blackat.github.io/blog/2013/03/14/singleton-pattern">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Contrast Of Beauty" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,700,600' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Sorts+Mill+Goudy:400,400italic' rel='stylesheet' type='text/css'>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Contrast Of Beauty</a></h1>
+  
+    <h2>I am just curious</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blackat.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/oo-design-principles">Design Principles</a></li>
+  <li><a href="/design-patterns">Design Patterns</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Singleton Pattern</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-03-14T20:58:00+01:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>8:58 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><blockquote><p>The Singleton Pattern ensures a class has only one instance and provides a global point of access to it.</p><footer><strong>Bates and Sierra,</strong> <cite><a href='http://shop.oreilly.com/product/9780596007126.do'>Head First Design Patterns</a></cite></footer></blockquote>
+
+
+<!-- more -->
+
+
+<h2>Class Diagram</h2>
+
+<p><img src="/images/posts/design-patterns/singleton.jpg"></p>
+
+<p><code>Singleton</code> is name of the class but also the type of the unique <code>instance</code> variable. The variable is <code>static</code> so it belongs to the class. The method <code>getInstance()</code> is <code>static</code> so can be access using <code>Singleton.getInstance()</code>.</p>
+
+<h2>Key Points</h2>
+
+<ul>
+<li><p><strong>Private Constructor.</strong> The class cannot be instantiated.</p></li>
+<li><p><strong>Core.</strong> The <code>Singleton</code> class</p>
+
+<ul>
+<li>manages the single instance,</li>
+<li>prevent other class from creating their instances,</li>
+<li>provide a <em>global access</em> point to the instance,</li>
+<li>can have its own data and methods.</li>
+</ul>
+</li>
+<li><p><strong>Lazy Initialization.</strong> The instance is created only the first time the method <code>getInstance()</code> is invoked. When the class is loaded by the class loader the instance is not yet created. Beneficial in case of <em>resource intensive objects</em> such as database connection.</p></li>
+<li><p><strong>Multiple Class Loaders.</strong> Each class loader defines a <em>namespace</em> so the same class is loaded multiple times. A custom class loader could be define to address the issue.</p></li>
+<li><p><strong>No Subclassing.</strong> Due to the <code>private</code> constructor the class cannot be <em>instantiated</em> and <em>subclassed</em>. If the constructor will be changed to public, the parent and the subclasses will share the <em>same instance variable</em>. A <code>static</code> variable means it belongs to the class.</p></li>
+<li><p><strong>Garbage Collector 1.2</strong> A curious issue happens in its implementation because the GC collected the singleton without a global reference to them. The <em>only reference</em> to a singleton is the singleton itself.</p></li>
+</ul>
+
+
+<h2>Implementation</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
+</span><span class='line'>      <span class="kd">private</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">instance</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">()</span> <span class="o">{</span> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="kd">public</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="o">(</span><span class="n">instance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Singleton</span><span class="o">();</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          <span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>      <span class="c1">// other data and methods</span>
+</span><span class='line'>  <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Multi-Threaded Application</h2>
+
+<p>The <code>Singleton</code> could be used in a multithreaded environment. Two threads could enter the <code>getInstance()</code> method at the same time. Ensure that each thread waits its turn before entering the method.</p>
+
+<p>Different implementations are feasible in order to address the issue.</p>
+
+<h3>Lazy Implementation</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
+</span><span class='line'>      <span class="kd">private</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">instance</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">()</span> <span class="o">{</span> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="kd">public</span> <span class="kd">static</span> <span class="kd">synchronized</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="o">(</span><span class="n">instance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="n">istance</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Singleton</span><span class="o">();</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          <span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>      <span class="c1">// other data and methods</span>
+</span><span class='line'>  <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Note.</strong> Synchronizing the <code>getInstance()</code> method creates an important overhead for the application, performance can decrease by a factor of 100.</p>
+
+<h3>Eager Implementation</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
+</span><span class='line'>      <span class="kd">private</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Singleton</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">()</span> <span class="o">{}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="kd">public</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>      <span class="c1">// other data and methods</span>
+</span><span class='line'>  <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Note.</strong> The JVM will create an instance of Singleton when the class is loaded. Fine if the application always uses a Singleton instance.</p>
+
+<h3>Double-Checked Locking Implementation</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
+</span><span class='line'>      <span class="kd">private</span> <span class="kd">volatile</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">instance</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">()</span> <span class="o">{}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="kd">public</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="o">(</span><span class="n">instance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>              <span class="kd">synchronized</span> <span class="o">(</span><span class="n">Singleton</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                  <span class="k">if</span> <span class="o">(</span><span class="n">instance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                      <span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Singleton</span><span class="o">();</span>
+</span><span class='line'>                  <span class="o">}</span>
+</span><span class='line'>              <span class="o">}</span>
+</span><span class='line'>          <span class="o">}</span>
+</span><span class='line'>          <span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>      <span class="c1">// other data and methods</span>
+</span><span class='line'>  <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Note.</strong> Just the creation of the instance is <code>synchronized</code> because the issue comes from a possible concurrent creation and avoid the reduction of the performance. Synchronization happens <em>only</em> the first time the issue has to be created. The <code>volatile</code> keyword</p>
+
+<p>Prior Java5 an out-of-order write may allow the reference to be returned before the object was created. The <code>new</code> operator is not atomic.</p>
+
+<h2>Drawbacks</h2>
+
+<ul>
+<li><p><strong>Global state.</strong> Singletons introduce a <em>global state</em> into a program</p>
+
+<ul>
+<li>anyone can access to the reference variable provided by Singleton ignoring the scope;</li>
+<li>global state state are very difficult to test;</li>
+<li>singleton user and singleton class become coupled together so really difficult to test
+
+<ul>
+<li><em>solution:</em> pass the singleton as parameter in the client&rsquo;s constructor so the singleton can be mocked</li>
+</ul>
+</li>
+<li>factory class or the client could enforce the singularity eliminating the global state
+
+<ul>
+<li><em>issue:</em> violation of the Single Responsibility Principle, the class should take care about its own task and the singularity</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Dependencies.</strong> Singleton can be accessed anywhere thanks to the static method <code>getInstance()</code>, no need to pass the reference variable as parameter.</p>
+
+<ul>
+<li><em>issues:</em>
+
+<ul>
+<li>the signatures of the methods do not show their dependency anymore, the method could pull a singleton <em>&ldquo;out of thin air&rdquo;</em> [<a href="https://code.google.com/p/google-singleton-detector/wiki/WhySingletonsAreControversial">4</a>];</li>
+<li>becomes more difficult to use and test the code, the developer should have a look at the inner code.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Test-driven and Agile Development.</strong> Have small tests covering most of the code</p>
+
+<ul>
+<li>test must be run in any order</li>
+<li>two test could modify a shared resource that is the singleton</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>References</h2>
+
+<p>IBM - User Your Singletons Wisely [<a href="http://www.ibm.com/developerworks/webservices/library/co-single/index.html">1</a>]
+Portland Pattern Repository - Pages about singleton [<a href="http://c2.com/cgi/wiki?search=Singleton">2</a>]
+Portland Pattern Repository - Singletons Are Evil [<a href="http://c2.com/cgi-bin/wiki?SingletonsAreEvil">3</a>]
+Google - Why Singletons Are Controversial [<a href="https://code.google.com/p/google-singleton-detector/wiki/WhySingletonsAreControversial">4</a>]
+JavaWorld - Simply Singleton [<a href="https://code.google.com/p/google-singleton-detector/wiki/WhySingletonsAreControversial">5</a>]
+Interview questions about singleton [<a href="http://javarevisited.blogspot.fr/2011/03/10-interview-questions-on-singleton.html">6</a>]</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">black@t</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2013-03-14T20:58:00+01:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>8:58 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/design-patterns/'>design patterns</a>, <a class='category' href='/blog/categories/java/'>java</a>, <a class='category' href='/blog/categories/singleton/'>singleton</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blackat.github.io/blog/2013/03/14/singleton-pattern/" data-via="" data-counturl="http://blackat.github.io/blog/2013/03/14/singleton-pattern/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/03/12/decorator-pattern/" title="Previous Post: Decorator Pattern">&laquo; Decorator Pattern</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/03/15/iterator-pattern/" title="Next Post: Iterator Pattern">Iterator Pattern &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/12/11/kii-web-application/">Kii Web Application</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/03/fullstack-javascript-web-application-part-2/">Fullstack Javascript Web Application Part 2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/09/fullstack-javascript-web-application/">Fullstack Javascript Web Application Part 1</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/31/synchronizers/">Synchronizers</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/21/factory-pattern/">Factory Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - black@t -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

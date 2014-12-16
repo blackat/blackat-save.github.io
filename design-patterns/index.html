@@ -1,0 +1,259 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Design Patterns - Contrast Of Beauty</title>
+  <meta name="author" content="black@t">
+
+  
+  <meta name="description" content="Design Patterns Mar 13th, 2013 10:45 pm Design Patterns Categories Design patterns can be divided in some categories according to what they achieve &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blackat.github.io/design-patterns">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Contrast Of Beauty" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,700,600' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Sorts+Mill+Goudy:400,400italic' rel='stylesheet' type='text/css'>
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Contrast Of Beauty</a></h1>
+  
+    <h2>I am just curious</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blackat.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/oo-design-principles">Design Principles</a></li>
+  <li><a href="/design-patterns">Design Patterns</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article role="article">
+  
+  <header>
+    <h1 class="entry-title">Design Patterns</h1>
+    <p class="meta">
+
+
+
+
+<time class='entry-date' datetime='2013-03-13T22:45:00+01:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>10:45 pm</span></time></p>
+  </header>
+  
+  <h2>Design Patterns Categories</h2>
+
+<p>Design patterns can be divided in some categories according to what they achieve.</p>
+
+<h3>Creational Patterns</h3>
+
+<p>They abstract the instantiation process, helping to make the system independent with respect to how the objects are created.</p>
+
+<p>The instantiation is <em>delegated</em> to another object. The system will depends on <em>object composition</em> rather than <em>class inheritance</em>. Two themes recur in the creational patterns [Gamma et all.]:</p>
+
+<ul>
+<li>they encapsulate knowledge about which concrete class the system uses;</li>
+<li>they hide how instances of these classes are created and put together.</li>
+</ul>
+
+
+<p>What a system knows about an object is only is <em>interface</em> so the <em>programming at the interfaces</em> using creational patterns gives a lot of flexibility about <em>what</em> is created, <em>who</em> creates the object, <em>how</em> and <em>when</em> the instance is created.</p>
+
+<p>The configuration of <em>what</em> is created can be decided <em>dynamically</em>, at <em>run-time</em> or <em>statically</em>, at <em>compile time</em>.</p>
+
+<ul>
+<li><strong><a href="/blog/2013/05/21/factory-pattern">Factory Pattern</a>.</strong></li>
+<li><strong><a href="/blog/2013/03/14/singleton-pattern">Singleton</a>.</strong></li>
+<li>Prototype</li>
+<li>Builder</li>
+</ul>
+
+
+<h3>Structural Patterns</h3>
+
+<p>They are related to how classes and objects are composed to from large structures, using inheritance it is possible to compose interfaces or implementations.</p>
+
+<ul>
+<li><strong><a href="/blog/2013/03/27/adapter-pattern">Adapter</a>.</strong> Converts one interface to another.</li>
+<li><strong><a href="/blog/2013/03/27/facade-pattern">Facade</a>.</strong> Makes an interface simpler.</li>
+<li><strong><a href="/blog/2013/03/12/decorator-pattern">Decorator Pattern</a>.</strong> Doesn&rsquo;t alter an interface, but adds responsibilities.</li>
+<li><strong><a href="/blog/2013/03/15/composite-pattern">Composite</a>.</strong></li>
+<li><strong><a href="/blog/2013/03/20/proxy-pattern">Proxy</a>.</strong>
+
+<ul>
+<li><strong><a href="/blog/2013/03/22/protection-proxy-pattern">Protection Proxy</a>.</strong></li>
+<li><strong><a href="/blog/2013/03/22/remote-proxy-pattern">Remote Proxy</a>.</strong></li>
+<li><strong><a href="/blog/2013/03/22/virtual-proxy-pattern">Virtual Proxy</a>.</strong></li>
+</ul>
+</li>
+<li>Flyweight</li>
+<li>Bridge</li>
+</ul>
+
+
+<h3>Behavioral Patterns</h3>
+
+<p>They are related to algorithms, assignment of responsibilities among objects and communication among them.</p>
+
+<ul>
+<li><strong><a href="/blog/2013/03/26/template-pattern">Template Method</a></strong>.</li>
+<li><strong><a href="/blog/2013/03/25/strategy-pattern">Strategy</a></strong>.</li>
+<li><strong><a href="/blog/2013/03/25/observer-pattern">Observer</a>.</strong></li>
+<li><strong><a href="/blog/2013/03/15/iterator-pattern">Iterator</a>.</strong></li>
+<li><strong><a href="/blog/2013/03/28/command-pattern">Command</a>.</strong></li>
+<li>State</li>
+<li>Mediator</li>
+<li>Visitor</li>
+<li>Memento</li>
+<li>Interpreter</li>
+</ul>
+
+
+<h2>Comparisons</h2>
+
+<h2>References</h2>
+
+<ul>
+<li><ol type="a">
+<li>Gamma, R. Helm, R. Johnson, J. Vlissides. Design Patterns: Elements of Reusable Object-Oriented Software. Addison-Wesley, 1998.</li>
+</ol>
+</li>
+</ul>
+
+
+  
+    <footer>
+      <p class="meta">
+        
+        
+
+
+
+
+<time class='entry-date' datetime='2013-03-13T22:45:00+01:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>10:45 pm</span></time>
+        
+      </p>
+      
+        <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blackat.github.io/design-patterns/index.html" data-via="" data-counturl="http://blackat.github.io/design-patterns/index.html" >Tweet</a>
+  
+  
+  
+</div>
+
+      
+    </footer>
+  
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/12/11/kii-web-application/">Kii Web Application</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/03/fullstack-javascript-web-application-part-2/">Fullstack Javascript Web Application Part 2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/09/fullstack-javascript-web-application/">Fullstack Javascript Web Application Part 1</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/31/synchronizers/">Synchronizers</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/21/factory-pattern/">Factory Pattern</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - black@t -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
