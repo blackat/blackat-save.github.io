@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Jasmine | Contrast Of Beauty]]></title>
   <link href="http://blackat.github.io/blog/categories/jasmine/atom.xml" rel="self"/>
   <link href="http://blackat.github.io/"/>
-  <updated>2014-12-16T21:39:36+01:00</updated>
+  <updated>2015-01-28T18:29:42+01:00</updated>
   <id>http://blackat.github.io/</id>
   <author>
     <name><![CDATA[black@t]]></name>
@@ -19,6 +19,8 @@
     <updated>2014-10-03T23:52:35+02:00</updated>
     <id>http://blackat.github.io/blog/2014/10/03/fullstack-javascript-web-application-part-2</id>
     <content type="html"><![CDATA[<p>The single page web application will be enriched with a database support, a build system with dependencies management and a testing framework.</p>
+
+<p><img class="center" src="/images/posts/popcorn-time-screenshot.png"></p>
 
 <p><a href="http://gruntjs.com/" title="Grunt homepage">Grunt</a> task runner and <a href="bower.io" title="Bower homepage">Bower</a> package management system will be configured. Then <a href="http://www.mongodb.org/" title="MongoDB homepage">Mongodb</a> with a persistent model will be added, finally <a href="http://jasmine.github.io/" title="Jasmine homepage">Jasmine</a> and <a href="http://karma-runner.github.io/0.12/index.html" title="Karma homepage">Karma</a> will support tests and their execution.</p>
 
