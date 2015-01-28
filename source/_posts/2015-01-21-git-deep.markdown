@@ -1,0 +1,110 @@
+---
+layout: post
+title: "Git Deep"
+date: 2015-01-21 20:47:44 +0100
+comments: true
+categories:
+published: false
+---
+## Basic Terms and Ideas
+A __Git project__ is represented by a _repository_ which in turn consists of a set of individual snapshots called _commits_. A repository contains the complete history of the project. Each commit has a _parent commit_, the commit without parents is called _root commit_ or initial commit in the repository. When a commit has multiple parents is a _merge commit_ which reconciles the changes made on distinct branches of the _commit graph_.
+
+All the commits linked to their parents form the _commit graph_.
+
+##### Branches
+A branch is the collection of all commits in the graph representing a branch of the commit graph. Each brach has a name such as _master_ or _release_. The _tip_ of the branch represents the latest commit. Starting from a tip and following parents it is possible to walk back on the hierarchy and the on the history of the commit till the root.
+
+- __be on a branch__ means looking at the content corresponding to the _tip commit_ on that branch.
+- __branch master__ is by default the first branch when a new repository is created and represents the _main line_ of development.
+- __push__ operation to push changes to a repository.
+- __pull__ operation to pull changes from a repository.
+- __clone__ operation to start to work on a project in order to have a _fully copy_ of the original, project history included. A new repository has been created and keep the reference to the original repository called _remote_. If the original repository contains two branches _master_ and _release_ they are qualified with names _origin/master_ and _origin/release_. _Master_ branch is automatically checked out during _clone_ operation and becomes the _upstream_ branch.
+- __origin__ is the original remote repository from which the new local repository has been cloned.
+- _upstream_ branch_ is the current active branch.
+- _commit_ affects only the local repository, pushing commits make them visible to anyone else. A commit is a complete snapshot of the repository content.
+
+###### Refs
+A reference or _refs_ is a name pointer and can be:
+
+- a simple ref pointing directly to an object ID such as a commit or a tag (similar to hard link);
+- a symbolic ref or _symref_ pointing to another ref (similar to symbolic link).
+
+Refs represent a hierarchical namespace starting at 'refs/' and then having 'refs/tags', 'refs/heads' and 'refs/remotes' each one of them holds names. For instance under remote there is 'refs/remotes/origin' pointing to the source repository.
+
+###### Branch in deep
+A branch is just a pointer to a commit. The special ref _HEAD_ represents the branch the user is _on_ and, being a ref, can be:
+
+- a symbolic ref for an existing branch, then the user in _on_ the branch;
+- a simple ref pointing directly to a commit, then the user is _not on_ the branch so in _detached HEAD_ mode (for instance an earlier commit).
+
+Examples
+
+    // HEAD points to the branch master
+    $ git symbolic-ref HEAD
+    refs/heads/master
+
+    // The user in on the branch master
+    git branch
+    * master
+
+    // The user checkout a specific commit, not a branch tip
+    git checkout taggedCommit
+    Note: checking out 'taggedCommit'
+    You are in 'detached HEAD' state...
+
+    // HEAD is no longer a symbolic link
+    $ git symbolic-ref HEAD
+    fatal: ref HEAD is not a symbolic ref
+
+When a new commit happens the _master_ branch 'refs/heads/master' points to the new commit.
+
+###### Index
+Git index is a list of file pathnames with some attributes such as the ID of a blob. The index is _the next commit_ that is the complete set of files that will be included in the next commit.
+
+###### Merging
+Each branch is a separate work on a specific set of files. Meeging means combining the work done on separate branches.
+
+A branch is generally used to work on a new feature in isolation without adding to the main line of development. When need to work on the main project is enough to switch to the _master_ branch. Periodically a merge of _master_ into the separate branch is useful to solve conflicts with an up-to-date code. Once the feature is readz merge the branch into _master_ to add the new code feature to the main line of development of the project.
+
+###### Default branch master
+Once a new repository is created using the command 'git init' the default branch _master_ is created and the _HEAD ref_ (the current active branch) point to _master_. _master_ is a branch name but also a _ref_ pointing the latest commit on the branch.
+
+At the beginning there are not commits yet so there is _master_ branch __ref__ yet. Once the first commit comes, Git creates the _master_ branch with it.
+
+##### Create a new branch
+The command
+
+    $ git checkout -b foo
+
+creates a new branch named 'foo' pointing at the current commit and switches to it. Now _master_ and _foo_ branches point to the same commit. Doing 3 commits to _foo_ branch make it progress. So _foo_ branch points to the latest commit while _master_ point to an old commit.
+
+A new branch can be even created starting from a specific commit.
+
+'git checkout' is a command used to switch among branches, specifying the option '-b' and the name of a non existing branch, it will be created and automatically switch on it. Switching a branch means changing the _HEAD_ symbolic ref to point to the new branch name.
+
+_HEAD_ is by definition the branch the user is currently _on_.
+
+##### Losing the HEAD
+When a _specific commit_ is checked out rather than a _branch_ Git returns a warning 'detached HEAD state'. _HEAD_ ref now points to a commit rather than to a branch.
+
+When _HEAD_ point to a commit it is like it is pointing to an _anonymous branch_ to which it is possible to give a name with 'git checkout -b name'.
+
+## Merging
+Before proceeding with a merge be sure the work has been committed
+
+    $ git status
+    On branch master
+    Your branch is up-to-date with 'origin/master'.
+
+    nothing to commit, working directory clean
+
+The user in _on_ branch _master_, then run the command
+
+    $ git merge foobranch
+    // some Git output
+
+The work done on _foobranch_ is merge into _master_ branch. Periodically could be necessary to integrate changes from _master_ branch into the new feature branch in order to work on up-to-date code. To do this just switch to _foobranch_ branch and the run the 'merge' command
+
+    $ git checkout foobranch
+
+    $ git merge master
