@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Javascript | Contrast Of Beauty]]></title>
   <link href="http://blackat.github.io/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://blackat.github.io/"/>
-  <updated>2015-02-14T22:05:02+01:00</updated>
+  <updated>2015-02-25T18:13:30+01:00</updated>
   <id>http://blackat.github.io/</id>
   <author>
     <name><![CDATA[black@t]]></name>
@@ -236,6 +236,10 @@ $ cordova emulate ios
 </code></pre>
 
 <p>and the application will be deployed into the Genymotion device.</p>
+
+<h2>From the Kii Team</h2>
+
+<p>If you&rsquo;re interested in more samples that use <strong>Kii Cloud</strong> please take a look at the <a href="https://github.com/KiiCorp">GitHub page</a> from the Kii team. Also, if you&rsquo;re interested in other platforms, please check out their samples section available <a href="http://docs.kii.com/en/samples/">here</a>.</p>
 
 <h2>Trobleshooting</h2>
 
