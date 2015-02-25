@@ -4,7 +4,7 @@
   <title><![CDATA[Contrast Of Beauty]]></title>
   <link href="http://blackat.github.io/atom.xml" rel="self"/>
   <link href="http://blackat.github.io/"/>
-  <updated>2015-01-28T18:29:42+01:00</updated>
+  <updated>2015-02-25T18:13:30+01:00</updated>
   <id>http://blackat.github.io/</id>
   <author>
     <name><![CDATA[black@t]]></name>
@@ -12,6 +12,401 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[JavaScript: Anatomy of an Object]]></title>
+    <link href="http://blackat.github.io/blog/2015/02/01/javascript-anatomy-of-an-object/"/>
+    <updated>2015-02-01T11:27:38+01:00</updated>
+    <id>http://blackat.github.io/blog/2015/02/01/javascript-anatomy-of-an-object</id>
+    <content type="html"><![CDATA[<p><strong>JavaScript</strong> is a <em>prototypal inheritance language</em> where objects inherit properties directly from other objects. Differently a <em>class-based languages</em> such as Java defines an object as instance of a class and inheritance hierarchy is defined through classes. Packages then define the layout of files and folders in a project.</p>
+
+<p>Objects in JavaScript are <em>class-free</em> and <em>dynamic</em> or <em>mutable</em>, they can change at any time during code execution. In Java objects are not dynamic, their layout is lock down by class definition.</p>
+
+<p>JavaScript defines a <em>prototype linkage feature</em> to allow an object to inherit properties from another object.</p>
+
+<!-- more -->
+
+
+<h2>1. Object representation</h2>
+
+<p>The JavaScript world is divided in two big chunks:</p>
+
+<ol>
+<li><em>simple types:</em> strings, booleans, numbers, <code>null</code> and <code>undefined</code>;</li>
+<li><em>objects:</em> rest of the world such as functions, arrays, regular expressions and, naturally, objects.</li>
+</ol>
+
+
+<blockquote><p>Objects in JavaScripts are mutable keyed collections.</p><footer><strong>Douglas Crockford</strong> <cite><a href='http://shop.oreilly.com/product/9780596517748.do'>JavaScript: The Good Parts</a></cite></footer></blockquote>
+
+
+<p>An object is represented as a collection of properties where each property has a <em>name</em> and a <em>value</em> as shown in the example below:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">catFelix</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;felix&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">house</span><span class="o">:</span> <span class="s1">&#39;house&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">domain</span><span class="o">:</span> <span class="s1">&#39;cat&#39;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">catFelix</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s1">&#39;@&#39;</span> <span class="o">+</span> <span class="nx">catFelix</span><span class="p">.</span><span class="nx">house</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="nx">catFelix</span><span class="p">.</span><span class="nx">domain</span><span class="p">);</span>
+</span><span class='line'><span class="c1">//output: felix@house.cat</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. How to create an object</h2>
+
+<h3>2.1 Object literal</h3>
+
+<p>The <em>object literal notation</em> is the easiest way to create an object. It is just a pair of curly brackets:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">cat</span> <span class="o">=</span> <span class="p">{};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The statement just creates an empty object, optionally it can be then populated as following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">cat</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'><span class="nx">cat</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;just a cat&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="nx">cat</span><span class="p">.</span><span class="nx">house</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Another way is to directly populate the object optionally enclosing a collection of <em>key/value</em> pairs between curly brackets:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">catFelix</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;felix&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">house</span><span class="o">:</span> <span class="s1">&#39;house&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">domain</span><span class="o">:</span> <span class="s1">&#39;cat&#39;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Whenever is required a new property/value pair can be added to the object. Moreover an object might contain one or more objects as following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">catFelix</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;felix&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">house</span><span class="o">:</span> <span class="s1">&#39;house&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">domain</span><span class="o">:</span> <span class="s1">&#39;cat&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">features</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">language</span><span class="o">:</span> <span class="s1">&#39;meow&#39;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">body</span><span class="o">:</span> <span class="s1">&#39;black&#39;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">eyes</span><span class="o">:</span> <span class="s1">&#39;white&#39;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">grin</span><span class="o">:</span> <span class="s1">&#39;giant&#39;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nx">photo</span><span class="o">:</span> <span class="s1">&#39;felix-awesome.png&#39;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><p>Objects are passed by reference, they are never copied.</p><footer><strong>Douglas Crockford</strong> <cite><a href='http://shop.oreilly.com/product/9780596517748.do'>JavaScript: The Good Parts</a></cite></footer></blockquote>
+
+
+<h4>2.1.1 Property access</h4>
+
+<p>Once an object has been created, there are two ways to get access to <em>property values</em>, <em>[property_name]</em> and <em>dot notation</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">//Object declaration.</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;I am &#39;</span> <span class="o">+</span> <span class="nx">catFelix</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]);</span> <span class="c1">// I am felix</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;I speak &#39;</span> <span class="o">+</span> <span class="nx">catFelix</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">][</span><span class="s1">&#39;language&#39;</span><span class="p">]);</span> <span class="c1">// I speak meow</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;I have a &#39;</span> <span class="o">+</span> <span class="nx">catFelix</span><span class="p">.</span><span class="nx">features</span><span class="p">.</span><span class="nx">grin</span> <span class="o">+</span> <span class="s1">&#39; grin&#39;</span><span class="p">);</span> <span class="c1">// I have a giant grin</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;My shortcoming is &#39;</span> <span class="o">+</span> <span class="nx">catFelix</span><span class="p">.</span><span class="nx">features</span><span class="p">.</span><span class="nx">shortcoming</span> <span class="o">||</span> <span class="s2">&quot;none&quot;</span><span class="p">);</span> <span class="c1">// My shortcoming is undefined</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3><a name="function_constructor"></a>2.2 Function Constructor</h3>
+
+<p>A class based language such as Java uses classes to obtain encapsulation and to structure a hierarchy. The constructor will build the object hierarchy and bring an object to an initial and well known state.</p>
+
+<p>A constructor avoid to initialize properties one by one everytime a new object has to be created. JavaScript offers a such mechanism through the <code>new</code> operator.</p>
+
+<blockquote><p>A Constructor is simply a function that is used with `new` to create an object.</p><footer><strong>Douglas Crockford</strong> <cite><a href='http://shop.oreilly.com/product/9780596517748.do'>The Principles of Object-Oriented JavaScript</a></cite></footer></blockquote>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">Cat</span><span class="p">()</span> <span class="p">{};</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">cat</span> <span class="o">=</span> <span class="nx">Cat</span><span class="p">();</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">assert</span><span class="p">(</span><span class="nx">cat</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">,</span> <span class="s2">&quot;cat is not an object&quot;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">cat</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cat</span><span class="p">();</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">assert</span><span class="p">(</span><span class="nx">cat</span> <span class="o">===</span> <span class="kc">undefined</span><span class="p">,</span> <span class="s2">&quot;cat is not anymore undefined&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The function <code>Cat()</code> is defined and it is called in two different ways:</p>
+
+<ol>
+<li>not produce any new object and the <code>console.assert</code> method passes;</li>
+<li>generate an exception, the <code>new</code> operator has allocated a new object and has automatically returned the reference to it stored in the variable <code>cat</code>.</li>
+</ol>
+
+
+<p>To share properties (methods and variables) among objects of a <em>given type</em> put them on the <em>prototype</em> as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">Cat</span><span class="p">()</span> <span class="p">{};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">language</span> <span class="o">=</span> <span class="s1">&#39;meow&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">legs</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">getLegs</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">legs</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">felix</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cat</span><span class="p">();</span>
+</span><span class='line'><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;I speak &quot;</span> <span class="o">+</span> <span class="nx">felix</span><span class="p">.</span><span class="nx">language</span> <span class="o">+</span> <span class="s2">&quot; language and I have &quot;</span> <span class="o">+</span> <span class="nx">felix</span><span class="p">.</span><span class="nx">getLegs</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot; legs&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Three properties have been attached to <code>prototype</code> having values of type <code>String</code>, <code>int</code> and <code>function</code> respectively. Notice that properties has been <em>attached</em> and not <em>added</em> [<a href="http://www.manning.com/resig/" title="Secrets of the JavaScript Ninja">2</a>]. For this reason JavaScript has been defined as <em>prototypal inheritance language</em>, objects can inherit properties directly from other objects.</p>
+
+<p>Constructors, by convention, are stored in variable with a capitalized name to avoid the risk to be called without <code>new</code> operator.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Capitalized function name.</span>
+</span><span class='line'><span class="kd">function</span> <span class="nx">Cat</span><span class="p">()</span> <span class="p">{};</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// New instance.</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">justACat</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cat</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Capitalized function variable name.</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">BlackCat</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{};</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// New instance.</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">felix</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BlackCat</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>3. Prototype Property</h2>
+
+<p>The property <code>prototype</code> is an <em>internal property</em> and all internal properties are not accessible via code, they defines behavior of code. ECRMAScript defines multiple internal properties indicating them by <em>double square-bracket notation</em> as <code>[[internal_property]]</code>.</p>
+
+<blockquote><p>You can think of a <span style="color:#B90504">prototype</span> as a recipe for an object.</p><footer><strong>Nicholas C. Zakas</strong> <cite><a href='http://shop.oreilly.com/product/9781593275402.do'>The Principles of Object-Oriented JavaScript</a></cite></footer></blockquote>
+
+
+<h5>Prototype property using object literal</h5>
+
+<p>Create an object via <em>object literal</em> notation in a browser console (Safari in this case):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&gt;</span> <span class="kd">var</span> <span class="nx">cat</span> <span class="o">=</span> <span class="p">{};</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="nx">cat</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="nb">Object</span>
+</span><span class='line'>    <span class="nx">__proto__</span><span class="o">:</span> <span class="nb">Object</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Typing the name of the variable will show type of the object which is <code>Object</code>, and the property <code>__proto__</code>. This <em>property</em> is supported by WebKit based browser and allows to both read and write to the <code>[[Prototype]]</code> property.</p>
+
+<p>The property <code>[[Prototype]]</code> is a pointer back to the prototype object used by the instance. In the example the property <code>__proto__</code> points to the <em>prototype object</em> <code>Object</code> because it has been created via object literal. Object <code>cat</code> inherits properties directly from <code>Object.prototype</code>.</p>
+
+<h5>Prototype property using function constructor</h5>
+
+<p>Now let&rsquo;s define a <em>constructor function</em> named <code>Cat</code> and create an object via the <code>new</code> operator:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="o">&gt;</span> <span class="kd">function</span> <span class="nx">Cat</span><span class="p">(){};</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="s1">&#39;just a cat&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="kd">var</span> <span class="nx">cat</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cat</span><span class="p">();</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="nx">cat</span>
+</span><span class='line'><span class="o">&lt;</span> <span class="nx">Cat</span>
+</span><span class='line'>    <span class="nx">__proto__</span><span class="o">:</span> <span class="nx">Cat</span>
+</span><span class='line'>        <span class="nx">constructor</span><span class="o">:</span> <span class="kd">function</span> <span class="nx">Cat</span><span class="p">()</span> <span class="p">{}</span>
+</span><span class='line'>        <span class="nx">name</span><span class="o">:</span> <span class="s2">&quot;just a cat&quot;</span>
+</span><span class='line'>        <span class="nx">__proto__</span><span class="o">:</span> <span class="nb">Object</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Typing <code>cat</code> something different happens: the variable <code>cat</code> contains a reference to an instance of type <code>Cat</code>, the property <code>__proto__</code> is of type <code>Cat</code> and, in turn, it has a property <code>constructor</code>, a property <code>name</code> (which is the one define on the <code>prototype</code> property of the constructor function) and, in the end, another <code>__proto__</code> prototype of type <code>Object</code>.</p>
+
+<h4>Prototype property in a nutshell</h4>
+
+<p>In JavaScript an object is defined by a set of pairs (property,value), prototype is an <em>inner hidden property</em> whose value is an object representing the <em>prototype chain</em>. The <em>prototype</em> property is a way to share common properties among objects in a <em>prototype chain</em> in order to build a hierarchy.</p>
+
+<p>The <code>__proto__</code> property reference the prototype chain used to return property values. The prototype chain determines from where an object inherits properties, if an object does not have a property, it is searched in the prototype chain, this is called <strong>delegation</strong> until the property is reached otherwise the return value is <code>undefined</code>.</p>
+
+<h3>3.1 Keep track of the prototype</h3>
+
+<p>An instance uses the <em>internal property</em> <code>[[Prototype]]</code> to keep track of its prototype, that is <em>the object it descends from</em>. Everything an object wants to share must be defined inside the prototype property.</p>
+
+<h4>Prototype property and constructors</h4>
+
+<p>The paragraph <a href="#function_constructor">function constructor</a> has introduced a way to share common properties among objects created by the same constructor function. For instance:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">function</span> <span class="nx">Cat</span><span class="p">()</span> <span class="p">{};</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">language</span> <span class="o">=</span> <span class="s1">&#39;meow&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">legs</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">Cat</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">toString</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="s1">&#39;language: &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">language</span> <span class="o">+</span> <span class="s1">&#39; and &#39;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">legs</span> <span class="o">+</span> <span class="s1">&#39; legs.&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">felix</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Cat</span><span class="p">();</span>
+</span><span class='line'><span class="nx">felix</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>the function constructor <code>Cat</code> has been defined via <em>object literal</em> notation and then its <em>prototype</em> is augmented with some properties in order to not be repeated every time an object of type <code>Cat</code> is created. In the example the function <code>toString()</code> is overridden so, when invoked, the one from <code>Cat.prototype</code> will be used instead of the one from <code>Object.prototype</code>.</p>
+
+<p>Typing <code>felix</code> in the console the referenced object is shown.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">felix</span>
+</span><span class='line'><span class="nx">Cat</span>
+</span><span class='line'>    <span class="nx">__proto__</span><span class="o">:</span> <span class="nx">Cat</span>
+</span><span class='line'>        <span class="nx">constructor</span><span class="o">:</span> <span class="kd">function</span> <span class="nx">Cat</span><span class="p">()</span> <span class="p">{}</span>
+</span><span class='line'>        <span class="nx">language</span><span class="o">:</span> <span class="s2">&quot;meow&quot;</span>
+</span><span class='line'>        <span class="nx">legs</span><span class="o">:</span> <span class="mi">4</span>
+</span><span class='line'>        <span class="nx">toString</span><span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">__proto__</span><span class="o">:</span> <span class="nb">Object</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The instance referenced by <code>felix</code> is of type <code>Cat</code> as expected, along with the properties <em>attached</em> to <code>Cat.prototype</code>.</p>
+
+<h3>References</h3>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Kii Web Application]]></title>
@@ -269,6 +664,10 @@ $ cordova emulate ios
 </code></pre>
 
 <p>and the application will be deployed into the Genymotion device.</p>
+
+<h2>From the Kii Team</h2>
+
+<p>If you&rsquo;re interested in more samples that use <strong>Kii Cloud</strong> please take a look at the <a href="https://github.com/KiiCorp">GitHub page</a> from the Kii team. Also, if you&rsquo;re interested in other platforms, please check out their samples section available <a href="http://docs.kii.com/en/samples/">here</a>.</p>
 
 <h2>Trobleshooting</h2>
 
@@ -4520,240 +4919,6 @@ Portland Pattern Repository - Singletons Are Evil [<a href="http://c2.com/cgi-bi
 Google - Why Singletons Are Controversial [<a href="https://code.google.com/p/google-singleton-detector/wiki/WhySingletonsAreControversial">4</a>]
 JavaWorld - Simply Singleton [<a href="https://code.google.com/p/google-singleton-detector/wiki/WhySingletonsAreControversial">5</a>]
 Interview questions about singleton [<a href="http://javarevisited.blogspot.fr/2011/03/10-interview-questions-on-singleton.html">6</a>]</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Decorator Pattern]]></title>
-    <link href="http://blackat.github.io/blog/2013/03/12/decorator-pattern/"/>
-    <updated>2013-03-12T20:34:00+01:00</updated>
-    <id>http://blackat.github.io/blog/2013/03/12/decorator-pattern</id>
-    <content type="html"><![CDATA[<blockquote><p>The Decorator Pattern attaches additional responsibilities to an object dynamically.<br/>Decorators provide a flexible alternative to subclassing for extending functionality.</p><footer><strong>Bates and Sierra,</strong> <cite><a href='http://shop.oreilly.com/product/9780596007126.do'>Head First Design Patterns</a></cite></footer></blockquote>
-
-
-<!-- more -->
-
-
-<h2>Class Diagram Explained</h2>
-
-<p><img src="http://blackat.github.io/images/posts/design-patterns/decorator.png"></p>
-
-<p><code>ConcreteComponent</code> object dynamically gets new behaviors, that is new methods are added to the component.</p>
-
-<p><code>Decorator</code> <em>HAS-A</em> or <em>wraps</em> a component having an instance variable referencing to a component.</p>
-
-<p><code>ConcreteDecorators</code> can extends the state of a component adding new properties, but also add new methods. A new method means a new behavior which is added by doing computation before or after an existing method in the component.</p>
-
-<h2>Key Points</h2>
-
-<ul>
-<li><p><strong>Open-Closed Principle.</strong> Classes should be open for extension but closed for modification.</p></li>
-<li><p><strong>Design.</strong> It should make possible to extend the <em><u>behavior</u></em> without modifying the existing code. <em><u>Composition</u></em> and <em><u>delegation</u></em> allow to add new behaviors at runtime [Bates, Sierra].</p></li>
-<li><p><strong>Adding Behavior.</strong> <em>Subclassing</em> is not the only solution and is not always flexible, decorator classes wrap, decorate, the concrete components as many times you want adding functionality dynamically.</p></li>
-<li><p><strong>Core.</strong> Decorators <em><u>change the behavior</u></em> of their <em><u>components</u></em> by adding new functionality before and/or after method calls to the component [Bates, Sierra].</p></li>
-<li><p><strong>Jargon.</strong></p>
-
-<ul>
-<li><em>Composition</em> means HAS-A, wrapping, holding a reference variable.</li>
-<li><em>Behavior</em> is synonym of method.</li>
-<li><em>Delegation</em> is a chain of method calls.</li>
-</ul>
-</li>
-</ul>
-
-
-<h2>Scenario</h2>
-
-<p>Image to be the owner of a coffee shop. A customer can choose a <em>coffee</em> among many kinds and then add to it some <strong>condiments</strong>. There are basic condiments and sets of condiments ready to transform a coffee into a mocha, cappuccino and so on.</p>
-
-<ul>
-<li><p><strong>Goal.</strong> A bill should be produced considering the coffee and all the extra ingredients added.</p></li>
-<li><p><strong>Adding Behavior.</strong> The customer start from a normal coffee and adding condiments (new functionalities) changes the <em>behavior</em> of the coffee into something else such as mocha or cappuccino.</p></li>
-</ul>
-
-
-<h2>Implementation</h2>
-
-<ul>
-<li><p>Create a <code>Coffee</code> class and then different subclasses, one for each possible combination of condiments. What happens if a new condiment is added or removed from the list? if a recipe changes? Class explosion and it could be necessary to modified the code.</p></li>
-<li><p>Use <em>decorator pattern</em> to dynamically add new behaviors.</p></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Coffee</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">private</span> <span class="n">String</span> <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;Simple coffe&quot;</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">private</span> <span class="kt">double</span> <span class="n">cost</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="nf">Coffee</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="nf">Coffee</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">coffeeDescription</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">description</span> <span class="o">=</span> <span class="n">coffeeDescription</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getDescription</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">description</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">double</span> <span class="nf">getCost</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">CondimentDecorator</span> <span class="kd">extends</span> <span class="n">Coffee</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">String</span> <span class="nf">getDescription</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Espresso</span> <span class="kd">extends</span> <span class="n">Coffee</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="nf">Espresso</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="kd">super</span><span class="o">(</span><span class="s">&quot;Espresso&quot;</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Override</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kd">final</span> <span class="kt">double</span> <span class="nf">getCost</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="mf">0.95</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MilkDecorator</span> <span class="kd">extends</span> <span class="n">CondimentDecorator</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">double</span> <span class="n">MILK_COST</span> <span class="o">=</span> <span class="o">.</span><span class="mi">50</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">private</span> <span class="n">Coffee</span> <span class="n">coffee</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="nf">MilkDecorator</span><span class="o">(</span><span class="kd">final</span> <span class="n">Coffee</span> <span class="n">coffeeBeverage</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">coffee</span> <span class="o">=</span> <span class="n">coffeeBeverage</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Override</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kd">final</span> <span class="n">String</span> <span class="nf">getDescription</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">coffee</span><span class="o">.</span><span class="na">getDescription</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot;, Milk&quot;</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Override</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kd">final</span> <span class="kt">double</span> <span class="nf">getCost</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">coffee</span><span class="o">.</span><span class="na">getCost</span><span class="o">()</span> <span class="o">+</span> <span class="n">MILK_COST</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DecoratorTest</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">private</span> <span class="n">Coffee</span> <span class="n">coffee</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">private</span> <span class="n">CondimentDecorator</span> <span class="n">condiment</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Before</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUp</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">coffee</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Espresso</span><span class="o">();</span>
-</span><span class='line'>        <span class="n">condiment</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">MilkDecorator</span><span class="o">(</span><span class="n">coffee</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Test</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testDescription</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">assertEquals</span><span class="o">(</span><span class="n">condiment</span><span class="o">.</span><span class="na">getDescription</span><span class="o">(),</span> <span class="s">&quot;Espresso, Milk&quot;</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Test</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testCost</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">assertEquals</span><span class="o">(</span><span class="n">condiment</span><span class="o">.</span><span class="na">getCost</span><span class="o">(),</span> <span class="mf">1.45</span><span class="o">,</span> <span class="mf">0.0</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   
