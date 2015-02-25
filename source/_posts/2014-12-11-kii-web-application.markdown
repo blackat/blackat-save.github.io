@@ -194,6 +194,9 @@ so run the command
 
 and the application will be deployed into the Genymotion device.
 
+## From the Kii Team
+If you're interested in more samples that use __Kii Cloud__ please take a look at the [GitHub page](https://github.com/KiiCorp) from the Kii team. Also, if you're interested in other platforms, please check out their samples section available [here](http://docs.kii.com/en/samples/).
+
 ## Trobleshooting
 
 #### Android target
