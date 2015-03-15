@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Remote Proxy | Contrast Of Beauty]]></title>
+  <link href="http://blackat.github.io/blog/categories/remote-proxy/atom.xml" rel="self"/>
+  <link href="http://blackat.github.io/"/>
+  <updated>2015-03-15T20:52:17+01:00</updated>
+  <id>http://blackat.github.io/</id>
+  <author>
+    <name><![CDATA[black@t]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Remote Proxy]]></title>
+    <link href="http://blackat.github.io/blog/2013/03/22/remote-proxy-pattern/"/>
+    <updated>2013-03-22T19:36:00+01:00</updated>
+    <id>http://blackat.github.io/blog/2013/03/22/remote-proxy-pattern</id>
+    <content type="html"><![CDATA[<p><blockquote><p>The proxy acts as a <em>local representative</em> for an object that lives somewhere else on the network on a different JVM.</p></blockquote></p>
+
+<!-- more -->
+
+
+<p><strong>Scenario.</strong> The client uses a service invoking some methods. Actually the service is located on a remote machine but the location the service should be transparent respect to the client.</p>
+
+<p><strong>Remote proxy.</strong> It behaves as a <em>local representative</em> for an remote object living on a <em>different JVM</em>.</p>
+
+<p><strong>Method call.</strong> A method call against the proxy results in the <em>transfer of the call</em> over the wire to the remote JVM. Once there the method call is invoked against the real object. The result of the call is returned back to the <em>proxy</em>, then from the proxy to the <em>client</em>.</p>
+
+<h2>RMI</h2>
+
+<p>Java Remote Method Invocation (RMI) is an example of remote proxy. RMI build two <em>helper objects</em>, <em>stub</em> and <em>skeleton</em>, which <em>hide</em> the communication and technical details about the transfer of the method call and the result return. The client will just interact with the proxy, one of the two helper objects.</p>
+
+<p><strong>RMI vs. Remote proxy</strong> Remote proxy does not involve any helper object as RMI does, but just the proxy concept.</p>
+
+<h2>Example</h2>
+
+<p>A very simple example consists of a client that uses a service to get something done. The client is unaware of the service location and type. The client does not know if the service is remote or local, if it will do database or disk access to provide data.</p>
+
+<p>There are <em>five steps</em> to implement a <em>remote service</em> based on RMI.</p>
+
+<h3>Remote Service Interface</h3>
+
+<p>Define the <em>interface</em> the client will use to interact with the service.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.rmi.Remote</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.rmi.RemoteException</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">ContactService</span> <span class="kd">extends</span> <span class="n">Remote</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">listAll</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">RemoteException</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kt">int</span> <span class="nf">getContactSize</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">RemoteException</span><span class="o">;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+<strong>Remote interface.</strong> <code>java.rmi.Remote</code> is just a <em>marker</em> that is an interface without methods. The marker tells that the interface will be used to support <em>remote calls</em>.</p>
+
+<p><strong>Client.</strong> It uses a service of type <code>ContactService</code>, the <em>remote service interface</em>, to invoke methods without knowing any implementation detail and thinking it is the real object.</p>
+
+<p><strong>Proxy.</strong> It implements the <em>remote interface</em> as the real object does, so the proxy can be used as a <em>surrogate</em> of the real object or, better, the proxy <em>substitute</em> the real object for all the request.</p>
+
+<p><strong>Stub.</strong> In RMI the proxy is called <em>stub</em>. It will manage all the networking and I/O operations. Something could go wrong (ex. network failure) so every remote method call is <em>risky</em> and has to declare to throw a <code>java.rmi.RemoteException</code> to handle possible communication failures.</p>
+
+<p><strong>Arguments and return values.</strong> They must be <code>primitive</code> or <code>Serializable</code>. Serialization is used to package values and transfer them across the network. In the example above, all the types implement natively <code>Serializable</code> interface as many other types from Java API.</p>
+
+<h3>Remote Service Implementation</h3>
+
+<p>The implementation of the service is very simple, this is the <em>real object</em> where the calls will be invoked on. The service will reside on the server machine.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.rmi.RemoteException</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.rmi.server.UnicastRemoteObject</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ContactServiceImpl</span> <span class="kd">extends</span> <span class="n">UnicastRemoteObject</span> <span class="kd">implements</span> <span class="n">ContactService</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">protected</span> <span class="nf">ContactServiceImpl</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">RemoteException</span> <span class="o">{</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">List</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">listAll</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">List</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">contacts</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">String</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;();</span>
+</span><span class='line'>    <span class="n">contacts</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;Fermi&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">contacts</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">&quot;Majorana&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">contacts</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">int</span> <span class="nf">getContactSize</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">18</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure>
+<strong>Being remote.</strong> Service implementation must extends <code>java.rmi.server.UnicastRemoteObject</code> to make it <em>remote</em> and so working as a <em>remote service object</em>. This class has some functionality (ex. read and write values on the socket) that allow it to <em>be remote</em>.</p>
+
+<p><strong>Superclass constructor.</strong> Superclass <code>UnicastRemoteObject</code> <em>constructor</em> throws a <code>RemoteException</code>. Superclass constructor is always called so no choice but declare that a constructor throws an exception.</p>
+
+<p><strong>Remote service registration.</strong> The <em>remote service implementation</em> needs be registered in the registry to make it available to remote clients. The registration is done by the <code>Server</code> class.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.net.MalformedURLException</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.rmi.Naming</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.rmi.RemoteException</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Server</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">ContactService</span> <span class="n">contactService</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ContactServiceImpl</span><span class="o">();</span>
+</span><span class='line'>            <span class="n">Naming</span><span class="o">.</span><span class="na">rebind</span><span class="o">(&amp;</span><span class="n">ldquo</span><span class="o">;/</span><span class="n">contact_service</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="o">;,</span> <span class="n">contactService</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">MalformedURLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">RemoteException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+<strong>RMI registry.</strong> Statement <code>Naming.rebind("/service", service)</code> puts the remote service <em>implementation</em> into the RMI registry with a <em>service name</em>. The client will use this name in order to look up for the <em>stub</em>.</p>
+
+<p><strong>Stub.</strong> The server registers or puts the <em>stub</em> in the <em>registry</em>.</p>
+
+<h3>Generate Stub and Skeleton</h3>
+
+<p>They are the client and server <em>helpers</em> created automatically by <code>rmic</code>. These classes implements all the code necessary to manage the connection socket and transfer the method call to the real object residing on the remote JVM.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bat'><span class='line'>MacBook:remote blackcat$ rmic ContactServiceImpl
+</span></code></pre></td></tr></table></div></figure>
+<strong>Stub and skeleton.</strong> Invoking <code>rmic</code> on <em>service implementation</em> generates <code>ContactServiceImpl_Stub.class</code> and <code>ContactServiceImpl_Skeleton.class</code>, the two helper objects. They will manage the transfer over the wire of the request about the method call which, finally, will be executed against the real object, <code>ContactServiceImpl</code>.</p>
+
+<h3>Start the Registry</h3>
+
+<p>The <code>rmiregistry</code> is a sort of white pages  where services can be registered and looked up. The client will look for the <em>proxy</em> or <em>client helper</em> or <em>stub</em> into the register. <em>Classes must be available to the rmi registry.</em>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bat'><span class='line'>MacBook:remote blackcat$ rmiregistry &amp;amp;
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h3>Start the Server</h3>
+
+<p>Once the registry has been started, it is possible to run the server which will register the service implementation.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bat'><span class='line'>MacBook:remote blackcat$ java Server
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h3>The Client</h3>
+
+<p>The client looks up the service, gets the reference to the <em>stub</em> and invokes the method against it.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.net.MalformedURLException</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.rmi.Naming</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.rmi.NotBoundException</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.rmi.RemoteException</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">new</span> <span class="nf">Client</span><span class="o">().</span><span class="na">start</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">start</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">ContactService</span> <span class="n">contactService</span> <span class="o">=</span> <span class="o">(</span><span class="n">ContactService</span><span class="o">)</span> <span class="n">Naming</span><span class="o">.</span><span class="na">lookup</span><span class="o">(</span><span class="s">&quot;rmi://127.0.0.1/contact_service&quot;</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;number of contacts in the address book is: &quot;</span> <span class="o">+</span> <span class="n">contactService</span><span class="o">.</span><span class="na">getContactSize</span><span class="o">());</span>
+</span><span class='line'>        <span class="k">for</span> <span class="o">(</span><span class="n">String</span> <span class="n">contact</span> <span class="o">:</span> <span class="n">contactService</span><span class="o">.</span><span class="na">listAll</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">contact</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">NotBoundException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">MalformedURLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">RemoteException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure>
+<strong>Naming lookup.</strong> Static method <code>Naming.lookup("rmi://127.0.0.1/contact_service")</code> allows the client to get the reference to an instance which represents the <em>helper</em> or <em>stub</em>.</p>
+
+<p><strong>Remote interface.</strong> The client uses the remote interface as service type without knowing the real <em>class name</em> of the remote service.</p>
+
+<p><strong>Cast.</strong> The <code>lookup</code> method returns an instance of type <code>Object</code> which has to be casted to the remote service type.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Design Pattern | Contrast Of Beauty]]></title>
+  <link href="http://blackat.github.io/blog/categories/design-pattern/atom.xml" rel="self"/>
+  <link href="http://blackat.github.io/"/>
+  <updated>2015-03-15T20:52:17+01:00</updated>
+  <id>http://blackat.github.io/</id>
+  <author>
+    <name><![CDATA[black@t]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Factory Pattern]]></title>
+    <link href="http://blackat.github.io/blog/2013/05/21/factory-pattern/"/>
+    <updated>2013-05-21T22:17:00+02:00</updated>
+    <id>http://blackat.github.io/blog/2013/05/21/factory-pattern</id>
+    <content type="html"><![CDATA[<h3>Introduction</h3>
+
+<ul>
+<li>An abstract factory method isolates the client from knowing what class is actually created.</li>
+<li><strong>New</strong> operator means <em>directly instantiating</em> an object so <em>direct dependency on a concrete class</em>.
+
+<ul>
+<li>Code is not close to modification.</li>
+</ul>
+</li>
+<li><strong>Interface and abstract class</strong> imply decoupling code from the actual object. If code is written to an interface it will work with any new class implementing that interface through polymorphism.</li>
+<li><strong>Design principle.</strong> <a href="/oo-design-principles/index.html#inversion_principle">Dependency Inversion Principle.</a></li>
+</ul>
+
+
+<!-- more -->
+
+
+<h3>In a Nutshell</h3>
+
+<ul>
+<li><strong>All factory pattern.</strong>
+
+<ul>
+<li>Encapsulate object creation.</li>
+<li>Promote <em>coding to abstraction</em> reducing dependency on concrete classes and improving loose coupling.</li>
+<li>Client depends on <em>interfaces</em> removing direct object instantiation.</li>
+<li>Hide object construction details from the client.</li>
+</ul>
+</li>
+<li><strong>Simple factory.</strong>
+
+<ul>
+<li>Not a proper design pattern, but more a programming idiom.</li>
+<li>A simple way to <em>decouple</em> a client from concrete classes.</li>
+<li>Usually a factory class provides a static method to construct an object.</li>
+</ul>
+</li>
+<li><strong>Factory method.</strong>
+
+<ul>
+<li>Is <em>abstract and protected</em> so defers the instantiation to its subclasses.</li>
+<li><strong>Relies on inheritance</strong> that is object creation is delegated to the subclasses which implement the <em>abstract factory method</em> able to create objects.</li>
+<li><strong>Design principle.</strong> <a href="/oo-design-principles/index.html#inversion_principle">Dependency Inversion Principle.</a></li>
+</ul>
+</li>
+<li><strong>Abstract factory.</strong>
+
+<ul>
+<li>Class whose interface is mostly made of abstract methods.</li>
+<li>Creates a family of related objects without depending on <em>concrete classes</em>.</li>
+<li><strong>relies on object composition</strong> that is object creation is implemented in methods exposed in the abstract factory class interface.</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>1. Simple Factory</h2>
+
+<ul>
+<li><p><strong>Definition.</strong> It is not a proper design pattern, but more a programming idiom.</p></li>
+<li><p><strong>Class diagram.</strong></p></li>
+<li><p><strong>Simple factory in action.</strong></p>
+
+<ul>
+<li>The factory class is responsible to create different <em>concrete products</em> hiding construction details from the client.</li>
+<li>Construction details are in a centralized place, easy to maintain.</li>
+<li>The client is aware only about the <em>product interface</em> and not anymore tightly coupled to its concrete instantiation.</li>
+<li>The factory class <em>encapsulate object creation,</em> not flexible and the creation of new products oblige to modify the class. A class should be closed to modification but open for extensions.</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Example</h3>
+
+<p>Suppose a car manufacturer which has to build different models of cars but should not be aware of all the production details for each model. Better to use a factory that knows all the details for each model.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CarManufacturer</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="n">CarFactory</span> <span class="n">carFactory</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="nf">CarManufacturer</span><span class="o">(</span><span class="n">CarFactory</span> <span class="n">factory</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">this</span><span class="o">.</span><span class="na">carFactory</span> <span class="o">=</span> <span class="n">factory</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="n">AbstractCar</span> <span class="nf">buildCar</span><span class="o">(</span><span class="n">String</span> <span class="n">model</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">AbstractCar</span> <span class="n">car</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">carFactory</span><span class="o">.</span><span class="na">createCarInstance</span><span class="o">(</span><span class="n">model</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Validate</span><span class="o">.</span><span class="na">notNull</span><span class="o">(</span><span class="n">car</span><span class="o">,</span> <span class="s">&quot;Model &quot;</span> <span class="o">+</span> <span class="n">model</span> <span class="o">+</span> <span class="s">&quot; is not available for the build.&quot;</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">car</span><span class="o">.</span><span class="na">assemble</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">car</span><span class="o">.</span><span class="na">paint</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">car</span><span class="o">.</span><span class="na">mountWheels</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">car</span><span class="o">.</span><span class="na">test</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">car</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>The factory knows, according to the model, which <em>concrete class</em> should be instantiated and returned. <code>CarManufacturer</code> HAS-A factory instance and the <code>buildCar</code> method returns an <code>abstract</code> car, so that programming to interfaces allow to return multiple object types.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CarFactory</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">A_CLASS</span> <span class="o">=</span> <span class="s">&quot;a-class&quot;</span><span class="o">;</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">B_CLASS</span> <span class="o">=</span> <span class="s">&quot;b-class&quot;</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="n">AbstractCar</span> <span class="nf">createCarInstance</span><span class="o">(</span><span class="n">String</span> <span class="n">model</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">model</span><span class="o">.</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="n">A_CLASS</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="nf">ClassA</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">model</span><span class="o">.</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="n">B_CLASS</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="nf">ClassB</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Finally the test class shows how</p>
+
+<ul>
+<li>implementation details of each model are hidden to the client,</li>
+<li>different factory instances could be passed to the car manufacturer at runtime,</li>
+<li><p>client is not aware of the concrete object type returned by the factory, but just knows the interface implemented.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CarManufacturerTest</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="kd">private</span> <span class="n">CarManufacturer</span> <span class="n">carManufacturer</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="nd">@Before</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUp</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">carManufacturer</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">CarManufacturer</span><span class="o">(</span><span class="k">new</span> <span class="nf">CarFactory</span><span class="o">());</span>
+</span><span class='line'>  <span class="o">}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="nd">@Test</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testBuildCarExistingModelClassA</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">AbstractCar</span> <span class="n">car</span> <span class="o">=</span> <span class="n">carManufacturer</span><span class="o">.</span><span class="na">buildCar</span><span class="o">(&amp;</span><span class="n">ldquo</span><span class="o">;</span><span class="n">a</span><span class="o">-</span><span class="n">class</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="o">;);</span>
+</span><span class='line'>      <span class="n">assertCarBuilt</span><span class="o">(</span><span class="n">car</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="nd">@Test</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testBuildCarExistingModelClassB</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">AbstractCar</span> <span class="n">car</span> <span class="o">=</span> <span class="n">carManufacturer</span><span class="o">.</span><span class="na">buildCar</span><span class="o">(&amp;</span><span class="n">ldquo</span><span class="o">;</span><span class="n">b</span><span class="o">-</span><span class="n">class</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="o">;);</span>
+</span><span class='line'>      <span class="n">assertCarBuilt</span><span class="o">(</span><span class="n">car</span><span class="o">);</span>
+</span><span class='line'>  <span class="o">}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="kd">private</span> <span class="kt">void</span> <span class="nf">assertCarBuilt</span><span class="o">(</span><span class="n">AbstractCar</span> <span class="n">car</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">assertTrue</span><span class="o">(</span><span class="n">car</span><span class="o">.</span><span class="na">isAssembled</span><span class="o">());</span>
+</span><span class='line'>      <span class="n">assertTrue</span><span class="o">(</span><span class="n">car</span><span class="o">.</span><span class="na">isPainted</span><span class="o">());</span>
+</span><span class='line'>      <span class="n">assertTrue</span><span class="o">(</span><span class="n">car</span><span class="o">.</span><span class="na">isWheelsMounted</span><span class="o">());</span>
+</span><span class='line'>      <span class="n">assertTrue</span><span class="o">(</span><span class="n">car</span><span class="o">.</span><span class="na">isTested</span><span class="o">());</span>
+</span><span class='line'>  <span class="o">}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="nd">@Rule</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="n">ExpectedException</span> <span class="n">thrown</span> <span class="o">=</span> <span class="n">ExpectedException</span><span class="o">.</span><span class="na">none</span><span class="o">();&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="nd">@Test</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testBuildCarNotExistingModel</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">thrown</span><span class="o">.</span><span class="na">expect</span><span class="o">(</span><span class="n">IllegalArgumentException</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'>      <span class="n">thrown</span><span class="o">.</span><span class="na">expectMessage</span><span class="o">(&amp;</span><span class="n">ldquo</span><span class="o">;</span><span class="n">Model</span> <span class="n">c</span><span class="o">-</span><span class="kd">class</span> <span class="nc">is</span> <span class="n">not</span> <span class="n">available</span> <span class="k">for</span> <span class="n">the</span> <span class="n">build</span><span class="o">.&amp;</span><span class="n">rdquo</span><span class="o">;);</span>
+</span><span class='line'>      <span class="n">AbstractCar</span> <span class="n">car</span> <span class="o">=</span> <span class="n">carManufacturer</span><span class="o">.</span><span class="na">buildCar</span><span class="o">(&amp;</span><span class="n">ldquo</span><span class="o">;</span><span class="n">c</span><span class="o">-</span><span class="n">class</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="o">;);</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></p></li>
+</ul>
+
+
+<h2>2. Factory Method</h2>
+
+<ul>
+<li><p><strong>Definition.</strong> Defines a <em>method interface</em> to create an object and lets subclasses decide which class should be instantiated. Thus the instantiation of the concrete class is deferred to subclasses.</p></li>
+<li><p><strong>Design principle.</strong> The dependency inversion principle.</p></li>
+<li><p><strong>Class diagram.</strong></p></li>
+</ul>
+
+
+<p><img src="/images/posts/design-patterns/factory_method.png"></p>
+
+<ul>
+<li><strong>Factory method in action.</strong>
+
+<ul>
+<li>With respect to the simple factory, the factory method gets rid of the external factory class and localize the making activity in the client class which is then abstract.</li>
+<li>The creation activity is concentrated into a method which acts as a <em>factory.</em></li>
+<li>Parallel class hierarchies, both the creator and the product hierarchy start from an abstract class.
+
+<ul>
+<li>Each class extending the abstract one, the client, is called <strong>creator class</strong> and many of them could be defined.</li>
+<li>The product class is abstract as well, so many product classes could be available.</li>
+</ul>
+</li>
+<li>Subclasses decide which implementation will be used, so more flexibility and products can vary.</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Example</h3>
+
+<p>Get rid of the external factory and defines <em>within the client class</em> an <em>abstract method</em> which acts as a factory. The advantage of this design is infinite extension of the class to add new models without changing the factory.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">AbstractCarManufacturer</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="nf">AbstractCarManufacturer</span><span class="o">()</span> <span class="o">{</span> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kd">final</span> <span class="n">AbstractCar</span> <span class="nf">buildCar</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">model</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">AbstractCar</span> <span class="n">car</span> <span class="o">=</span> <span class="n">createCar</span><span class="o">(</span><span class="n">model</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Validate</span><span class="o">.</span><span class="na">notNull</span><span class="o">(</span><span class="n">car</span><span class="o">,</span> <span class="s">&quot;Model &quot;</span> <span class="o">+</span> <span class="n">model</span> <span class="o">+</span> <span class="s">&quot; is not available for the build.&quot;</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">car</span><span class="o">.</span><span class="na">assemble</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">car</span><span class="o">.</span><span class="na">paint</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">car</span><span class="o">.</span><span class="na">mountWheels</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">car</span><span class="o">.</span><span class="na">test</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">car</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">protected</span> <span class="kd">abstract</span> <span class="n">AbstractCar</span> <span class="nf">createCar</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">model</span><span class="o">);</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Now the concrete client class implements the factory method and many clients can be defined to create different models.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FamilyCarManufacturer</span> <span class="kd">extends</span> <span class="n">AbstractCarManufacturer</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">C_CLASS</span> <span class="o">=</span> <span class="s">&quot;c-class&quot;</span><span class="o">;</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">E_CLASS</span> <span class="o">=</span> <span class="s">&quot;e-class&quot;</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">AbstractCar</span> <span class="nf">createCar</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">model</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">model</span><span class="o">.</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="n">C_CLASS</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="nf">ClassC</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">model</span><span class="o">.</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="n">E_CLASS</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="nf">ClassE</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Another manufacturer able to created different kinds of models.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SportCarManufacturer</span> <span class="kd">extends</span> <span class="n">AbstractCarManufacturer</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">SLK_CLASS</span> <span class="o">=</span> <span class="s">&quot;slk-class&quot;</span><span class="o">;</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">SLR_CLASS</span> <span class="o">=</span> <span class="s">&quot;slr-class&quot;</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">AbstractCar</span> <span class="nf">createCar</span><span class="o">(</span><span class="kd">final</span> <span class="n">String</span> <span class="n">model</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">model</span><span class="o">.</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="n">SLK_CLASS</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="nf">ClassA</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">model</span><span class="o">.</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="n">SLR_CLASS</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="nf">ClassB</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h2>3. Abstract Factory Method</h2>
+
+<ul>
+<li><strong>Definition.</strong> Provide and interface for creating families of related or dependent objects without specifying their concrete classes.</li>
+<li><strong>Class diagram.</strong></li>
+</ul>
+
+
+<p><img src="/images/posts/design-patterns/abstract_factory.png">
+* <strong>Class diagram explained.</strong>
+    * The <code>Client</code> defines an <code>AbstractFactory</code> variable and the actual factory will be resolved at runtime.
+    * The <code>AbstractFactory</code> defines an <em>interface</em>.
+    * Each <code>ConcreteFactory</code> represents a <em>family of products</em> and implements the method defined in the abstract interface. <code>ConcreteFactory2</code> for instance produces the set of products represented by <code>ProductA2</code> and <code>ProductB2</code>.
+    * The <em>product family</em> is represented by the two interfaces <code>AbstractProductA</code> and <code>AbstractProductB</code>.
+* <strong>Factory method in action.</strong>
+    * The job of an Abstract Factory is to define an interface for creating a set of products through a set of methods.
+    * Each product method in an interface is responsible to create a product.
+    * Subclasses of the Abstract Factory provides the implementations.
+    * Factory Methods are a natural way to implement the product methods in the abstract factories.
+* <strong>Comparison.</strong>
+    * <strong>Abstract factory</strong> creates a <em>family or set of products</em>.
+    * <strong>Method factory</strong> creates a <em>single product</em>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MVC Pattern]]></title>
+    <link href="http://blackat.github.io/blog/2013/03/28/mvc-pattern/"/>
+    <updated>2013-03-28T22:42:00+01:00</updated>
+    <id>http://blackat.github.io/blog/2013/03/28/mvc-pattern</id>
+    <content type="html"><![CDATA[<p><blockquote><p>The MVC Pattern combines three patterns into a solution that separate the responsibilities in managing an interaction.</p><footer><strong>Bates and Sierra</strong> <cite><a href="http://shop.oreilly.com/product/9780596007126.do">http://shop.oreilly.com/product/9780596007126.do</a> Head First Design Patterns</cite></footer></blockquote></p>
+
+<!-- more -->
+
+
+<h2>Class diagram</h2>
+
+<p><img src="/images/posts/design-patterns/mvc_pattern.png"></p>
+
+<ul>
+<li><strong>View</strong> present the model usually in graphic interface.</li>
+<li><strong>Controller</strong> takes user input, interpreting them to change the model, translates input into actions on the model.</li>
+<li><strong>Model</strong> holds all the data, state and application logic, sends notifications of state changes to the observers.</li>
+</ul>
+
+
+<p>According to the interaction shown</p>
+
+<ol>
+<li>The <em>user</em> does something.</li>
+<li>The <em>controller</em> gets the input (action and/or parameters), interprets them and figures out how to change the state of the <em>model</em> based on that action. The controller can also ask the view to change such as enable or disable certain buttons.</li>
+<li>The <em>model</em> handles all the application data and logic.</li>
+<li>The <em>model</em> notifies the <em>view</em> that its state has changed.</li>
+<li>The <em>view</em> gets the state of the <em>model</em> to update itself.</li>
+</ol>
+
+
+<h2>Patterns</h2>
+
+<h3>Strategy Pattern</h3>
+
+<p>Implemented by the <em>view</em> and the <em>controller</em>. It decouples the view from the model because the controller is responsible for interacting with the <em>model</em> to carry out user requests. The view doesn&rsquo;t know how the request will be interpreted to change the model.</p>
+
+<p>The view delegates to the controller to handle the user actions. The controller is the object that knows how to handle the user actions.</p>
+
+<h3>Composite</h3>
+
+<p>The view is a composite of GUI components, the top level contains other components which contain components and so on until the leaf.</p>
+
+<h3>Observer</h3>
+
+<p>The model is the <em>observable</em> and the view is the <em>observer</em> which registers with the model.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Facade Pattern]]></title>
+    <link href="http://blackat.github.io/blog/2013/03/27/facade-pattern/"/>
+    <updated>2013-03-27T08:02:00+01:00</updated>
+    <id>http://blackat.github.io/blog/2013/03/27/facade-pattern</id>
+    <content type="html"><![CDATA[<p><blockquote><p>The Facade Pattern provides a unified interface to a set of interfaces in a subsystem. Facade defines a higher-level interface that makes the subsystem easier to use.</p><footer><strong>Bates and Sierra</strong> <cite><a href="http://shop.oreilly.com/product/9780596007126.do">http://shop.oreilly.com/product/9780596007126.do</a> Head First Design Patterns</cite></footer></blockquote></p>
+
+<!-- more -->
+
+
+<h2>Class diagram</h2>
+
+<p><img src="/images/posts/design-patterns/facade_pattern.png"></p>
+
+<p>The <code>Facade</code> is a <em>unified interface</em> easily usable by the client which doesn&rsquo;t dialog anymore with the complex subsytem.</p>
+
+<h2>Design Principle</h2>
+
+<p>Principle of <em>Least Knowledge</em>, talk only to you immediate friends.</p>
+
+<ul>
+<li><strong>Loosely coupled system.</strong> Prevent from creating designs that have a large number of classes coupled together so that changes in one part of the system cascade on the other parts.</li>
+<li><strong>Fragile system.</strong> It happens when there are a lot of dependencies between many classes.</li>
+</ul>
+
+
+<h2>Key Points</h2>
+
+<ul>
+<li><strong>Only one friend.</strong> The <em>client</em> has only one friend, the facade.</li>
+<li><strong>Decoupling.</strong> Allow to decouple client implementation from any subsystem. Coding to the facade, rather than to the subystem, allows the client code to not change every time the subsystem changes, just the facade has to update.</li>
+<li><strong>Delegation.</strong> Implementing the facade requires to compose the facade with its subsystem and use <em>delegation</em> to perform the work.</li>
+<li><strong>Subsytem update.</strong> The update doesn&rsquo;t affect the client.</li>
+<li><strong>Additional facade.</strong> If the subsystem gets too complex <em>additional facade</em> could be introduced to <em>form layers of subsystems</em>.</li>
+<li><strong>Not encapsulate.</strong> The Facade doesn&rsquo;t encapsulate the classes but provides a simpler interface to the client. The subsystem classes can be still used by the client to achieve some low levels functionality.</li>
+<li><strong>Many facades.</strong> Given a subsystem many facades can be created.</li>
+</ul>
+
+
+<h2>Comparison</h2>
+
+<ul>
+<li><strong>Wrap multiple classes.</strong> Both can wrap multiple classes.</li>
+<li><strong>Facade</strong>
+
+<ul>
+<li>Simplify an interface.</li>
+<li>Decouple a client from a subsystem of components</li>
+<li>Subsystem classes are still available to the client for low level functionality.</li>
+</ul>
+</li>
+<li><strong>Adapter</strong>
+
+<ul>
+<li>Convert an interface into something different, something the client is expecting.</li>
+<li>Encapsulate the subsystem in order to hide it to the client which will use just the adapter interface.</li>
+</ul>
+</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Adapter Pattern]]></title>
+    <link href="http://blackat.github.io/blog/2013/03/27/adapter-pattern/"/>
+    <updated>2013-03-27T08:01:00+01:00</updated>
+    <id>http://blackat.github.io/blog/2013/03/27/adapter-pattern</id>
+    <content type="html"><![CDATA[<p><blockquote><p>The Adapter Method Pattern converts the interface of a class into another interface the clients expect. Adapter lets classes work together that couldn&rsquo;t otherwise because of incompatible interfaces.</p><footer><strong>Bates and Sierra</strong> <cite><a href="http://shop.oreilly.com/product/9780596007126.do">http://shop.oreilly.com/product/9780596007126.do</a> Head First Design Patterns</cite></footer></blockquote></p>
+
+<!-- more -->
+
+
+<h2>Class diagram</h2>
+
+<p><img src="/images/posts/design-patterns/adapter_pattern.png"></p>
+
+<ul>
+<li>Client can see only the <code>Target</code> interface.</li>
+<li><code>Adapter</code> implements the <code>Target</code> interface and is composed with the <code>Adaptee</code> to which translates or delegates all the requests.</li>
+<li><code>Adaptee</code> gets all the requests delegated by the <code>Adapter</code>.</li>
+</ul>
+
+
+<h2>Scenario</h2>
+
+<h2>Key Points</h2>
+
+<ul>
+<li><strong>Object composition.</strong> The pattern <em>wraps</em> the <em>adaptee</em> with an <em>altered interface</em> and it can use any <em>subclass</em> of the adaptee.</li>
+<li><strong>Bind to an interface.</strong> The pattern binds the client to an interface and not to an implementation.</li>
+<li><strong>Adapter.</strong>
+
+<ul>
+<li><strong>Decouple</strong> the client from the implemented interface.</li>
+<li><strong>Encapsulate what changes</strong> so the client doesn&rsquo;t have to modify each time needs to operate against a different interface.</li>
+<li><strong>Convert</strong> one interface to another so the <em>adapter</em> could wrap one or more <em>adaptee</em> but it would be a bit messy (see Facade Pattern).</li>
+<li><strong>Implement</strong> the interface of the type the client is expecting.</li>
+<li><strong>Delegate</strong> all the requests to the object it wraps.</li>
+<li><strong>Two ways Adapter.</strong> A client could expect old and new interfaces, so the adapter <em>implement both interfaces</em> to support the client.</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Adapter vs. Decorator</h2>
+
+<ul>
+<li><strong>Focus on</strong>
+
+<ul>
+<li><em>Adapter</em> convert the interface of what it wrap, <em>decorator</em> not change the interface.</li>
+</ul>
+</li>
+<li><strong>Decorator</strong>
+
+<ul>
+<li>Wrapped many other adapters.</li>
+<li>Add new behaviors.</li>
+</ul>
+</li>
+<li><strong>Adapter</strong>
+
+<ul>
+<li>Allow clients to use other libraries without changing any code.</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>Real World Adapters</h2>
+
+<ul>
+<li>Enumerator. Allow iterate over a collection elements without knowing the collection implementation details.</li>
+<li>Iterator. Like the enumerator but with also the remove method.</li>
+</ul>
+
+
+<p><code>Enumerator</code> is the old fashion interface to iterate the collection elements so an adapter could <em>adapt</em> the old fashion to the new one.</p>
+
+<ul>
+<li><strong>Target interface.</strong> <code>Iterator</code></li>
+<li><strong>Adaptee interface.</strong> <code>Enumeration</code></li>
+<li>The <code>Adapter</code> has to implement the <code>Target</code> and to compose with the <code>Adaptee</code>.</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Ios | Contrast Of Beauty]]></title>
+  <link href="http://blackat.github.io/blog/categories/ios/atom.xml" rel="self"/>
+  <link href="http://blackat.github.io/"/>
+  <updated>2015-03-15T20:52:17+01:00</updated>
+  <id>http://blackat.github.io/</id>
+  <author>
+    <name><![CDATA[black@t]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Kii Web Application]]></title>
+    <link href="http://blackat.github.io/blog/2014/12/11/kii-web-application/"/>
+    <updated>2014-12-11T19:32:27+01:00</updated>
+    <id>http://blackat.github.io/blog/2014/12/11/kii-web-application</id>
+    <content type="html"><![CDATA[<p>The current <strong>tut</strong> explore how to create a simple mobile application with HTML5, CSS3 and JavaScript based on the new Kii Javascript SDK. Basically Kii Corporation offers a rich cloud mobile backend to help the development of a mobile application providing some services out of the box such as user registration and login. Then the application will be wrapped by Apache Cordova to obtain a deployable app for iOS and Android in a hybrid fashion.</p>
+
+<p><img class="center" src="/images/posts/genymotion-get-your-box.png"></p>
+
+<!-- more -->
+
+
+<h2>Preview of the application in Plunker</h2>
+
+<p>A preview of the web application that is going to be implemented can be seen and tested in <a href="http://plnkr.co/edit/mSrWyzmmgOeSzCDKRWk8?p=preview" target="_blank">Plunker</a> using <code>jon/dohh</code> as username/password or just registering a new user. Password must be at least 4 charaters and special ones are not allowed</p>
+
+<p>In order to make it work I had to brutally copy/paste the content of the Kii Javascript SDK in a file because Plunker does not allow file upload.</p>
+
+<h2>Build steps</h2>
+
+<h3>1. Create a Kii cloud application</h3>
+
+<p>First of all create a Kii account and then a new Kii application, put the name and select the HTML5 logo. Now download the <a href="https://developer.kii.com/v2/apps/5510/downloads-templates" target="_blank">Kii Javascript SDK</a>.</p>
+
+<h3>2. Clone Github repository</h3>
+
+<p>Clone the repository containing the simple application</p>
+
+<pre><code>$ git clone https://github.com/blackat/kii-sdk-js-101.git
+</code></pre>
+
+<p>The application is the same application has been implemented in <a href="http://plnkr.co/edit/mSrWyzmmgOeSzCDKRWk8?p=preview" target="_blank">Plunker</a> with the following structure:</p>
+
+<pre><code>├── css
+│   ├── bootstrap.min.css
+│   └── style.css                   # custom style
+├── fonts
+│   └── CherryCreamSoda.ttf         # a fancy font
+├── index.html                      # single page of the web application
+├── js
+│   ├── angular.min.js
+│   ├── angular.min.js.map
+│   ├── kiisdk.js                   # Kii JavaScript SDK
+│   └── script.js                   # custom script for Angular controllers
+├── package.json
+└── server.js                       # server side configuration
+</code></pre>
+
+<p>In the <code>index.html</code> a minimal form has been implemented to allow login and registration of the user. Just to make the UI a bit more fancy and easy to develop, Boostrap and AngularJS frameworks have been added.</p>
+
+<h4>2.1 Kii JavaScript SDK</h4>
+
+<p>The SDK has been used to perform <em>login</em> and <em>registration</em> action.</p>
+
+<pre><code class="javascript js/script.js https://github.com/blackat/kii-sdk-js-101/blob/master/js/script.js">$scope.login = function () {
+
+    KiiUser.authenticate($scope.user.username, $scope.user.password, {
+        // Called on successful registration
+        success: function (theUser) {
+
+        },
+
+        // Called on a failed authentication
+        failure: function (theUser, errorString) {
+
+        }
+    })
+};
+</code></pre>
+
+<p>Some details has been remove just to focus on the <code>authenticate</code> function. Once the credential has been sent to the cloud one of the two functions will be called according to the outcome of the authentication.</p>
+
+<p>The registration function is a bit different, a new <code>KiiUser</code> object has to be created with the data coming from the <code>form</code> and then the function <code>register</code> has to be called. As for the <code>login</code> function two callbacks are available to manage possible process outcomes.</p>
+
+<pre><code class="javascript js/script.js https://github.com/blackat/kii-sdk-js-101/blob/master/js/script.js">$scope.register = function () {
+
+    // Create the KiiUser object
+    var user = KiiUser.userWithUsername($scope.user.username, $scope.user.password);
+
+    // Register the user, defining callbacks for when the process completes
+    user.register({
+        // Called on successful registration
+        success: function (theUser) {
+
+        },
+        // Called on a failed registration
+        failure: function (theUser, errorString) {
+
+        }
+    });
+};
+</code></pre>
+
+<h3>3. Local test with node.js</h3>
+
+<p>In order to locally test in a browser the application <code>node.js</code> can be used. Download and install <a href="http://nodejs.org/download/" target="_blank">node.js</a>. On mac use <a href="http://brew.sh/"target="_blank">homebrew</a></p>
+
+<pre><code>$ brew install node
+</code></pre>
+
+<p>once done use <code>npm</code> to install modules declared in <code>package.json</code></p>
+
+<pre><code>$ npm install -g
+</code></pre>
+
+<p>where <code>-g</code> option means glabally, remove it to have all the modules installed locally in a folder named <code>node_modules</code>. Then, in the folder where the repository has been cloned, run the command</p>
+
+<pre><code>$ node server.js
+</code></pre>
+
+<p>and type in a browser tab <code>http://127.0.0.1:5000/</code> to load the web page.</p>
+
+<h3>4. PhoneGap/Apache Cordova Installation</h3>
+
+<p>PhoneGap wraps a native web application written in HTML, CSS and JavaScript in a native application of a given platform such as iOS, Android, Windows8 and more.</p>
+
+<p><a href="http://www.smashingmagazine.com/2014/02/11/four-ways-to-build-a-mobile-app-part3-phonegap/">Here</a> it is possible to find a more detailed tutorial about hot to build a mobile application using PhoneGap.</p>
+
+<h4>PhoneGap vs Cordova</h4>
+
+<blockquote><p>PhoneGap is a distribution of Apache Cordova. You can think of Apache Cordova as the engine that powers PhoneGap, similar to how WebKit is the engine that powers Chrome or Safari.</p></blockquote>
+
+<p>More <a href="http://phonegap.com/2012/03/19/phonegap-cordova-and-what%E2%80%99s-in-a-name/">here</a></p>
+
+<h4>Prepare the environment</h4>
+
+<p><a href="http://nodejs.org/download/">Install Node.js</a> if not yet done.</p>
+
+<p>Install Apache Cordova</p>
+
+<pre><code>npm install -g cordova
+</code></pre>
+
+<p>Optional, to debug install <a href="http://www.raymondcamden.com/index.cfm/2013/11/5/Ripple-is-Reborn">Apache Ripple emulator</a></p>
+
+<pre><code>$ npm install -g ripple-emulator
+</code></pre>
+
+<p>Install Android SDK</p>
+
+<pre><code>$ brew install android
+</code></pre>
+
+<p>Install &lsquo;&#8217;actual SDK stuff&rsquo;&#8217;</p>
+
+<pre><code>$ android
+</code></pre>
+
+<p><a href="https://www.genymotion.com/#!/download">Install Genymotion</a> to test the mobile application for Android devices.</p>
+
+<h4>Genymotion</h4>
+
+<p>Genymotion offers a better and more straight forward way to test an Android app than the native emulator. Once done register one or more virtual divices according to your preferences.</p>
+
+<p><img class="center" src="/images/posts/genymotion-devices.png"></p>
+
+<p>Pay attention about the specified <code>API version</code> of the virtual devices because it must match the one installed previously when <code>android</code> command has been run to install &lsquo;&#8217;actual SDK stuff&rsquo;&lsquo;, both are at version 21.</p>
+
+<p><img class="center" src="/images/posts/android-sdk.png"></p>
+
+<h3>5. Create the Apache Cordova application</h3>
+
+<h4>Step A - Create a Cordova project</h4>
+
+<p>Run the command</p>
+
+<pre><code>$ cordova create kii101phonegap com.kii.phonegap Kii101PhoneGap
+</code></pre>
+
+<p>This command will create a project named <em>Kii101PhoneGap</em> in the folder <code>kii101phonegap</code>.</p>
+
+<h4>Step B - Add project files</h4>
+
+<p>Copy the cloned repository content under the <code>www</code> into the project just created.</p>
+
+<pre><code>├── css
+│   ├── bootstrap.min.css
+│   └── style.css
+├── fonts
+│       └── CherryCreamSoda.ttf
+├── index.html
+└── js
+    ├── angular.min.js
+    ├── angular.min.js.map
+    ├── kiisdk.js
+    └── script.js
+</code></pre>
+
+<h4>Step C - Add platforms</h4>
+
+<p>Switch to folder <code>kii101phonegap</code> and add the platforms against which the test will be done, for instance iOS and Android</p>
+
+<pre><code>$ cordova platform add ios
+$ cordova platform add android
+</code></pre>
+
+<h4>Step D - Build and emulate</h4>
+
+<p>Build the application and test it in <strong>iOS</strong> platform running</p>
+
+<pre><code>$ cordova build ios
+$ cordova emulate ios
+</code></pre>
+
+<p>after the project have been built, an emulation window opens showing the developed application.</p>
+
+<p>For <strong>Android</strong> it is a bit different, before start the Genymotion virtual device created in one of the previous steps, then in the command line type</p>
+
+<pre><code>$ adb devices
+</code></pre>
+
+<p>and see how the Genymotion virtual device is seen as a real one</p>
+
+<pre><code>List of devices attached
+192.168.56.101:5555 device
+</code></pre>
+
+<p>so run the command</p>
+
+<pre><code>$ cordova run android
+</code></pre>
+
+<p>and the application will be deployed into the Genymotion device.</p>
+
+<h2>From the Kii Team</h2>
+
+<p>If you&rsquo;re interested in more samples that use <strong>Kii Cloud</strong> please take a look at the <a href="https://github.com/KiiCorp">GitHub page</a> from the Kii team. Also, if you&rsquo;re interested in other platforms, please check out their samples section available <a href="http://docs.kii.com/en/samples/">here</a>.</p>
+
+<h2>Trobleshooting</h2>
+
+<h4>Android target</h4>
+
+<p>Sometimes could happen that a prject has been created when a previuos <code>android-sdk</code> was installed, then having created a new device based on a more recent <code>API</code> the following error arises</p>
+
+<pre><code>ERROR: Error: Please install Android target 19 (the Android newest SDK).
+Make sure you have the latest Android tools installed as well.
+Run "android" from your command-line to install/update any missing SDKs or tools.
+</code></pre>
+
+<p>In the folder <code>kii101phonegap/platforms/android</code> of the Cordova application check the following files and keep android-sdk version consistent.</p>
+
+<pre><code>├── AndroidManifest.xml     # &lt;uses-sdk&gt; tag
+├── local.properties        # location of the SDK. This is only used by Ant
+├── project.properties      # project target
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

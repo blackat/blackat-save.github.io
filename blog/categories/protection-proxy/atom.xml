@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Protection Proxy | Contrast Of Beauty]]></title>
+  <link href="http://blackat.github.io/blog/categories/protection-proxy/atom.xml" rel="self"/>
+  <link href="http://blackat.github.io/"/>
+  <updated>2015-03-15T20:52:17+01:00</updated>
+  <id>http://blackat.github.io/</id>
+  <author>
+    <name><![CDATA[black@t]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Protection Proxy]]></title>
+    <link href="http://blackat.github.io/blog/2013/03/22/protection-proxy-pattern/"/>
+    <updated>2013-03-22T19:38:00+01:00</updated>
+    <id>http://blackat.github.io/blog/2013/03/22/protection-proxy-pattern</id>
+    <content type="html"><![CDATA[<p><blockquote><p>It controls the access to a resource based on access rights.</p></blockquote></p>
+
+<!-- more -->
+
+
+<p><strong>Scenario.</strong> A proxy <em>controls the access</em> to the real object applying <em>protection</em> to the method calls in a transparent way. The client will invoke methods against the proxy thinking it is the real object.</p>
+
+<p><strong>Java dynamic proxy support.</strong> <code>java.lang.reflect</code> package can be used to create a proxy class <em>on the fly</em>. The <em>proxy class</em> implements one or more interfaces and delegates method invocation to a  specified class, the <em>invoker handler</em>.</p>
+
+<p><strong>Class diagram.</strong> The use of <code>java.lang.reflect</code> package imposes a change in the proxy pattern class diagram.
+<img src="/images/posts/design-patterns/protection_proxy.jpg"></p>
+
+<p><strong>Proxy in action.</strong> The handler answers to any method call made by the client on the proxy. The proxy implements <em>the same interface</em> as the real object.</p>
+
+<h2>Example</h2>
+
+<p>A reviewer can only get information about a movie and write comments, he cannot change the title or the actors of the movie.</p>
+
+<h3>Start</h3>
+
+<p>The <code>MovieReviews</code> class simply creates a of two movie proxies, each proxy manages one movie.
+Using the <em>static method</em> <code>Proxy.newProxyInstance(Movie.class.getClassLoader(), new Class[]{Movie.class}, forrestGumpHandler);</code> allows the creation of a new proxy <em>on the fly</em> passing:</p>
+
+<ul>
+<li>the same class loader of the <code>Movie</code> interface or of the <em>real movie object</em>,</li>
+<li>the interface the proxy has to expose,</li>
+<li>the handler every method call has to be delegated to, it also <em>wraps</em> the <em>real object</em>.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.lang.reflect.InvocationHandler</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.lang.reflect.Proxy</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MovieReviews</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">new</span> <span class="nf">MovieReviews</span><span class="o">().</span><span class="na">run</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">Reviewer</span> <span class="n">reviewer</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Reviewer</span><span class="o">(</span><span class="n">buildMovieList</span><span class="o">());</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">reviewer</span><span class="o">.</span><span class="na">spoilMovieTitle</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;operation not permitted.&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">reviewer</span><span class="o">.</span><span class="na">printMovieTiles</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="n">List</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Movie</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">buildMovieList</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">List</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Movie</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">movieList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Movie</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Movie</span> <span class="n">forrestGumpMovie</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">MovieImpl</span><span class="o">(</span><span class="s">&quot;Forrest Gump&quot;</span><span class="o">,</span> <span class="s">&quot;Tom Hanks&quot;</span><span class="o">,</span> <span class="s">&quot;Gary Sinise&quot;</span><span class="o">,</span> <span class="s">&quot;Robin Wright&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">InvocationHandler</span> <span class="n">forrestGumpHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">InvocationHandlerImpl</span><span class="o">(</span><span class="n">forrestGumpMovie</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">Movie</span> <span class="n">forrestGumpProxy</span> <span class="o">=</span> <span class="o">(</span><span class="n">Movie</span><span class="o">)</span> <span class="n">Proxy</span><span class="o">.</span><span class="na">newProxyInstance</span><span class="o">(</span><span class="n">Movie</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getClassLoader</span><span class="o">(),</span>
+</span><span class='line'>        <span class="k">new</span> <span class="n">Class</span><span class="o">[]{</span><span class="n">Movie</span><span class="o">.</span><span class="na">class</span><span class="o">},</span> <span class="n">forrestGumpHandler</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Movie</span> <span class="n">djangoMovie</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">MovieImpl</span><span class="o">(</span><span class="s">&quot;Django&quot;</span><span class="o">,</span> <span class="s">&quot;Quentin Tarantino&quot;</span><span class="o">,</span> <span class="s">&quot;Jamie Foxx&quot;</span><span class="o">,</span> <span class="s">&quot;Franco Nero&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">InvocationHandler</span> <span class="n">djangoHandler</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">InvocationHandlerImpl</span><span class="o">(</span><span class="n">djangoMovie</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">Movie</span> <span class="n">djangoProxy</span> <span class="o">=</span> <span class="o">(</span><span class="n">Movie</span><span class="o">)</span> <span class="n">Proxy</span><span class="o">.</span><span class="na">newProxyInstance</span><span class="o">(</span><span class="n">Movie</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getClassLoader</span><span class="o">(),</span>
+</span><span class='line'>        <span class="k">new</span> <span class="n">Class</span><span class="o">[]{</span><span class="n">Movie</span><span class="o">.</span><span class="na">class</span><span class="o">},</span> <span class="n">djangoHandler</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">movieList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">forrestGumpProxy</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">movieList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">djangoProxy</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">movieList</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h3>The Interface</h3>
+
+<p>Very simple interface with some getters, setters and the method to comment the movie.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Movie</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">String</span> <span class="nf">getTitle</span><span class="o">();</span>
+</span><span class='line'>    <span class="kt">void</span> <span class="nf">setTitle</span><span class="o">(</span><span class="n">String</span> <span class="n">title</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">getActors</span><span class="o">();</span>
+</span><span class='line'>    <span class="kt">void</span> <span class="nf">setActors</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">actors</span><span class="o">);</span>
+</span><span class='line'>    <span class="kt">void</span> <span class="nf">comment</span><span class="o">(</span><span class="n">String</span> <span class="n">comment</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h3>The Invocation Handler</h3>
+
+<p>This class will invoke the method, by using <em>reflection</em>, on the <em>real object</em> that is <em>wrapped</em>. The proxy object will create at runtime, so the handler is the only place where the protection logic can be put.</p>
+
+<p>The protection disallow to use any <code>setter</code> method, only <code>getters</code> and <code>comment</code> methods can be invoked.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.lang.reflect.InvocationHandler</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.lang.reflect.InvocationTargetException</span><span class="o">;</span>
+</span><span class='line'><span class="kn">import</span> <span class="nn">java.lang.reflect.Method</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">InvocationHandlerImpl</span> <span class="kd">implements</span> <span class="n">InvocationHandler</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="n">Movie</span> <span class="n">movie</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="nf">InvocationHandlerImpl</span><span class="o">(</span><span class="n">Movie</span> <span class="n">c</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">movie</span> <span class="o">=</span> <span class="n">c</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">Object</span> <span class="nf">invoke</span><span class="o">(</span><span class="n">Object</span> <span class="n">proxy</span><span class="o">,</span> <span class="n">Method</span> <span class="n">method</span><span class="o">,</span> <span class="n">Object</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Throwable</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">method</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">startsWith</span><span class="o">(</span><span class="s">&quot;set&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalAccessException</span><span class="o">();</span>
+</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">method</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;comment&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">method</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="n">movie</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">method</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">startsWith</span><span class="o">(</span><span class="s">&quot;get&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">method</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="n">movie</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InvocationTargetException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h3>The Client</h3>
+
+<p>The client will receive the list of the movies which he can write a comment on. From the reviewer point of view every object exposes the <code>Movie</code> interface, so he doesn&rsquo;t know to invoke methods against a proxy object.</p>
+
+<p>Remember, both the proxy and the real movie object implement the <em>same interface</em> so the proxy can <em>take the place</em> of the <em>real object</em>.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Reviewer</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">List</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Movie</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">movieList</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="nf">Reviewer</span><span class="o">(</span><span class="n">List</span><span class="o">&amp;</span><span class="n">lt</span><span class="o">;</span><span class="n">Movie</span><span class="o">&amp;</span><span class="n">gt</span><span class="o">;</span> <span class="n">list</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">movieList</span> <span class="o">=</span> <span class="n">list</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">spoilMovieTitle</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="n">Movie</span> <span class="n">movie</span> <span class="o">:</span> <span class="n">movieList</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">movie</span><span class="o">.</span><span class="na">setTitle</span><span class="o">(</span><span class="s">&quot;spoiled&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">printMovieTiles</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="n">Movie</span> <span class="n">movie</span> <span class="o">:</span> <span class="n">movieList</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">movie</span><span class="o">.</span><span class="na">getTitle</span><span class="o">());</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;}</span>
+</span></code></pre></td></tr></table></div></figure></p>
+]]></content>
+  </entry>
+  
+</feed>

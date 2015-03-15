@@ -1,0 +1,459 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Object Oriented Principles - Contrast Of Beauty</title>
+  <meta name="author" content="black@t">
+
+  
+  <meta name="description" content="Object Oriented Principles May 27th, 2013 9:14 pm Encapsulates What Varies Encapsulates what varies so it won't affect the rest of the code if it &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blackat.github.io/oo-design-principles/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Contrast Of Beauty" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,700,600' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Sorts+Mill+Goudy:400,400italic' rel='stylesheet' type='text/css'>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-59763266-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Contrast Of Beauty</a></h1>
+  
+    <h2>I am just curious</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="blackat.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/oo-design-principles">Design Principles</a></li>
+  <li><a href="/design-patterns">Design Patterns</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article role="article">
+  
+  <header>
+    <h1 class="entry-title">Object Oriented Principles</h1>
+    <p class="meta">
+
+
+
+
+<time class='entry-date' datetime='2013-05-27T21:14:00+02:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>9:14 pm</span></time></p>
+  </header>
+  
+  <h2><a id="encapsulates_what_varies_principle">Encapsulates What Varies</a></h2>
+
+<blockquote><p>Encapsulates what varies so it won&#8217;t affect the rest of the code if it changes</p></blockquote>
+
+
+<ul>
+<li><strong>Design Pattern.</strong> Strategy pattern.</li>
+<li><strong>Meaning.</strong> If there are some aspects of the code that could change with every new requirements then it is a behavior that need to be pulled out and separated from stuff that doesn&rsquo;t change.</li>
+<li><strong>Key points.</strong>
+
+<ul>
+<li>Identify the aspects of the application that vary and separate them from what stays the same.</li>
+<li>Take parts that vary and encapsulate them, so that later you can later or extend the parts that vary without affecting those that don&rsquo;t.</li>
+<li><em>Base of all design patterns.</em> All patterns provides a way to let some part of a system vary independently of all other parts.</li>
+</ul>
+</li>
+</ul>
+
+
+<h2><a id="program_to_interface_principle">Program to an Interface not to an Implementation</a></h2>
+
+<blockquote><p>Encapsulates what varies so it won&#8217;t affect the rest of the code if it changes</p></blockquote>
+
+
+<ul>
+<li><strong>Design Pattern.</strong> Strategy pattern.</li>
+<li><strong>Meaning.</strong> Program to an interface means <em>program to a supertype</em> usually an abstract class or an interface so that the class declaring them doesn&rsquo;t have to know about the actual object types.</li>
+<li><strong>Key points.</strong>
+
+<ul>
+<li>A <em>behavior</em>, for instance, can be represented by an <em>interface</em> so that the <em>actual implementation</em> of the behavior wont be locked by a class or subclass.</li>
+<li><em>Behavior are no longer hidden into a class</em> but can <em>be reused</em> and new behaviors can <em>be added</em> without modifying any of the existing classes.</li>
+<li>Behavior are no longer hidden into a class but can be reused and new behaviors can be added without modifying any of the existing classes.</li>
+</ul>
+</li>
+</ul>
+
+
+<h2><a id="composition_over_inheritance_principle">Favor Composition Over Inheritance</a></h2>
+
+<blockquote><p>Getting behavior by being composed is better than inherit them.</p></blockquote>
+
+
+<ul>
+<li><strong>Design Pattern.</strong> Strategy pattern.</li>
+<li><strong>Key points.</strong>
+
+<ul>
+<li>Composition gives more flexibility.</li>
+<li>Allow to encapsulate family of algorithms into their own set of classes.</li>
+<li>Allow to change behavior at runtime.</li>
+</ul>
+</li>
+</ul>
+
+
+<h2><a id="open_close_principle">The Open-Closed Principle</a></h2>
+
+<blockquote><p>Classes should be opened for extension but closed for modification.</p></blockquote>
+
+
+<ul>
+<li><strong>Design Pattern.</strong> Decorator pattern.</li>
+<li><strong>Meaning.</strong> It allows code to be extended without direct modification.</li>
+<li><strong>Key points.</strong>
+
+<ul>
+<li>introduce new levels of abstraction which adds complexity to the code</li>
+<li>concentrate on those area are likely to change in your design</li>
+<li>do not apply the open-close principle everywhere, it is unnecessary, leads to complexity and hard to understand code</li>
+</ul>
+</li>
+</ul>
+
+
+<h2><a id="loosely_coupled_principle">Loosely Coupled Design Principle</a></h2>
+
+<blockquote><p>Strive for loosely coupled designs between objects that interact.</p></blockquote>
+
+
+<ul>
+<li><strong>Design Pattern.</strong> Obsever pattern.</li>
+<li><strong>Meaning.</strong> Loosely coupled designs allow to build flexible systems minimizing the interdependency between objects.</li>
+<li><strong>Loosely coupling power.</strong>
+
+<ul>
+<li>An observer has to implement an interface, can be added or removed at any time.</li>
+<li>The <code>Subject</code> just deliver notifications to any objects implementing the <code>Observer</code> interface.</li>
+<li>Any object can get notifications, it has just to implement the <code>Observer</code> interface.</li>
+<li>A <code>Subject</code> and an <code>Observer</code> can change independenlty as long as they respect the respective interfaces.</li>
+</ul>
+</li>
+</ul>
+
+
+<h2><a id="inversion_principle">The Dependency Inversion Principle</a></h2>
+
+<blockquote><p>Depend upon abstractions, do not depend upon concrete classes.</p></blockquote>
+
+
+<ul>
+<li><strong>Design Pattern.</strong> Factory Method pattern is one of the possible way to respect this principle.</li>
+<li><strong>Meaning.</strong>
+
+<ul>
+<li>Start from the top, high-level components and go down to the bottom, the concrete classes.</li>
+<li>Look at how classes are linked and the direction of the arrows when the code depends on concrete implementation using <em>new</em> and compare with arrows when factory method is involved.</li>
+<li>The factory method returns a concrete type implementing a given interface and the client is just waiting for something respecting that interface without considering a specific type.</li>
+<li>The <em>return</em> in the factory method reverts the direction of the creation arrows.</li>
+<li>Now both <em>low-level</em> (concrete cars) and <em>high-level</em> (car manufacturers) components depend on the abstraction (the abstract car).</li>
+<li><em>Invertion.</em> Start at Pizzas level and see what you can abstract and then go back to PizzaStore.</li>
+</ul>
+</li>
+<li><strong>Key points.</strong>
+
+<ul>
+<li>Similar to &ldquo;Program to an interface, not an implementation&rdquo; but stronger about abstraction.</li>
+<li>High-level and low-level components depend only on the abstraction, that is Pizza.</li>
+<li>PizzaStore is the high level component and depends on concrete pizza classes.</li>
+<li>Pizzas are the low-level components.</li>
+</ul>
+</li>
+<li><strong>Guideline to follow the principle.</strong>
+
+<ul>
+<li><em>No variable should hold a reference to a concrete class.</em> Do not use <em>new</em> but a factory to get around that.</li>
+<li><em>No class should derive from a concrete class.</em> Deriving from a concrete class implies a dependency on that concrete class.
+
+<ul>
+<li>Derive instead from <em>abstraction</em> or <em>interface</em>.</li>
+</ul>
+</li>
+<li><em>No method should override an implemented method of any of its base classes.</em> Overriding a method means that the base class was not really an abstraction.
+
+<ul>
+<li>Methods in the base class are meant to be <em>shared</em> among subclasses.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+<h2><a id="hollywood_principle">The Hollywood Principle</a></h2>
+
+<ul>
+<li><strong>Definition.</strong> Don&rsquo;t call us, we&rsquo;ll call you.</li>
+<li><strong>Design Pattern.</strong> Template Method pattern.</li>
+<li><strong>Meaning.</strong> This principle allows low-level components to hook themselves into a system, but the high-level components determine when they are needed and how. The high-level components give the low-level components a &ldquo;don&rsquo;t call us, se&rsquo;ll call you&rdquo; treatment.
+
+<ul>
+<li>The abstract class is the <em>high-level</em> component, it has the control over the algorithm.
+
+<ul>
+<li>Abstract class calls the subclasses only when an implementation of a method is needed.</li>
+<li>Client will depend on the class abstraction rather than on concrete class reducing the dependencies in the system.</li>
+</ul>
+</li>
+<li>Subclasses are the <em>low-level</em> components used to <em>provide implementation details</em>.</li>
+<li>A low-level component <em>never calls directly</em> a high-level component, it can be hooked into the computation without creating dependencies between low-level and high-level layers.</li>
+<li>High-level components reserve the low-level components a <em>&ldquo;don&rsquo;t call us, we&rsquo;ll call you&rdquo;</em> treatment.</li>
+</ul>
+</li>
+<li><strong>Key points.</strong>
+
+<ul>
+<li>Technique for creating designs that allow low-level structure to interoperate while preventing other classes from becoming too dependent on them</li>
+<li>Avoid explicit circular dependencies between the low-level components and the high-level ones</li>
+</ul>
+</li>
+<li><strong>Advantages.</strong> Decoupling, lower-level components can be hooked into the computation without creating dependencies between the lower-level components and the higher-level layers.</li>
+</ul>
+
+
+<h2>Principle of Least Knowledge (aka Law of Demeter)</h2>
+
+<ul>
+<li><strong>Definition.</strong> Talk only to your immediate friends.</li>
+<li><strong>Design Pattern.</strong></li>
+<li><strong>Meaning.</strong> It reduces the interaction between objects to just a few close friends.</li>
+<li><strong>Key points.</strong> Invoke only methods that belong to
+
+<ul>
+<li>the object itself</li>
+<li>objects passed in as a parameter to the method</li>
+<li>any object the method creates or instantiates</li>
+<li>any components of the object (HAS-A relationship)</li>
+</ul>
+</li>
+<li><strong>Advantages.</strong>
+
+<ul>
+<li>For any object be careful of the number of classes it interacts with and also how it interacts.</li>
+<li>Prevent the creation of a large number of classes coupled together (changes in one part cascade to the others).</li>
+<li>Many dependencies between many classes the system will be fragile:
+
+<ul>
+<li>difficult to maintain</li>
+<li>complex for others to understand.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>Disadvantages.</strong>
+
+<ul>
+<li>More wrapper classes being written to handle method calls to other components:
+
+<ul>
+<li>increase complexity, development time and runtime performance</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+  
+    <footer>
+      <p class="meta">
+        
+        
+
+
+
+
+<time class='entry-date' datetime='2013-05-27T21:14:00+02:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>9:14 pm</span></time>
+        
+      </p>
+      
+        <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blackat.github.io/oo-design-principles/index.html" data-via="eugeniolentini" data-counturl="http://blackat.github.io/oo-design-principles/index.html" >Tweet</a>
+  
+  
+  
+</div>
+
+      
+    </footer>
+  
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/03/07/how-to-test-1-find-errors-to-make-the-application-works/">How to Test 1: Find Errors to Make the Application Works</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/02/01/javascript-anatomy-of-an-object/">JavaScript: Anatomy of an Object</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/12/11/kii-web-application/">Kii Web Application</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/03/fullstack-javascript-web-application-part-2/">Fullstack Javascript Web Application Part 2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/09/fullstack-javascript-web-application/">Fullstack Javascript Web Application Part 1</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/blackat">@blackat</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'blackat',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - black@t -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'blackatblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blackat.github.io/oo-design-principles/index.html';
+        var disqus_url = 'http://blackat.github.io/oo-design-principles/index.html';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

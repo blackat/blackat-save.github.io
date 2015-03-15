@@ -1,0 +1,917 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Fullstack Javascript Web Application Part 2 - Contrast Of Beauty</title>
+  <meta name="author" content="black@t">
+
+  
+  <meta name="description" content="The single page web application will be enriched with a database support, a build system with dependencies management and a testing framework. Grunt &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blackat.github.io/blog/2014/10/03/fullstack-javascript-web-application-part-2/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Contrast Of Beauty" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,700,600' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Sorts+Mill+Goudy:400,400italic' rel='stylesheet' type='text/css'>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-59763266-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Contrast Of Beauty</a></h1>
+  
+    <h2>I am just curious</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="blackat.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/oo-design-principles">Design Principles</a></li>
+  <li><a href="/design-patterns">Design Patterns</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Fullstack Javascript Web Application Part 2</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-10-03T23:52:35+02:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>11:52 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://blackat.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>The single page web application will be enriched with a database support, a build system with dependencies management and a testing framework.</p>
+
+<p><img class="center" src="/images/posts/popcorn-time-screenshot.png"></p>
+
+<p><a href="http://gruntjs.com/" title="Grunt homepage">Grunt</a> task runner and <a href="bower.io" title="Bower homepage">Bower</a> package management system will be configured. Then <a href="http://www.mongodb.org/" title="MongoDB homepage">Mongodb</a> with a persistent model will be added, finally <a href="http://jasmine.github.io/" title="Jasmine homepage">Jasmine</a> and <a href="http://karma-runner.github.io/0.12/index.html" title="Karma homepage">Karma</a> will support tests and their execution.</p>
+
+<!-- more -->
+
+
+<h2>1. Continuos build integration</h2>
+
+<p><a href="http://gruntjs.com/" title="Grunt homepage">Grunt</a> is a <em>task runner</em>, means it runs pre-defined tasks and custom tasks defined by the user in order to achieve a certain goal such as the deployment in production, running unit and end-to-end (e2e) tests and so on.</p>
+
+<p><a href="bower.io" title="Bower homepage">Bower</a> is a package management system quite widespread in the javascript community added to manage packages for client-side programming. It depends on <em>Node.js</em> and <em>npm</em>.</p>
+
+<h3>1.1 Grunt Task Runner</h3>
+
+<figure class='code'><figcaption><span>package.json</span> — <a href='https://github.com/blackat/popcorn-time-express-angular-mongodb-grunt/blob/master/package.json'>Link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;popcorn-time-backend&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;a web application based on node, express, mongodb and grunt task runner with bower dependencies manager&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.0.1&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;private&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;dependencies&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nt">&quot;express&quot;</span><span class="p">:</span> <span class="s2">&quot;4.0.x&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;ejs&quot;</span><span class="p">:</span> <span class="s2">&quot;~0.8.4&quot;</span>
+</span><span class='line'>    <span class="p">},</span>
+</span><span class='line'>    <span class="nt">&quot;devDependencies&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nt">&quot;grunt&quot;</span><span class="p">:</span> <span class="s2">&quot;~0.4.5&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;grunt-contrib-jshint&quot;</span><span class="p">:</span> <span class="s2">&quot;~0.10.0&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;grunt-contrib-uglify&quot;</span><span class="p">:</span> <span class="s2">&quot;~0.5.0&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;load-grunt-tasks&quot;</span><span class="p">:</span> <span class="s2">&quot;~0.2.0&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;grunt-express-server&quot;</span><span class="p">:</span> <span class="s2">&quot;~0.4.19&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;grunt-open&quot;</span><span class="p">:</span> <span class="s2">&quot;~0.2.0&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;time-grunt&quot;</span><span class="p">:</span> <span class="s2">&quot;~0.2.1&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="nt">&quot;load-grunt-tasks&quot;</span><span class="p">:</span> <span class="s2">&quot;~0.2.0&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Modify the list of modules in order to include the dependencies to Grunt and Grunt plugins in <code>devDependencies</code>.</p>
+
+<p>Previous dependencies have been removed and will be managed by Bower later on. <code>package.json</code> manages just Grunt and Bower dependencies necessary to manage the all project lifecycle.</p>
+
+<h3>1.2 Grunt file configuration</h3>
+
+<figure class='code'><figcaption><span>Gruntfile.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 1. Wrapper function</span>
+</span><span class='line'><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">grunt</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// replace step 3</span>
+</span><span class='line'>    <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;load-grunt-tasks&#39;</span><span class="p">)(</span><span class="nx">grunt</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// 2. Project and tasks configuration</span>
+</span><span class='line'>    <span class="nx">grunt</span><span class="p">.</span><span class="nx">initConfig</span><span class="p">({</span>
+</span><span class='line'>        <span class="nx">pkg</span><span class="o">:</span> <span class="nx">grunt</span><span class="p">.</span><span class="nx">file</span><span class="p">.</span><span class="nx">readJSON</span><span class="p">(</span><span class="s1">&#39;package.json&#39;</span><span class="p">),</span>
+</span><span class='line'>        <span class="nx">express</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">port</span><span class="o">:</span> <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">PORT</span> <span class="o">||</span> <span class="mi">9000</span>
+</span><span class='line'>            <span class="p">},</span>
+</span><span class='line'>            <span class="nx">dev</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">script</span><span class="o">:</span> <span class="s1">&#39;server.js&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="nx">debug</span><span class="o">:</span> <span class="kc">true</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="nx">open</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nx">server</span><span class="o">:</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;http://localhost:&lt;%= express.options.port %&gt;&#39;</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// 3. Load grunt plugins and tasks</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// 4. Custom tasks</span>
+</span><span class='line'>    <span class="nx">grunt</span><span class="p">.</span><span class="nx">registerTask</span><span class="p">(</span><span class="s1">&#39;serve&#39;</span><span class="p">,</span> <span class="s1">&#39;default is dev environment&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">target</span><span class="p">){</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nx">grunt</span><span class="p">.</span><span class="nx">task</span><span class="p">.</span><span class="nx">run</span><span class="p">([</span>
+</span><span class='line'>            <span class="s1">&#39;express:dev&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s1">&#39;open&#39;</span>
+</span><span class='line'>        <span class="p">]);</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add <code>Gruntfile.js</code> to the project used to define tasks and load plugins. Grunt configuration file is made of four parts</p>
+
+<ol>
+<li>Wrapper function: when Grunt is run from the CLI, it looks for the configuration file in order to load plugins and run the required task. Grunt</li>
+<li>Project and tasks configuration: here plugin&rsquo;s tasks are defined in order to be reused later on. For instance <code>express</code> Grunt plugin has been declared in the <code>package.json</code>, along with the plugin come some tasks which could be configured and used. <code>express</code> plugin task is declared and configured as the <code>open</code> plugin&rsquo;s task.</li>
+<li><p>Load grunt plugins and tasks: for instance <code>express</code> plugin must be declared under <code>devDependencies</code> in <code>package.json</code>, configured in <code>Gruntfile.js</code> but even loaded. This section is done for loading such plugins which define tasks such as  <code>grunt.loadNpmTasks('grunt-express-server');</code>.</p>
+
+<p> When the project grows there could be many lines each one to load a plugin, this can become quite annoying and even result in a good amount of boiler-plate code. As alternative solution, use <a href="(https://github.com/sindresorhus/load-grunt-tasks)" title="Load grunt task plugin">load-grunt-task</a> plugin in order to automatically load plugins from <code>dependencies</code> and <code>devDependencies</code> in <code>package.json</code>, so just <em>load plugins in one line</em>.</p></li>
+<li><p>Custom tasks: here define your task as aggregation of tasks defined and configured in section number 2.</p></li>
+</ol>
+
+
+<h3>1.3 First run</h3>
+
+<p>Run <code>npm install</code> to install modules locally or <code>npm install -g</code> to install modules globally then run <code>grunt serve</code> task.</p>
+
+<h3>1.4 Bower Package Management System</h3>
+
+<figure class='code'><figcaption><span>bower.json</span> — <a href='https://github.com/blackat/popcorn-time-express-angular-mongodb-grunt/blob/master/bower.json'>Link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="s2">&quot;name&quot;</span><span class="o">:</span> <span class="s2">&quot;popcorn-time-backend-bower&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;version&quot;</span><span class="o">:</span> <span class="s2">&quot;0.0.1&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;homepage&quot;</span><span class="o">:</span> <span class="s2">&quot;https://github.com/blackat/popcorn-time-express-angular-mongodb-grunt&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;authors&quot;</span><span class="o">:</span> <span class="p">[</span>
+</span><span class='line'>        <span class="s2">&quot;blackat &lt;blackat@somewhere.world&gt;&quot;</span>
+</span><span class='line'>    <span class="p">],</span>
+</span><span class='line'>    <span class="s2">&quot;description&quot;</span><span class="o">:</span> <span class="s2">&quot;A web application based on node, express, mongodb and grunt task runner with bower dependencies manager&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;moduleType&quot;</span><span class="o">:</span> <span class="p">[</span>
+</span><span class='line'>        <span class="s2">&quot;node&quot;</span>
+</span><span class='line'>    <span class="p">],</span>
+</span><span class='line'>    <span class="s2">&quot;license&quot;</span><span class="o">:</span> <span class="s2">&quot;MIT&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="s2">&quot;ignore&quot;</span><span class="o">:</span> <span class="p">[</span>
+</span><span class='line'>        <span class="s2">&quot;**/.*&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="s2">&quot;node_modules&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="s2">&quot;bower_components&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="s2">&quot;app/bower_components&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="s2">&quot;test&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="s2">&quot;tests&quot;</span>
+</span><span class='line'>    <span class="p">]</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Type <code>npm install -g bower</code> to install <strong>Bower</strong> globally, then <code>bower init</code> in the root folder of the current project to have <code>bower.json</code> <em>manifest</em> file created and initialized with some basic information.</p>
+
+<h4>1.4.1 Bower in a Nutshell</h4>
+
+<p><em>Bower</em> manages front-end components (css, html, js), <em>npm</em> manages Javascript modules called packages. Some components can be installed by <em>npm</em> as well but step by step a cleaner difference between backend and frontend elements is arising. <em>Ember</em> updates for instance are currently published only under <em>Bower</em>. More on the difference  <a href="http://tech.pro/tutorial/1190/package-managers-an-introductory-guide-for-the-uninitiated-front-end-developer">here</a>.</p>
+
+<p>Thus <code>package.json</code> is used to install <em>Node</em> modules such as <em>Grunt</em>, <em>Express</em> and so on, instead <code>bower.json</code> for all the client-side libraries such as <em>Angular</em>, <em>Bootstrap</em> and all the components could be required by <code>index.html</code> page.</p>
+
+<h4>1.4.2 Configure Grunt Wiredep Task</h4>
+
+<figure class='code'><figcaption><span>package.json</span> — <a href='https://github.com/blackat/popcorn-time-express-angular-mongodb-grunt/blob/master/package.json'>Link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="err">},</span>
+</span><span class='line'>    <span class="s2">&quot;devDependencies&quot;</span><span class="err">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="err">...</span>
+</span><span class='line'>        <span class="nt">&quot;grunt-wiredep&quot;</span><span class="p">:</span> <span class="s2">&quot;~1.9.x&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="err">...</span>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add <code>grunt-wiredep</code> to <code>package.json</code>. It is the <em>grunt task</em> will inject UI dependencies. Then add and configure the grunt task in <code>Gruntfile.js</code> as follows:</p>
+
+<figure class='code'><figcaption><span>Gruntfile.js</span> — <a href='https://github.com/blackat/popcorn-time-express-angular-mongodb-grunt/blob/master/Gruntfile.js'>Link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="err">...</span>
+</span><span class='line'><span class="err">grunt.initConfig(</span><span class="p">{</span>
+</span><span class='line'>    <span class="err">...</span>
+</span><span class='line'>    <span class="err">//</span> <span class="err">Download</span> <span class="err">and</span> <span class="err">inject</span> <span class="err">Bower</span> <span class="err">components</span> <span class="err">into</span> <span class="err">the</span> <span class="err">app</span>
+</span><span class='line'>    <span class="err">wiredep:</span> <span class="err">{</span>
+</span><span class='line'>        <span class="err">target:</span> <span class="err">{</span>
+</span><span class='line'>            <span class="err">src:</span> <span class="err">&#39;app/views/**/*.html&#39;,</span>
+</span><span class='line'>            <span class="err">options:</span> <span class="err">{</span>
+</span><span class='line'>                <span class="err">cwd:</span> <span class="err">&#39;&#39;,</span>
+</span><span class='line'>                <span class="err">dependencies:</span> <span class="err">true,</span>
+</span><span class='line'>                <span class="err">devDependencies:</span> <span class="err">false,</span>
+</span><span class='line'>                <span class="err">exclude:</span> <span class="err">[&#39;app/bower_components/bootstrap/dist/js/bootstrap.js&#39;]</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="err">}</span>
+</span><span class='line'>    <span class="err">}</span>
+</span><span class='line'><span class="err">});</span>
+</span><span class='line'>    <span class="err">...</span>
+</span><span class='line'><span class="err">grunt.registerTask(&#39;serve&#39;,</span> <span class="err">&#39;default</span> <span class="err">is</span> <span class="err">dev</span> <span class="err">environment&#39;,</span> <span class="err">function</span> <span class="err">(target)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="err">grunt.task.run([</span>
+</span><span class='line'>        <span class="err">&#39;wiredep&#39;,</span>
+</span><span class='line'>        <span class="err">&#39;express:dev&#39;,</span>
+</span><span class='line'>        <span class="err">&#39;open&#39;,</span>
+</span><span class='line'>        <span class="err">&#39;express-keepalive&#39;</span>
+</span><span class='line'>    <span class="err">]);</span>
+</span><span class='line'><span class="p">}</span><span class="err">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>1.4.3 Inject Bower Components</h4>
+
+<figure class='code'><figcaption><span>bower.json</span> — <a href='https://github.com/blackat/popcorn-time-express-angular-mongodb-grunt/blob/master/bower.json'>Link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='json'><span class='line'><span class="err">...</span>
+</span><span class='line'><span class="s2">&quot;dependencies&quot;</span><span class="err">:</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nt">&quot;angular&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=1.2.*&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;angular-resource&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=1.2.*&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;angular-route&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=1.2.*&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;bootstrap&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=3.2.*&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;less.js&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=1.7.*&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;fontawesome&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=4.2.x&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;angular-xeditable&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=0.1.x&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nt">&quot;angular-mocks&quot;</span><span class="p">:</span> <span class="s2">&quot;&gt;=1.2.*&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span><span class="err">,</span>
+</span><span class='line'><span class="s2">&quot;devDependencies&quot;</span><span class="err">:</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Insert the list of dependencies Bower has to inject into <code>index.html</code> and remove them from <code>package.json</code>. Now frontend dependencies are managed and injected by <em>Bower</em> and not anymore by <em>npm</em></p>
+
+<figure class='code'><figcaption><span>app/views/index.html</span> — <a href='https://github.com/blackat/popcorn-time-express-angular-mongodb-grunt/blob/master/app/views/index.html'>Link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</span><span class='line'><span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">&quot;en&quot;</span> <span class="na">ng-app=</span><span class="s">&quot;movieApp&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;head&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content=</span><span class="s">&quot;width=device-width, initial-scale=1&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;title&gt;</span>Movie page<span class="nt">&lt;/title&gt;</span>
+</span><span class='line'>    <span class="c">&lt;!-- bower:css --&gt;</span>
+</span><span class='line'>    <span class="c">&lt;!-- endbower --&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;/styles/style.less&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet/less&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;/head&gt;</span>
+</span><span class='line'><span class="nt">&lt;body</span> <span class="na">ng-controller=</span><span class="s">&quot;MainController&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>...
+</span><span class='line'><span class="nt">&lt;/body&gt;</span>
+</span><span class='line'><span class="c">&lt;!-- bower:js --&gt;</span>
+</span><span class='line'><span class="c">&lt;!-- endbower --&gt;</span>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;scripts/services/services.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;scripts/controllers/controllers.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'><span class="nt">&lt;/html&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Specify in <code>index.html</code> where <em>Bower</em> should insert css and javascript dependencies that have been specified in <code>bower.json</code>.</p>
+
+<p>Once done run</p>
+
+<ul>
+<li><code>bower install</code> to download <em>Bower</em> components;</li>
+<li><code>grunt serve</code> to run all the defined tasks and have the server up and running.</li>
+</ul>
+
+
+<p> Just to test the injection task run <code>grunt wiredep</code> and check that dependencies have been added to the <code>index.html</code> page as follows:</p>
+
+<figure class='code'><figcaption><span>app/views/index.html</span> — <a href='https://github.com/blackat/popcorn-time-express-angular-mongodb-grunt/blob/master/app/views/index.html'>Link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</span><span class='line'><span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">&quot;en&quot;</span> <span class="na">ng-app=</span><span class="s">&quot;movieApp&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;head&gt;</span>
+</span><span class='line'>     <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">&quot;utf-8&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>     <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content=</span><span class="s">&quot;width=device-width, initial-scale=1&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>     <span class="nt">&lt;title&gt;</span>Movie page<span class="nt">&lt;/title&gt;</span>
+</span><span class='line'>     <span class="c">&lt;!-- bower:css --&gt;</span>
+</span><span class='line'>     <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;../bower_components/bootstrap/dist/css/bootstrap.css&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>     <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;../bower_components/fontawesome/css/font-awesome.css&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>     <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;../bower_components/angular-xeditable/dist/css/xeditable.css&quot;</span> <span class="nt">/&gt;</span>
+</span><span class='line'>     <span class="c">&lt;!-- endbower --&gt;</span>
+</span><span class='line'>     <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;/styles/style.less&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet/less&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'><span class="nt">&lt;/head&gt;</span>
+</span><span class='line'><span class="nt">&lt;body</span> <span class="na">ng-controller=</span><span class="s">&quot;MainController&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'> ...
+</span><span class='line'><span class="nt">&lt;/body&gt;</span>
+</span><span class='line'><span class="c">&lt;!-- bower:js --&gt;</span>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;../bower_components/jquery/dist/jquery.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;../bower_components/angular/angular.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;../bower_components/angular-resource/angular-resource.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;../bower_components/angular-route/angular-route.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;../bower_components/less.js/dist/less-1.7.5.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;../bower_components/angular-xeditable/dist/js/xeditable.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;../bower_components/angular-mocks/angular-mocks.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'><span class="c">&lt;!-- endbower --&gt;</span>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;scripts/services/services.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;scripts/controllers/controllers.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+</span><span class='line'><span class="nt">&lt;/html&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>2. MongoDB</h2>
+
+<h3>2.1 Model</h3>
+
+<p>As first thing I want to define the object model should be persisted, retrieved and finally show off in the client user interface. So in &lsquo;../lib/models&rsquo; define</p>
+
+<figure class='code'><figcaption><span>/lib/models/product.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose&#39;</span><span class="p">),</span>
+</span><span class='line'>    <span class="nx">Schema</span>   <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">ProductSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Schema</span><span class="p">({</span>
+</span><span class='line'>    <span class="nx">name</span><span class="o">:</span> <span class="nb">String</span><span class="p">,</span>
+</span><span class='line'>    <span class="nx">description</span><span class="o">:</span> <span class="nb">String</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Product&#39;</span><span class="p">,</span> <span class="nx">ProductSchema</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I have decided to use <a href="http://mongoosejs.com/" title="Mongoose home page">mongoose</a> in order to reduce boilerplate code for validation, read/write operation and so on.</p>
+
+<blockquote><p>With Mongoose, everything is derived from a Schema. Each <a href="http://mongoosejs.com/docs/guide.html" title="Mongoose Schemas">schema</a> maps to a MongoDB collection and defines the shape of the documents within that collection.</p></blockquote>
+
+<p>I have defined a very simple schema for a product with only two fields <code>name</code> and <code>description</code>.</p>
+
+<blockquote><p>Models are fancy constructors compiled from our Schema definitions.</p></blockquote>
+
+<h4>Routes</h4>
+
+<p>Once the user has required an action on a resource it has to be served according to its name and the <code>HTTP verb</code>. Thus create an instance of <a href="http://expressjs.com/4x/api.html#app.route" title="express route api">route</a> with a specific name and then manage all the <code>HTTP verbs</code> avoiding duplicates in names.</p>
+
+<figure class='code'><figcaption><span>/lib/routes.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">products</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;./controllers/products&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">app</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">app</span><span class="p">.</span><span class="nx">route</span><span class="p">(</span><span class="s1">&#39;api/products&#39;</span><span class="p">).</span><span class="nx">get</span><span class="p">(</span><span class="nx">products</span><span class="p">.</span><span class="nx">products</span><span class="p">);</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Controller</h4>
+
+<p>Once done the object should be retrieved from the data source, create a new module file in &lsquo;../lib/controllers&rsquo;:</p>
+
+<figure class='code'><figcaption><span>/lib/controllers/products.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;mongoose&#39;</span><span class="p">),</span>
+</span><span class='line'>    <span class="nx">Product</span> <span class="o">=</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">&#39;Product&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">exports</span><span class="p">.</span><span class="nx">products</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">Product</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">prods</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">(</span><span class="nx">prods</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nx">res</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In order to retrieve all the product documents stored in the data source, use static method <code>find</code>. Documents are instances of the model.</p>
+
+<p>The module <code>products.js</code> exports the function <code>products()</code> adding it to the <code>exports</code> object. The function will be added to the root of the module.</p>
+
+<h4>RESTful Backend</h4>
+
+<p>In order to better interact with the frontend, a RESTful backend has to be provided by means of <em>REST endpoints</em> as follows:</p>
+
+<table>
+<thead>
+<tr>
+<th>Url            </th>
+<th> HTTP Verb </th>
+<th> POST Body   </th>
+<th> Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>api/movies     </td>
+<td> GET       </td>
+<td> empty       </td>
+<td> return all the movies    </td>
+</tr>
+<tr>
+<td>api/movies     </td>
+<td> POST      </td>
+<td> JSON String </td>
+<td> create a new movie       </td>
+</tr>
+<tr>
+<td>api/movies/:id </td>
+<td> GET       </td>
+<td> empty       </td>
+<td> return a single movie    </td>
+</tr>
+<tr>
+<td>api/movies/:id </td>
+<td> PUT       </td>
+<td> JSON String </td>
+<td> update an existing movie </td>
+</tr>
+<tr>
+<td>api/movies/:id </td>
+<td> DELETE    </td>
+<td> empty       </td>
+<td> delete an existing entry </td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>3. Morgan the Logger</h2>
+
+<h2>4. Angular</h2>
+
+<p>A nice way to implement <em>CRUD operations</em> in <a href="https://angularjs.org/">Angular</a> is using <code>$resource</code> factory which helps to interact with a standard <em>REST endpoints</em>. In <code>bower.json</code> the module <code>angular-resource</code> is already present, then it will be injected into &lsquo;index.html&rsquo; by <a href="bower.io" title="Bower homepage">Bower</a>.</p>
+
+<h3>4.1 Consuming a RESTful service</h3>
+
+<figure class='code'><figcaption><span>/app/scripts/services/movieServices.js</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span>  <span class="nx">movieServices</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;movieApp.movieServices&#39;</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;ngResource&#39;</span><span class="p">]);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">movieServices</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="s1">&#39;Movie&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$resource</span><span class="p">){</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nx">$resource</span><span class="p">(</span><span class="s1">&#39;movies/movies/:id&#39;</span><span class="p">,</span> <span class="p">{</span><span class="nx">id</span><span class="o">:</span><span class="s1">&#39;@_id&#39;</span><span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Module <code>ngResource</code> needs to be installed and declared in order to use its <strong>service</strong> <code>$resource</code>. The returned resources has <strong>action methods</strong> providing higher-level behaviors than the low level <code>$http</code>.</p>
+
+<p>According to Angular  <a href="https://docs.angularjs.org/api/ngResource/service/$resource">api</a> a parametrized URL has to be specified, it is the <em>full endpoint</em> address which covers all the URLs for basic CRUD operations.</p>
+
+<pre><code>$resource(url, [paramDefaults], [actions], options);
+</code></pre>
+
+<p><code>:id</code> is the parameter and <code>{id:@_id}</code> is the name of the parameter in the <code>data</code> object provided when the method will be called, so it means extract the value of parameter <code>data._id</code> and assign it to <code>id</code> parameter.</p>
+
+<p>The returned object has a <em>default set</em> of <strong>resource actions</strong> which can be extended with custom <code>actions</code>.</p>
+
+<pre><code>{
+    'get':    {method:'GET'},
+    'save':   {method:'POST'},
+    'query':  {method:'GET', isArray:true},
+    'remove': {method:'DELETE'},
+    'delete': {method:'DELETE'}
+};
+</code></pre>
+
+<h2>5. Testing</h2>
+
+<ul>
+<li>unit test the RESTful api, user <a href="https://github.com/visionmedia/supertest">SuperTest</a></li>
+<li>Jasmine</li>
+<li>Karma</li>
+<li>Mongodb? integration test?</li>
+</ul>
+
+
+<!-- Links -->
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">black@t</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-10-03T23:52:35+02:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2014</span></span> <span class='time'>11:52 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/bower/'>bower</a>, <a class='category' href='/blog/categories/fullstack/'>fullstack</a>, <a class='category' href='/blog/categories/grunt/'>grunt</a>, <a class='category' href='/blog/categories/jasmine/'>jasmine</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/karma/'>karma</a>, <a class='category' href='/blog/categories/monmgodb/'>monmgodb</a>, <a class='category' href='/blog/categories/webapp/'>webapp</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blackat.github.io/blog/2014/10/03/fullstack-javascript-web-application-part-2/" data-via="eugeniolentini" data-counturl="http://blackat.github.io/blog/2014/10/03/fullstack-javascript-web-application-part-2/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/09/09/fullstack-javascript-web-application/" title="Previous Post: Fullstack Javascript Web Application Part 1">&laquo; Fullstack Javascript Web Application Part 1</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/12/11/kii-web-application/" title="Next Post: kii web application">kii web application &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/03/07/how-to-test-1-find-errors-to-make-the-application-works/">How to Test 1: Find Errors to Make the Application Works</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/02/01/javascript-anatomy-of-an-object/">JavaScript: Anatomy of an Object</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/12/11/kii-web-application/">Kii Web Application</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/03/fullstack-javascript-web-application-part-2/">Fullstack Javascript Web Application Part 2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/09/fullstack-javascript-web-application/">Fullstack Javascript Web Application Part 1</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/blackat">@blackat</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'blackat',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - black@t -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'blackatblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blackat.github.io/blog/2014/10/03/fullstack-javascript-web-application-part-2/';
+        var disqus_url = 'http://blackat.github.io/blog/2014/10/03/fullstack-javascript-web-application-part-2/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

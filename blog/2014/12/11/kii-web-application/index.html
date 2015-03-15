@@ -1,0 +1,547 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Kii Web Application - Contrast Of Beauty</title>
+  <meta name="author" content="black@t">
+
+  
+  <meta name="description" content="The current tut explore how to create a simple mobile application with HTML5, CSS3 and JavaScript based on the new Kii Javascript SDK. Basically Kii &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blackat.github.io/blog/2014/12/11/kii-web-application/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Contrast Of Beauty" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,700,600' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Sorts+Mill+Goudy:400,400italic' rel='stylesheet' type='text/css'>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-59763266-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Contrast Of Beauty</a></h1>
+  
+    <h2>I am just curious</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="blackat.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/oo-design-principles">Design Principles</a></li>
+  <li><a href="/design-patterns">Design Patterns</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Kii Web Application</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-12-11T19:32:27+01:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>7:32 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://blackat.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>The current <strong>tut</strong> explore how to create a simple mobile application with HTML5, CSS3 and JavaScript based on the new Kii Javascript SDK. Basically Kii Corporation offers a rich cloud mobile backend to help the development of a mobile application providing some services out of the box such as user registration and login. Then the application will be wrapped by Apache Cordova to obtain a deployable app for iOS and Android in a hybrid fashion.</p>
+
+<p><img class="center" src="/images/posts/genymotion-get-your-box.png"></p>
+
+<!-- more -->
+
+
+<h2>Preview of the application in Plunker</h2>
+
+<p>A preview of the web application that is going to be implemented can be seen and tested in <a href="http://plnkr.co/edit/mSrWyzmmgOeSzCDKRWk8?p=preview" target="_blank">Plunker</a> using <code>jon/dohh</code> as username/password or just registering a new user. Password must be at least 4 charaters and special ones are not allowed</p>
+
+<p>In order to make it work I had to brutally copy/paste the content of the Kii Javascript SDK in a file because Plunker does not allow file upload.</p>
+
+<h2>Build steps</h2>
+
+<h3>1. Create a Kii cloud application</h3>
+
+<p>First of all create a Kii account and then a new Kii application, put the name and select the HTML5 logo. Now download the <a href="https://developer.kii.com/v2/apps/5510/downloads-templates" target="_blank">Kii Javascript SDK</a>.</p>
+
+<h3>2. Clone Github repository</h3>
+
+<p>Clone the repository containing the simple application</p>
+
+<pre><code>$ git clone https://github.com/blackat/kii-sdk-js-101.git
+</code></pre>
+
+<p>The application is the same application has been implemented in <a href="http://plnkr.co/edit/mSrWyzmmgOeSzCDKRWk8?p=preview" target="_blank">Plunker</a> with the following structure:</p>
+
+<pre><code>├── css
+│   ├── bootstrap.min.css
+│   └── style.css                   # custom style
+├── fonts
+│   └── CherryCreamSoda.ttf         # a fancy font
+├── index.html                      # single page of the web application
+├── js
+│   ├── angular.min.js
+│   ├── angular.min.js.map
+│   ├── kiisdk.js                   # Kii JavaScript SDK
+│   └── script.js                   # custom script for Angular controllers
+├── package.json
+└── server.js                       # server side configuration
+</code></pre>
+
+<p>In the <code>index.html</code> a minimal form has been implemented to allow login and registration of the user. Just to make the UI a bit more fancy and easy to develop, Boostrap and AngularJS frameworks have been added.</p>
+
+<h4>2.1 Kii JavaScript SDK</h4>
+
+<p>The SDK has been used to perform <em>login</em> and <em>registration</em> action.</p>
+
+<figure class='code'><figcaption><span>js/script.js</span> — <a href='https://github.com/blackat/kii-sdk-js-101/blob/master/js/script.js'>Link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$scope</span><span class="p">.</span><span class="nx">login</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nx">KiiUser</span><span class="p">.</span><span class="nx">authenticate</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">username</span><span class="p">,</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">password</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// Called on successful registration</span>
+</span><span class='line'>        <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">theUser</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// Called on a failed authentication</span>
+</span><span class='line'>        <span class="nx">failure</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">theUser</span><span class="p">,</span> <span class="nx">errorString</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">})</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Some details has been remove just to focus on the <code>authenticate</code> function. Once the credential has been sent to the cloud one of the two functions will be called according to the outcome of the authentication.</p>
+
+<p>The registration function is a bit different, a new <code>KiiUser</code> object has to be created with the data coming from the <code>form</code> and then the function <code>register</code> has to be called. As for the <code>login</code> function two callbacks are available to manage possible process outcomes.</p>
+
+<figure class='code'><figcaption><span>js/script.js</span> — <a href='https://github.com/blackat/kii-sdk-js-101/blob/master/js/script.js'>Link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$scope</span><span class="p">.</span><span class="nx">register</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Create the KiiUser object</span>
+</span><span class='line'>    <span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">KiiUser</span><span class="p">.</span><span class="nx">userWithUsername</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">username</span><span class="p">,</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">password</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Register the user, defining callbacks for when the process completes</span>
+</span><span class='line'>    <span class="nx">user</span><span class="p">.</span><span class="nx">register</span><span class="p">({</span>
+</span><span class='line'>        <span class="c1">// Called on successful registration</span>
+</span><span class='line'>        <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">theUser</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">},</span>
+</span><span class='line'>        <span class="c1">// Called on a failed registration</span>
+</span><span class='line'>        <span class="nx">failure</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">theUser</span><span class="p">,</span> <span class="nx">errorString</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3. Local test with node.js</h3>
+
+<p>In order to locally test in a browser the application <code>node.js</code> can be used. Download and install <a href="http://nodejs.org/download/" target="_blank">node.js</a>. On mac use <a href="http://brew.sh/"target="_blank">homebrew</a></p>
+
+<pre><code>$ brew install node
+</code></pre>
+
+<p>once done use <code>npm</code> to install modules declared in <code>package.json</code></p>
+
+<pre><code>$ npm install -g
+</code></pre>
+
+<p>where <code>-g</code> option means glabally, remove it to have all the modules installed locally in a folder named <code>node_modules</code>. Then, in the folder where the repository has been cloned, run the command</p>
+
+<pre><code>$ node server.js
+</code></pre>
+
+<p>and type in a browser tab <code>http://127.0.0.1:5000/</code> to load the web page.</p>
+
+<h3>4. PhoneGap/Apache Cordova Installation</h3>
+
+<p>PhoneGap wraps a native web application written in HTML, CSS and JavaScript in a native application of a given platform such as iOS, Android, Windows8 and more.</p>
+
+<p><a href="http://www.smashingmagazine.com/2014/02/11/four-ways-to-build-a-mobile-app-part3-phonegap/">Here</a> it is possible to find a more detailed tutorial about hot to build a mobile application using PhoneGap.</p>
+
+<h4>PhoneGap vs Cordova</h4>
+
+<blockquote><p>PhoneGap is a distribution of Apache Cordova. You can think of Apache Cordova as the engine that powers PhoneGap, similar to how WebKit is the engine that powers Chrome or Safari.</p></blockquote>
+
+<p>More <a href="http://phonegap.com/2012/03/19/phonegap-cordova-and-what%E2%80%99s-in-a-name/">here</a></p>
+
+<h4>Prepare the environment</h4>
+
+<p><a href="http://nodejs.org/download/">Install Node.js</a> if not yet done.</p>
+
+<p>Install Apache Cordova</p>
+
+<pre><code>npm install -g cordova
+</code></pre>
+
+<p>Optional, to debug install <a href="http://www.raymondcamden.com/index.cfm/2013/11/5/Ripple-is-Reborn">Apache Ripple emulator</a></p>
+
+<pre><code>$ npm install -g ripple-emulator
+</code></pre>
+
+<p>Install Android SDK</p>
+
+<pre><code>$ brew install android
+</code></pre>
+
+<p>Install &lsquo;&#8217;actual SDK stuff&rsquo;&#8217;</p>
+
+<pre><code>$ android
+</code></pre>
+
+<p><a href="https://www.genymotion.com/#!/download">Install Genymotion</a> to test the mobile application for Android devices.</p>
+
+<h4>Genymotion</h4>
+
+<p>Genymotion offers a better and more straight forward way to test an Android app than the native emulator. Once done register one or more virtual divices according to your preferences.</p>
+
+<p><img class="center" src="/images/posts/genymotion-devices.png"></p>
+
+<p>Pay attention about the specified <code>API version</code> of the virtual devices because it must match the one installed previously when <code>android</code> command has been run to install &lsquo;&#8217;actual SDK stuff&rsquo;&lsquo;, both are at version 21.</p>
+
+<p><img class="center" src="/images/posts/android-sdk.png"></p>
+
+<h3>5. Create the Apache Cordova application</h3>
+
+<h4>Step A - Create a Cordova project</h4>
+
+<p>Run the command</p>
+
+<pre><code>$ cordova create kii101phonegap com.kii.phonegap Kii101PhoneGap
+</code></pre>
+
+<p>This command will create a project named <em>Kii101PhoneGap</em> in the folder <code>kii101phonegap</code>.</p>
+
+<h4>Step B - Add project files</h4>
+
+<p>Copy the cloned repository content under the <code>www</code> into the project just created.</p>
+
+<pre><code>├── css
+│   ├── bootstrap.min.css
+│   └── style.css
+├── fonts
+│       └── CherryCreamSoda.ttf
+├── index.html
+└── js
+    ├── angular.min.js
+    ├── angular.min.js.map
+    ├── kiisdk.js
+    └── script.js
+</code></pre>
+
+<h4>Step C - Add platforms</h4>
+
+<p>Switch to folder <code>kii101phonegap</code> and add the platforms against which the test will be done, for instance iOS and Android</p>
+
+<pre><code>$ cordova platform add ios
+$ cordova platform add android
+</code></pre>
+
+<h4>Step D - Build and emulate</h4>
+
+<p>Build the application and test it in <strong>iOS</strong> platform running</p>
+
+<pre><code>$ cordova build ios
+$ cordova emulate ios
+</code></pre>
+
+<p>after the project have been built, an emulation window opens showing the developed application.</p>
+
+<p>For <strong>Android</strong> it is a bit different, before start the Genymotion virtual device created in one of the previous steps, then in the command line type</p>
+
+<pre><code>$ adb devices
+</code></pre>
+
+<p>and see how the Genymotion virtual device is seen as a real one</p>
+
+<pre><code>List of devices attached
+192.168.56.101:5555 device
+</code></pre>
+
+<p>so run the command</p>
+
+<pre><code>$ cordova run android
+</code></pre>
+
+<p>and the application will be deployed into the Genymotion device.</p>
+
+<h2>From the Kii Team</h2>
+
+<p>If you&rsquo;re interested in more samples that use <strong>Kii Cloud</strong> please take a look at the <a href="https://github.com/KiiCorp">GitHub page</a> from the Kii team. Also, if you&rsquo;re interested in other platforms, please check out their samples section available <a href="http://docs.kii.com/en/samples/">here</a>.</p>
+
+<h2>Trobleshooting</h2>
+
+<h4>Android target</h4>
+
+<p>Sometimes could happen that a prject has been created when a previuos <code>android-sdk</code> was installed, then having created a new device based on a more recent <code>API</code> the following error arises</p>
+
+<pre><code>ERROR: Error: Please install Android target 19 (the Android newest SDK).
+Make sure you have the latest Android tools installed as well.
+Run "android" from your command-line to install/update any missing SDKs or tools.
+</code></pre>
+
+<p>In the folder <code>kii101phonegap/platforms/android</code> of the Cordova application check the following files and keep android-sdk version consistent.</p>
+
+<pre><code>├── AndroidManifest.xml     # &lt;uses-sdk&gt; tag
+├── local.properties        # location of the SDK. This is only used by Ant
+├── project.properties      # project target
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">black@t</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-12-11T19:32:27+01:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>7:32 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/android/'>android</a>, <a class='category' href='/blog/categories/angularjs/'>angularjs</a>, <a class='category' href='/blog/categories/genymotion/'>genymotion</a>, <a class='category' href='/blog/categories/ios/'>ios</a>, <a class='category' href='/blog/categories/javascript/'>javascript</a>, <a class='category' href='/blog/categories/mobile/'>mobile</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blackat.github.io/blog/2014/12/11/kii-web-application/" data-via="eugeniolentini" data-counturl="http://blackat.github.io/blog/2014/12/11/kii-web-application/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/10/03/fullstack-javascript-web-application-part-2/" title="Previous Post: Fullstack Javascript Web Application Part 2">&laquo; Fullstack Javascript Web Application Part 2</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/02/01/javascript-anatomy-of-an-object/" title="Next Post: JavaScript: anatomy of an object">JavaScript: anatomy of an object &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/03/07/how-to-test-1-find-errors-to-make-the-application-works/">How to Test 1: Find Errors to Make the Application Works</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/02/01/javascript-anatomy-of-an-object/">JavaScript: Anatomy of an Object</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/12/11/kii-web-application/">Kii Web Application</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/03/fullstack-javascript-web-application-part-2/">Fullstack Javascript Web Application Part 2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/09/fullstack-javascript-web-application/">Fullstack Javascript Web Application Part 1</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/blackat">@blackat</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'blackat',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - black@t -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'blackatblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blackat.github.io/blog/2014/12/11/kii-web-application/';
+        var disqus_url = 'http://blackat.github.io/blog/2014/12/11/kii-web-application/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

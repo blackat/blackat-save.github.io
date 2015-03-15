@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Mvc | Contrast Of Beauty]]></title>
+  <link href="http://blackat.github.io/blog/categories/mvc/atom.xml" rel="self"/>
+  <link href="http://blackat.github.io/"/>
+  <updated>2015-03-15T20:52:17+01:00</updated>
+  <id>http://blackat.github.io/</id>
+  <author>
+    <name><![CDATA[black@t]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[MVC Pattern]]></title>
+    <link href="http://blackat.github.io/blog/2013/03/28/mvc-pattern/"/>
+    <updated>2013-03-28T22:42:00+01:00</updated>
+    <id>http://blackat.github.io/blog/2013/03/28/mvc-pattern</id>
+    <content type="html"><![CDATA[<p><blockquote><p>The MVC Pattern combines three patterns into a solution that separate the responsibilities in managing an interaction.</p><footer><strong>Bates and Sierra</strong> <cite><a href="http://shop.oreilly.com/product/9780596007126.do">http://shop.oreilly.com/product/9780596007126.do</a> Head First Design Patterns</cite></footer></blockquote></p>
+
+<!-- more -->
+
+
+<h2>Class diagram</h2>
+
+<p><img src="/images/posts/design-patterns/mvc_pattern.png"></p>
+
+<ul>
+<li><strong>View</strong> present the model usually in graphic interface.</li>
+<li><strong>Controller</strong> takes user input, interpreting them to change the model, translates input into actions on the model.</li>
+<li><strong>Model</strong> holds all the data, state and application logic, sends notifications of state changes to the observers.</li>
+</ul>
+
+
+<p>According to the interaction shown</p>
+
+<ol>
+<li>The <em>user</em> does something.</li>
+<li>The <em>controller</em> gets the input (action and/or parameters), interprets them and figures out how to change the state of the <em>model</em> based on that action. The controller can also ask the view to change such as enable or disable certain buttons.</li>
+<li>The <em>model</em> handles all the application data and logic.</li>
+<li>The <em>model</em> notifies the <em>view</em> that its state has changed.</li>
+<li>The <em>view</em> gets the state of the <em>model</em> to update itself.</li>
+</ol>
+
+
+<h2>Patterns</h2>
+
+<h3>Strategy Pattern</h3>
+
+<p>Implemented by the <em>view</em> and the <em>controller</em>. It decouples the view from the model because the controller is responsible for interacting with the <em>model</em> to carry out user requests. The view doesn&rsquo;t know how the request will be interpreted to change the model.</p>
+
+<p>The view delegates to the controller to handle the user actions. The controller is the object that knows how to handle the user actions.</p>
+
+<h3>Composite</h3>
+
+<p>The view is a composite of GUI components, the top level contains other components which contain components and so on until the leaf.</p>
+
+<h3>Observer</h3>
+
+<p>The model is the <em>observable</em> and the view is the <em>observer</em> which registers with the model.</p>
+]]></content>
+  </entry>
+  
+</feed>
