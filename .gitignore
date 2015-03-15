@@ -1,3 +1,7 @@
+
+/.idea
+*.iml
+
 .bundle
 .DS_Store
 .sass-cache
