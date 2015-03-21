@@ -1,0 +1,783 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>How to Test 2: TDD a Simple Example - Contrast Of Beauty</title>
+  <meta name="author" content="black@t">
+
+  
+  <meta name="description" content="Introduction DRAFT 1 A bit of theory Learning by example Imagine to write a new collector unit which can be plugged into the Cloud Service. At the &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blackat.github.io/blog/2015/03/21/how-to-test-2-tdd-a-simple-example/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Contrast Of Beauty" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,700,600' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Sorts+Mill+Goudy:400,400italic' rel='stylesheet' type='text/css'>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-59763266-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Contrast Of Beauty</a></h1>
+  
+    <h2>I am just curious</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="blackat.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/oo-design-principles">Design Principles</a></li>
+  <li><a href="/design-patterns">Design Patterns</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">How to Test 2: TDD a Simple Example</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-03-21T12:37:14+01:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span> <span class='time'>12:37 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://blackat.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Introduction</h2>
+
+<p>DRAFT 1</p>
+
+<!-- more  -->
+
+
+<h2>A bit of theory</h2>
+
+<h2>Learning by example</h2>
+
+<p>Imagine to write a new collector unit which can be plugged into the Cloud Service. At the beginning not all the details are clear and well defined, but with some imagination we can define some functionalities. Just a sort of rough idea and then start to apply the TDD steps one by one.</p>
+
+<h3>First test</h3>
+
+<h5>RED</h5>
+
+<p>So let&rsquo;s create the <code>FacebookCollectorTddTest.class</code> and implement the first</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FacebookCollectorTddTest</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAcceptGoldenPath</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">FacebookCollector</span> <span class="n">collector</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FacebookCollector</span><span class="o">();</span>
+</span><span class='line'>        <span class="n">assertTrue</span><span class="o">(</span><span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="k">new</span> <span class="nf">FacebookPost</span><span class="o">(</span><span class="s">&quot;Just a foo post&quot;</span><span class="o">),</span> <span class="mi">1L</span><span class="o">));</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>the code won&rsquo;t compile because the classes still do not exist. You can ask your IDE to implement the classes for you. For instance in <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a> you can exploit the class creation functionality as the screenshot below
+<img class="center" src="/images/posts/idea_class_creation.png"></p>
+
+<p>The class we are going to implement should implement the <code>Collector.java</code> interface</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FacebookCollector</span> <span class="kd">implements</span> <span class="n">Collector</span> <span class="o">{</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>Collector</code> interface is already the result of some rough idea about the service, but can be improved or extended in orde to support new features or requirements.</p>
+
+<p>Once the code compile, run the test and make it fails, <strong>Red</strong>. But wait a minute! The assertion does not have any message and when the test fails does not tell us anything interesting.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">AssertionError</span>
+</span><span class='line'>  <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">fail</span><span class="o">(</span><span class="n">Assert</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">86</span><span class="o">)</span>
+</span><span class='line'>  <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">Assert</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">41</span><span class="o">)</span>
+</span><span class='line'>  <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">Assert</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">52</span><span class="o">)</span>
+</span><span class='line'>  <span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">contrastofbeauty</span><span class="o">.</span><span class="na">tutorial</span><span class="o">.</span><span class="na">collectors</span><span class="o">.</span><span class="na">FacebookCollectorTddTest</span><span class="o">.</span><span class="na">testAcceptGoldenPath</span><span class="o">(</span><span class="n">FacebookCollectorTddTest</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">15</span><span class="o">)</span>
+</span><span class='line'>  <span class="o">...</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Let&rsquo;s improve the assertion with a test message</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAcceptGoldenPath</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">FacebookCollector</span> <span class="n">collector</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FacebookCollector</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">FacebookPost</span> <span class="n">facebookPost</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FacebookPost</span><span class="o">(</span><span class="s">&quot;Just a foo post&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">assertTrue</span><span class="o">(</span><span class="s">&quot;Object &quot;</span> <span class="o">+</span> <span class="n">facebookPost</span> <span class="o">+</span> <span class="s">&quot; for user &quot;</span> <span class="o">+</span> <span class="n">USER_ID</span> <span class="o">+</span> <span class="s">&quot; has not been accepted.&quot;</span><span class="o">,</span> <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">facebookPost</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">));</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h5>GREEN</h5>
+
+<p>Make the test passes with the minimum and simplest amount of code. As result the <em>first version</em> of the constructor and the <code>accept</code> method could be</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FacebookCollector</span> <span class="kd">implements</span> <span class="n">Collector</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">FacebookPost</span><span class="o">&gt;&gt;</span> <span class="n">facebookPostMap</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="nf">FacebookCollector</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">facebookPostMap</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">accept</span><span class="o">(</span><span class="n">Object</span> <span class="n">object</span><span class="o">,</span> <span class="kt">long</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span><span class="o">(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">userId</span><span class="o">,</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">FacebookPost</span><span class="o">&gt;());</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">add</span><span class="o">((</span><span class="n">FacebookPost</span><span class="o">)</span> <span class="n">object</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now re-running the test it passes. Comparing this way of implementing with the one seen to correct the class by testing you can notice we have some quite a good amount of time because of <code>NullPointerException</code>, they have been spotted immediately and corrected without allowing them to propagate.</p>
+
+<h5>REFACTOR</h5>
+
+<p>Refactor both test and the class to make them more readable such as the <code>setUp()</code> method, the assertion message and the constant</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FacebookCollectorTddTest</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">long</span> <span class="n">USER_ID</span> <span class="o">=</span> <span class="mi">1L</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">FacebookCollector</span> <span class="n">collector</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">FacebookPost</span> <span class="n">facebookPost</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Before</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUp</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">collector</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FacebookCollector</span><span class="o">();</span>
+</span><span class='line'>        <span class="n">facebookPost</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FacebookPost</span><span class="o">(</span><span class="s">&quot;Just a foo post&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Test</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAcceptGoldenPath</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;Object &quot;</span> <span class="o">+</span> <span class="n">facebookPost</span> <span class="o">+</span> <span class="s">&quot; for user &quot;</span> <span class="o">+</span> <span class="n">USER_ID</span> <span class="o">+</span> <span class="s">&quot; has not been accepted.&quot;</span><span class="o">;</span>
+</span><span class='line'>        <span class="n">assertTrue</span><span class="o">(</span><span class="n">message</span><span class="o">,</span> <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">facebookPost</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">));</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<h3>Second test</h3>
+
+<h5>RED</h5>
+
+<p>The test is marked as <em>GoldenPath</em> in order to highlight it is the most common case, where everything should run smooth. But what happens at the borders? Our implementation always return true except when an exception happens. So let&rsquo;s implement another test.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAcceptWrongObjectType</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">Integer</span> <span class="n">fooObject</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Integer</span><span class="o">(</span><span class="mi">123</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;Object &quot;</span> <span class="o">+</span> <span class="n">fooObject</span> <span class="o">+</span> <span class="s">&quot; for user &quot;</span> <span class="o">+</span> <span class="n">USER_ID</span> <span class="o">+</span> <span class="s">&quot; must not be accepted.&quot;</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">assertFalse</span><span class="o">(</span><span class="n">message</span><span class="o">,</span> <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">fooObject</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">));</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The test will fail because of a <code>java.lang.ClassCastException</code>, the declaration of the list <code>List&lt;FacebookPost&gt;</code> prevents some wrong addition to the list.</p>
+
+<h5>GREEN</h5>
+
+<p>It is enough doing a check on the type of object to make the test passes</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">accept</span><span class="o">(</span><span class="n">Object</span> <span class="n">object</span><span class="o">,</span> <span class="kt">long</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">object</span> <span class="k">instanceof</span> <span class="n">FacebookPost</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">userId</span><span class="o">,</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">FacebookPost</span><span class="o">&gt;());</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">add</span><span class="o">((</span><span class="n">FacebookPost</span><span class="o">)</span> <span class="n">object</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h5>REFACTOR</h5>
+
+<p>Test and class should be fine.</p>
+
+<hr />
+
+<h3>Third test</h3>
+
+<p>Roughly a collector starts to collect posts from a user, when a certain number of posts is reached, the collector calls the method <code>flush()</code> to submit the job.</p>
+
+<h5>RED</h5>
+
+<p>Let&rsquo;s write a failing test</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAcceptCallFlushMethod</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">collector</span><span class="o">.</span><span class="na">setNewBufferSize</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">collector</span><span class="o">.</span><span class="na">setCallbackFunction</span><span class="o">(</span><span class="n">callbackMock</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">facebookPost</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">facebookPost</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">verify</span><span class="o">(</span><span class="n">callbackMock</span><span class="o">,</span> <span class="n">times</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">addTask</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Callable</span><span class="o">.</span><span class="na">class</span><span class="o">),</span> <span class="n">anyInt</span><span class="o">());</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The test sets the <em>buffer size</em> equal to two so it is enough adding two posts to have the <code>flush</code> method called. By using Mockito it is possible to verify if a certain method has been called and how many times. This is <em>behavior verification</em> and happens on <em>indirect outputs</em>.</p>
+
+<h5>GREEN</h5>
+
+<p>A solution for the method could be</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">accept</span><span class="o">(</span><span class="n">Object</span> <span class="n">object</span><span class="o">,</span> <span class="kt">long</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">object</span> <span class="k">instanceof</span> <span class="n">FacebookPost</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">userId</span><span class="o">,</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">FacebookPost</span><span class="o">&gt;());</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">add</span><span class="o">((</span><span class="n">FacebookPost</span><span class="o">)</span> <span class="n">object</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">newBufferSize</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="n">newBufferSize</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">flush</span><span class="o">(</span><span class="n">userId</span><span class="o">);</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="n">BUFFER_SIZE</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">flush</span><span class="o">(</span><span class="n">userId</span><span class="o">);</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p> To make the test work we have to implement other three methods such as <code>flush()</code>, <code>setNewBufferSize()</code> and setCallbackFunction(). SO it is possible to temporary move to other tests and then come back or just provide a fake implementation to produce the call of the method we want to verify. It depends a lot on experience, confidence with the task and how strict we want to adhere to TDD approach. Two methods are setters and they should not be tested, the third one could be temporary implemented as</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">flush</span><span class="o">(</span><span class="kt">long</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">callbackFunction</span><span class="o">.</span><span class="na">addTask</span><span class="o">(</span><span class="k">new</span> <span class="nf">Callable</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="nd">@Override</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="n">Object</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">},</span> <span class="n">userId</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The test passes.</p>
+
+<h5>REFACTOR</h5>
+
+<p>Improve a bit the <code>accept()</code> method to make it more readable and compact. One solution could be</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">accept</span><span class="o">(</span><span class="n">Object</span> <span class="n">object</span><span class="o">,</span> <span class="kt">long</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">object</span> <span class="k">instanceof</span> <span class="n">FacebookPost</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>         <span class="k">if</span> <span class="o">(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>             <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">userId</span><span class="o">,</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">FacebookPost</span><span class="o">&gt;());</span>
+</span><span class='line'>         <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>         <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">add</span><span class="o">((</span><span class="n">FacebookPost</span><span class="o">)</span> <span class="n">object</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>         <span class="kt">int</span> <span class="n">bufferSize</span> <span class="o">=</span> <span class="n">newBufferSize</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">newBufferSize</span> <span class="o">:</span> <span class="n">BUFFER_SIZE</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>         <span class="k">if</span> <span class="o">(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="n">bufferSize</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>             <span class="n">flush</span><span class="o">(</span><span class="n">userId</span><span class="o">);</span>
+</span><span class='line'>         <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>         <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<h3>Fourth test</h3>
+
+<p>It&rsquo;s time to test the <code>flush()</code> method. Write a unit test, make it fails and re-implement it in a more appropriate way than what done before.
+When the <code>flush()</code> method is called, it creates a task and invokes a method against a callback function, the list for a given user is cleared.</p>
+
+<h5>RED</h5>
+
+<p>The failing test</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testFlushGoldenPath</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">collector</span><span class="o">.</span><span class="na">setCallbackFunction</span><span class="o">(</span><span class="n">callbackMock</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">facebookPost</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">facebookPost</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">String</span> <span class="n">message1</span> <span class="o">=</span> <span class="s">&quot;The list size for the user &quot;</span> <span class="o">+</span> <span class="n">USER_ID</span> <span class="o">+</span> <span class="s">&quot; must be equal to 2&quot;</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">assertEquals</span><span class="o">(</span><span class="n">message1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="n">collector</span><span class="o">.</span><span class="na">getListSizeByUserId</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">));</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">collector</span><span class="o">.</span><span class="na">flush</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">String</span> <span class="n">message2</span> <span class="o">=</span> <span class="s">&quot;The list size after a call to flush() must be 0&quot;</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">assertEquals</span><span class="o">(</span><span class="n">message2</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">collector</span><span class="o">.</span><span class="na">getListSizeByUserId</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">));</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">verify</span><span class="o">(</span><span class="n">callbackMock</span><span class="o">,</span> <span class="n">times</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">addTask</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Callable</span><span class="o">.</span><span class="na">class</span><span class="o">),</span> <span class="n">anyInt</span><span class="o">());</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We test</p>
+
+<pre><code>- posts have been correctly added
+- after the call to the `flush()` method the list is empty
+- the method `addTask()` from callback is invoked
+</code></pre>
+
+<h5>GREEN</h5>
+
+<p>Solution</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">flush</span><span class="o">(</span><span class="kt">long</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">List</span><span class="o">&lt;</span><span class="n">FacebookPost</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">));</span>
+</span><span class='line'>    <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">clear</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">FacebookTask</span> <span class="n">facebookTask</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FacebookTask</span><span class="o">(</span><span class="n">list</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">callbackFunction</span><span class="o">.</span><span class="na">addTask</span><span class="o">(</span><span class="n">facebookTask</span><span class="o">,</span> <span class="n">userId</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The test run fine.</p>
+
+<h5>REFACTOR</h5>
+
+<p>The class seems fine.</p>
+
+<hr />
+
+<h3>Fifth test</h3>
+
+<p>Add exception in case the callback function is not set. This is a borderline test</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">black@t</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-03-21T12:37:14+01:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2015</span></span> <span class='time'>12:37 pm</span></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blackat.github.io/blog/2015/03/21/how-to-test-2-tdd-a-simple-example/" data-via="eugeniolentini" data-counturl="http://blackat.github.io/blog/2015/03/21/how-to-test-2-tdd-a-simple-example/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/03/07/how-to-test-1-find-errors-to-make-the-application-works/" title="Previous Post: How to test 1: find errors to make the application works">&laquo; How to test 1: find errors to make the application works</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/03/21/how-to-test-2-tdd-a-simple-example/">How to Test 2: TDD a Simple Example</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/07/how-to-test-1-find-errors-to-make-the-application-works/">How to Test 1: Find Errors to Make the Application Works</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/02/01/javascript-anatomy-of-an-object/">JavaScript: Anatomy of an Object</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/12/11/kii-web-application/">Kii Web Application</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/03/fullstack-javascript-web-application-part-2/">Fullstack Javascript Web Application Part 2</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/blackat">@blackat</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'blackat',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - black@t -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'blackatblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blackat.github.io/blog/2015/03/21/how-to-test-2-tdd-a-simple-example/';
+        var disqus_url = 'http://blackat.github.io/blog/2015/03/21/how-to-test-2-tdd-a-simple-example/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
