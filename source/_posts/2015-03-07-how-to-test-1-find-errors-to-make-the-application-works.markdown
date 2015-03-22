@@ -3,13 +3,13 @@ layout: post
 title: "How to test 1: find errors to make the application works"
 date: 2015-03-07 09:37:33 +0100
 comments: true
-categories:
+categories: [test, testing, mockito, mock, tdd, java]
 ---
 This is an _experiment tutorial_ to better learn some _101_ practices and how testing can be a better replacement of developing by debugging.
 
 The goal of the _experiment-project_ is find, correct bugs and make the application works by writing tests.
 
-This tutorial is still in __DRAFT 2__.
+This tutorial is still in __DRAFT 3__.
 <!-- more -->
 
 ## 1 Clone the project

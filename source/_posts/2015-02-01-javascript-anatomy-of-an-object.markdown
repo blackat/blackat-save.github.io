@@ -3,7 +3,7 @@ layout: post
 title: "JavaScript: anatomy of an object"
 date: 2015-02-01 11:27:38 +0100
 comments: true
-categories:
+categories: [javascript, oo, object oriented]
 ---
 __JavaScript__ is a _prototypal inheritance language_ where objects inherit properties directly from other objects. Differently a _class-based languages_ such as Java defines an object as instance of a class and inheritance hierarchy is defined through classes. Packages then define the layout of files and folders in a project.
 
