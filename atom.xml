@@ -4,7 +4,7 @@
   <title><![CDATA[Contrast Of Beauty]]></title>
   <link href="http://blackat.github.io/atom.xml" rel="self"/>
   <link href="http://blackat.github.io/"/>
-  <updated>2015-03-21T23:55:12+01:00</updated>
+  <updated>2015-03-22T17:45:44+01:00</updated>
   <id>http://blackat.github.io/</id>
   <author>
     <name><![CDATA[black@t]]></name>
@@ -18,12 +18,14 @@
     <link href="http://blackat.github.io/blog/2015/03/21/how-to-test-2-tdd-a-simple-example/"/>
     <updated>2015-03-21T12:37:14+01:00</updated>
     <id>http://blackat.github.io/blog/2015/03/21/how-to-test-2-tdd-a-simple-example</id>
-    <content type="html"><![CDATA[<h2>Introduction</h2>
-
-<p>DRAFT 1</p>
+    <content type="html"><![CDATA[<p>Test Driven Development (TDD) is a software development process based on the <em>test-first</em> approach of <a href="http://en.wikipedia.org/wiki/Extreme_programming">extreme programming</a>. Roughly the idea is creating tests before any implementation and then start development guided by test, finally refactor. We will quickly explore the technique and its <em>rhythm</em> to highlight advantages and disadvantages. <strong>DRAFT 1</strong></p>
 
 <!-- more  -->
 
+
+<h3>Components and material</h3>
+
+<p>This tutorial is part of an experiment done to simply explain fundamental concepts of testing. In the <a href="http://blackat.github.io/blog/2015/03/07/how-to-test-1-find-errors-to-make-the-application-works/">previous one</a> you can find concepts and jargon of the testing world along with some exercises which can help you to get in confidence with unit testing and mock objects. The code experiment used in this tutorial is described in the previous article and can be found on <a href="https://github.com/blackat/tutorial-howtotest-1-collectors">GitHub</a>, so please clone it to experiment or just follow some code snippet on this page.</p>
 
 <h2>A bit of theory</h2>
 
@@ -79,13 +81,11 @@
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-<span class='line-number'>6</span>
 </pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">AssertionError</span>
 </span><span class='line'>  <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">fail</span><span class="o">(</span><span class="n">Assert</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">86</span><span class="o">)</span>
 </span><span class='line'>  <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">Assert</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">41</span><span class="o">)</span>
 </span><span class='line'>  <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">Assert</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">52</span><span class="o">)</span>
 </span><span class='line'>  <span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">contrastofbeauty</span><span class="o">.</span><span class="na">tutorial</span><span class="o">.</span><span class="na">collectors</span><span class="o">.</span><span class="na">FacebookCollectorTddTest</span><span class="o">.</span><span class="na">testAcceptGoldenPath</span><span class="o">(</span><span class="n">FacebookCollectorTddTest</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">15</span><span class="o">)</span>
-</span><span class='line'>  <span class="o">...</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -547,7 +547,7 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 
 <p>The goal of the <em>experiment-project</em> is find, correct bugs and make the application works by writing tests.</p>
 
-<p>This tutorial is still in <strong>DRAFT 2</strong>.</p>
+<p>This tutorial is still in <strong>DRAFT 3</strong>.</p>
 
 <!-- more -->
 
@@ -558,73 +558,39 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 
 <h2>2 Scaffolding</h2>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>├── README.md
-</span><span class='line'>├── example.log
-</span><span class='line'>├── exercise-api
-</span><span class='line'>│   ├── exercise-api.iml
-</span><span class='line'>│   ├── pom.xml
-</span><span class='line'>│   └── src
-</span><span class='line'>│       └── main
-</span><span class='line'>│           └── java
-</span><span class='line'>│               └── com
-</span><span class='line'>│                   └── contrastofbeauty
-</span><span class='line'>│                       └── tutorial
-</span><span class='line'>│                           └── api
-</span><span class='line'>│                               ├── collectors
-</span><span class='line'>│                               │   └── Collector.java
-</span><span class='line'>│                               ├── domain
-</span><span class='line'>│                               │   ├── AcknoledgeService.java
-</span><span class='line'>│                               │   └── Callback.java
-</span><span class='line'>│                               └── services
-</span><span class='line'>│                                   └── Service.java
-</span><span class='line'>├── exercise-to-be-corrected
-</span><span class='line'>│   ├── exercise-to-be-corrected.iml
-</span><span class='line'>│   ├── pom.xml
-</span><span class='line'>│   └── src
-</span><span class='line'>│       ...
-</span><span class='line'>│
-</span><span class='line'>├── exercise-working
-</span><span class='line'>│   ├── example.log
-</span><span class='line'>│   ├── exercise-working.iml
-</span><span class='line'>│   ├── pom.xml
-</span><span class='line'>│   └── src
-</span><span class='line'>│       ...
-</span><span class='line'>│
-</span><span class='line'>└── pom.xml</span></code></pre></td></tr></table></div></figure>
-
+<p>  ├── README.md
+  ├── example.log
+  ├── exercise-api
+  │   ├── exercise-api.iml
+  │   ├── pom.xml
+  │   └── src
+  │       └── main
+  │           └── java
+  │               └── com
+  │                   └── contrastofbeauty
+  │                       └── tutorial
+  │                           └── api
+  │                               ├── collectors
+  │                               │   └── Collector.java
+  │                               ├── domain
+  │                               │   ├── AcknoledgeService.java
+  │                               │   └── Callback.java
+  │                               └── services
+  │                                   └── Service.java
+  ├── exercise-to-be-corrected
+  │   ├── exercise-to-be-corrected.iml
+  │   ├── pom.xml
+  │   └── src
+  │       &hellip;
+  │
+  ├── exercise-working
+  │   ├── example.log
+  │   ├── exercise-working.iml
+  │   ├── pom.xml
+  │   └── src
+  │       &hellip;
+  │
+  └── pom.xml</p>
 
 <p>The maven project is composed by three modules:</p>
 
@@ -753,8 +719,6 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 <h4>4.1.2 Method accept(), 3 errors</h4>
 
 <p>Let&rsquo;s start working on the method <code>accept(Object object, long userId)</code>, run the first test that has been renamed <code>testAcceptGoldenPath()</code> and contains just one assertion:</p>
-
-<p>// explain why the golden path and import static</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1327,161 +1291,125 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 
 <h5>Additional test</h5>
 
-<p>To build a <em>net of automatic tests</em> is interesting to test different aspects of a method so we can add the following one
+<p>To build a <em>net of automatic tests</em> is interesting to test different aspects of a method so we can add the following one</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testOpenConnectionUserHasNotOpenConnection</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">assertFalse</span><span class="o">(</span><span class="n">cloudService</span><span class="o">.</span><span class="na">isUserConnected</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">));</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="err">``</span>
+</span><span class='line'>
+</span><span class='line'><span class="err">####</span> <span class="mf">4.2</span><span class="o">.</span><span class="mi">4</span> <span class="n">Method</span> <span class="nf">saveObject</span><span class="o">()</span> <span class="o">-</span> <span class="mi">0</span> <span class="n">errors</span>
+</span><span class='line'><span class="n">This</span> <span class="n">method</span> <span class="n">does</span> <span class="n">not</span> <span class="n">have</span> <span class="n">any</span> <span class="n">error</span><span class="o">,</span> <span class="n">but</span> <span class="n">one</span> <span class="n">or</span> <span class="n">more</span> <span class="n">test</span> <span class="n">must</span> <span class="n">be</span> <span class="n">written</span> <span class="n">to</span> <span class="n">build</span> <span class="n">up</span> <span class="n">an</span> <span class="n">efficient</span> <span class="n">_test</span> <span class="n">suite_</span><span class="o">.</span> <span class="n">Moreover</span> <span class="n">it</span> <span class="n">could</span> <span class="n">be</span> <span class="n">another</span> <span class="n">opportunity</span> <span class="n">to</span> <span class="n">see</span> <span class="n">the</span> <span class="n">difference</span> <span class="n">between</span> <span class="n">using</span> <span class="n">_override_</span> <span class="n">and</span> <span class="n">_Mockito_</span> <span class="n">to</span> <span class="n">test</span> <span class="n">_indirect</span> <span class="n">output_</span><span class="o">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p> java
 @Test
-public void testOpenConnectionUserHasNotOpenConnection() {
-    assertFalse(cloudService.isUserConnected(USER_ID));
-}</p>
+public void testSaveObjectWithOverrideGoldenPath() throws Exception {</p>
 
-<h4>4.2.4 Method saveObject() - 0 errors</h4>
+<pre><code>final AtomicBoolean accepted = new AtomicBoolean();
 
-<p>This method does not have any error, but one or more test must be written to build up an efficient <em>test suite</em>. Moreover it could be another opportunity to see the difference between using <em>override</em> and <em>Mockito</em> to test <em>indirect output</em>.</p>
+Collector tweetCollector = new TweetCollector(){
+    @Override
+    public boolean accept(Object object, long userId) {
+
+        if (object instanceof Tweet) {
+            accepted.set(true);
+            return true;
+        }
+
+        return false;
+    }
+};
+
+cloudService.addCollector(tweetCollector);
+
+cloudService.openConnection(USER_ID);
+
+cloudService.saveObject(new Tweet("foo tweet"), USER_ID);
+
+assertTrue(accepted.get());
+</code></pre>
+
+<p>}</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">and</span> <span class="n">the</span> <span class="n">same</span> <span class="n">test</span> <span class="n">but</span> <span class="n">done</span> <span class="n">using</span> <span class="n">Mockito</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p> java
+@Test
+public void testSaveObjectWithMockitoGoldenPath() throws Exception {</p>
+
+<pre><code>Collector collectorMock = mock(TweetCollector.class);
+when(collectorMock.accept(any(Tweet.class), anyInt())).thenReturn(true);
+
+cloudService.addCollector(collectorMock);
+
+cloudService.openConnection(USER_ID);
+
+cloudService.saveObject(tweetMock, USER_ID);
+
+verify(collectorMock, times(1)).accept(any(Tweet.class), anyInt());
+</code></pre>
+
+<p>}</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testSaveObjectWithOverrideGoldenPath</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Once</span> <span class="n">again</span> <span class="n">the</span> <span class="n">use</span> <span class="n">of</span> <span class="n">Mockito</span> <span class="n">allows</span> <span class="n">to</span> <span class="n">have</span> <span class="n">a</span> <span class="n">more</span> <span class="n">concise</span> <span class="n">and</span> <span class="n">readable</span> <span class="n">test</span><span class="o">.</span> <span class="n">The</span> <span class="err">`</span><span class="n">Mockito</span><span class="o">.</span><span class="na">verify</span><span class="o">()</span><span class="err">`</span> <span class="n">method</span> <span class="n">highlights</span> <span class="n">the</span> <span class="n">test</span> <span class="n">of</span> <span class="n">the</span> <span class="n">_indirect</span> <span class="n">output_</span><span class="o">.</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="kd">final</span> <span class="n">AtomicBoolean</span> <span class="n">accepted</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">AtomicBoolean</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">Collector</span> <span class="n">tweetCollector</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">TweetCollector</span><span class="o">(){</span>
-</span><span class='line'>        <span class="nd">@Override</span>
-</span><span class='line'>        <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">accept</span><span class="o">(</span><span class="n">Object</span> <span class="n">object</span><span class="o">,</span> <span class="kt">long</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">object</span> <span class="k">instanceof</span> <span class="n">Tweet</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>                <span class="n">accepted</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-</span><span class='line'>                <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
-</span><span class='line'>            <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">};</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">addCollector</span><span class="o">(</span><span class="n">tweetCollector</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">openConnection</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">saveObject</span><span class="o">(</span><span class="k">new</span> <span class="nf">Tweet</span><span class="o">(</span><span class="s">&quot;foo tweet&quot;</span><span class="o">),</span> <span class="n">USER_ID</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">assertTrue</span><span class="o">(</span><span class="n">accepted</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
-</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="err">#####</span> <span class="n">Additional</span> <span class="n">test</span> <span class="mi">1</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>and the same test but done using Mockito</p>
+<p> java
+@Rule
+public ExpectedException exception = ExpectedException.none();</p>
+
+<p>@Test
+public void testSaveObjectObjectNotAcceptedThrowException() throws Exception {</p>
+
+<pre><code>exception.expect(IllegalArgumentException.class);
+exception.expectMessage("Entity of type " + new Object().getClass() + " cannot be accepted.");
+
+cloudService.addCollector(new TweetCollector());
+
+cloudService.openConnection(USER_ID);
+
+cloudService.saveObject(new Object(), USER_ID);
+</code></pre>
+
+<p>}</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testSaveObjectWithMockitoGoldenPath</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">Collector</span> <span class="n">collectorMock</span> <span class="o">=</span> <span class="n">mock</span><span class="o">(</span><span class="n">TweetCollector</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">when</span><span class="o">(</span><span class="n">collectorMock</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Tweet</span><span class="o">.</span><span class="na">class</span><span class="o">),</span> <span class="n">anyInt</span><span class="o">())).</span><span class="na">thenReturn</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">addCollector</span><span class="o">(</span><span class="n">collectorMock</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">openConnection</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">saveObject</span><span class="o">(</span><span class="n">tweetMock</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">verify</span><span class="o">(</span><span class="n">collectorMock</span><span class="o">,</span> <span class="n">times</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">accept</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Tweet</span><span class="o">.</span><span class="na">class</span><span class="o">),</span> <span class="n">anyInt</span><span class="o">());</span>
-</span><span class='line'><span class="o">}</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="err">#####</span> <span class="n">Additional</span> <span class="n">test</span> <span class="mi">2</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Once again the use of Mockito allows to have a more concise and readable test. The <code>Mockito.verify()</code> method highlights the test of the <em>indirect output</em>.</p>
+<p> java
+@Test
+public void testSaveObjectUserNotConnected() throws Exception {
+    exception.expect(IllegalArgumentException.class);
+    exception.expectMessage(&ldquo;User with id &rdquo; + USER_ID + &ldquo; has not open any connection, please open a connection &rdquo; +
+        &ldquo;before trying to save.&rdquo;);</p>
 
-<h5>Additional test 1</h5>
+<pre><code>cloudService.saveObject(mock(Callable.class), USER_ID);
+</code></pre>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Rule</span>
-</span><span class='line'><span class="kd">public</span> <span class="n">ExpectedException</span> <span class="n">exception</span> <span class="o">=</span> <span class="n">ExpectedException</span><span class="o">.</span><span class="na">none</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testSaveObjectObjectNotAcceptedThrowException</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">exception</span><span class="o">.</span><span class="na">expect</span><span class="o">(</span><span class="n">IllegalArgumentException</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">exception</span><span class="o">.</span><span class="na">expectMessage</span><span class="o">(</span><span class="s">&quot;Entity of type &quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="nf">Object</span><span class="o">().</span><span class="na">getClass</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; cannot be accepted.&quot;</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">addCollector</span><span class="o">(</span><span class="k">new</span> <span class="nf">TweetCollector</span><span class="o">());</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">openConnection</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">saveObject</span><span class="o">(</span><span class="k">new</span> <span class="nf">Object</span><span class="o">(),</span> <span class="n">USER_ID</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h5>Additional test 2</h5>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testSaveObjectUserNotConnected</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">exception</span><span class="o">.</span><span class="na">expect</span><span class="o">(</span><span class="n">IllegalArgumentException</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">exception</span><span class="o">.</span><span class="na">expectMessage</span><span class="o">(</span><span class="s">&quot;User with id &quot;</span> <span class="o">+</span> <span class="n">USER_ID</span> <span class="o">+</span> <span class="s">&quot; has not open any connection, please open a connection &quot;</span> <span class="o">+</span>
-</span><span class='line'>        <span class="s">&quot;before trying to save.&quot;</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">saveObject</span><span class="o">(</span><span class="n">mock</span><span class="o">(</span><span class="n">Callable</span><span class="o">.</span><span class="na">class</span><span class="o">),</span> <span class="n">USER_ID</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<p>}
+&#8220;`</p>
 ]]></content>
   </entry>
   
@@ -1617,6 +1545,8 @@ public void testOpenConnectionUserHasNotOpenConnection() {
 </span><span class='line'>    <span class="p">}</span>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
+
+
 
 
 <blockquote><p>Objects are passed by reference, they are never copied.</p><footer><strong>Douglas Crockford</strong> <cite><a href='http://shop.oreilly.com/product/9780596517748.do'>JavaScript: The Good Parts</a></cite></footer></blockquote>

@@ -9,7 +9,7 @@
   <meta name="author" content="black@t">
 
   
-  <meta name="description" content="Introduction DRAFT 1 A bit of theory Learning by example Imagine to write a new collector unit which can be plugged into the Cloud Service. At the &hellip;">
+  <meta name="description" content="Test Driven Development (TDD) is a software development process based on the test-first approach of extreme programming. Roughly the idea is creating &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -103,12 +103,14 @@
   </header>
 
 
-<div class="entry-content"><h2>Introduction</h2>
-
-<p>DRAFT 1</p>
+<div class="entry-content"><p>Test Driven Development (TDD) is a software development process based on the <em>test-first</em> approach of <a href="http://en.wikipedia.org/wiki/Extreme_programming">extreme programming</a>. Roughly the idea is creating tests before any implementation and then start development guided by test, finally refactor. We will quickly explore the technique and its <em>rhythm</em> to highlight advantages and disadvantages. <strong>DRAFT 1</strong></p>
 
 <!-- more  -->
 
+
+<h3>Components and material</h3>
+
+<p>This tutorial is part of an experiment done to simply explain fundamental concepts of testing. In the <a href="http://blackat.github.io/blog/2015/03/07/how-to-test-1-find-errors-to-make-the-application-works/">previous one</a> you can find concepts and jargon of the testing world along with some exercises which can help you to get in confidence with unit testing and mock objects. The code experiment used in this tutorial is described in the previous article and can be found on <a href="https://github.com/blackat/tutorial-howtotest-1-collectors">GitHub</a>, so please clone it to experiment or just follow some code snippet on this page.</p>
 
 <h2>A bit of theory</h2>
 
@@ -164,13 +166,11 @@
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-<span class='line-number'>6</span>
 </pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">AssertionError</span>
 </span><span class='line'>  <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">fail</span><span class="o">(</span><span class="n">Assert</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">86</span><span class="o">)</span>
 </span><span class='line'>  <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">Assert</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">41</span><span class="o">)</span>
 </span><span class='line'>  <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">Assert</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">52</span><span class="o">)</span>
 </span><span class='line'>  <span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">contrastofbeauty</span><span class="o">.</span><span class="na">tutorial</span><span class="o">.</span><span class="na">collectors</span><span class="o">.</span><span class="na">FacebookCollectorTddTest</span><span class="o">.</span><span class="na">testAcceptGoldenPath</span><span class="o">(</span><span class="n">FacebookCollectorTddTest</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">15</span><span class="o">)</span>
-</span><span class='line'>  <span class="o">...</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
