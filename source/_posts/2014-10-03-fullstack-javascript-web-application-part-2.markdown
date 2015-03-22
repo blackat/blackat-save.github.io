@@ -3,7 +3,7 @@ layout: post
 title: "Fullstack Javascript Web Application Part 2"
 date: 2014-10-03 23:52:35 +0200
 comments: true
-categories: [javascript, monmgodb, grunt, bower, webapp, fullstack, jasmine, karma]
+categories:
 ---
 
 The single page web application will be enriched with a database support, a build system with dependencies management and a testing framework.
@@ -49,7 +49,7 @@ Modify the list of modules in order to include the dependencies to Grunt and Gru
 Previous dependencies have been removed and will be managed by Bower later on. `package.json` manages just Grunt and Bower dependencies necessary to manage the all project lifecycle.
 
 ### 1.2 Grunt file configuration
-```javascript Gruntfile.js
+``` javascript Gruntfile.js
 'use strict';
 
 // 1. Wrapper function
@@ -89,7 +89,6 @@ module.exports = function (grunt) {
         ]);
     });
 }
-
 ```
 
 Add `Gruntfile.js` to the project used to define tasks and load plugins. Grunt configuration file is made of four parts
@@ -131,6 +130,7 @@ Run `npm install` to install modules locally or `npm install -g` to install modu
     ]
 }
 ```
+
 Type `npm install -g bower` to install __Bower__ globally, then `bower init` in the root folder of the current project to have `bower.json` _manifest_ file created and initialized with some basic information.
 
 #### 1.4.1 Bower in a Nutshell
@@ -139,7 +139,7 @@ _Bower_ manages front-end components (css, html, js), _npm_ manages Javascript m
 Thus `package.json` is used to install _Node_ modules such as _Grunt_, _Express_ and so on, instead `bower.json` for all the client-side libraries such as _Angular_, _Bootstrap_ and all the components could be required by `index.html` page.
 
 #### 1.4.2 Configure Grunt Wiredep Task
-```json package.json https://github.com/blackat/popcorn-time-express-angular-mongodb-grunt/blob/master/package.json
+``` json package.json https://github.com/blackat/popcorn-time-express-angular-mongodb-grunt/blob/master/package.json
 },
     "devDependencies": {
         ...
@@ -150,7 +150,7 @@ Thus `package.json` is used to install _Node_ modules such as _Grunt_, _Express_
 
 Add `grunt-wiredep` to `package.json`. It is the _grunt task_ will inject UI dependencies. Then add and configure the grunt task in `Gruntfile.js` as follows:
 
-```json Gruntfile.js https://github.com/blackat/popcorn-time-express-angular-mongodb-grunt/blob/master/Gruntfile.js
+``` json Gruntfile.js https://github.com/blackat/popcorn-time-express-angular-mongodb-grunt/blob/master/Gruntfile.js
     ...
     grunt.initConfig({
         ...
@@ -180,7 +180,7 @@ Add `grunt-wiredep` to `package.json`. It is the _grunt task_ will inject UI dep
 
 
 #### 1.4.3 Inject Bower Components
-```json bower.json https://github.com/blackat/popcorn-time-express-angular-mongodb-grunt/blob/master/bower.json
+``` json bower.json https://github.com/blackat/popcorn-time-express-angular-mongodb-grunt/blob/master/bower.json
     ...
     "dependencies": {
         "angular": ">=1.2.*",
@@ -197,9 +197,10 @@ Add `grunt-wiredep` to `package.json`. It is the _grunt task_ will inject UI dep
 
     }
 ```
+
 Insert the list of dependencies Bower has to inject into `index.html` and remove them from `package.json`. Now frontend dependencies are managed and injected by _Bower_ and not anymore by _npm_
 
-```html app/views/index.html https://github.com/blackat/popcorn-time-express-angular-mongodb-grunt/blob/master/app/views/index.html
+``` html app/views/index.html https://github.com/blackat/popcorn-time-express-angular-mongodb-grunt/blob/master/app/views/index.html
 <!DOCTYPE html>
 <html lang="en" ng-app="movieApp">
 <head>
@@ -219,6 +220,7 @@ Insert the list of dependencies Bower has to inject into `index.html` and remove
 <script src="scripts/controllers/controllers.js"></script>
 </html>
 ```
+
 Specify in `index.html` where _Bower_ should insert css and javascript dependencies that have been specified in `bower.json`.
 
 Once done run
@@ -227,7 +229,7 @@ Once done run
  - `grunt serve` to run all the defined tasks and have the server up and running.
 
  Just to test the injection task run `grunt wiredep` and check that dependencies have been added to the `index.html` page as follows:
-```html app/views/index.html https://github.com/blackat/popcorn-time-express-angular-mongodb-grunt/blob/master/app/views/index.html
+``` html app/views/index.html https://github.com/blackat/popcorn-time-express-angular-mongodb-grunt/blob/master/app/views/index.html
 <!DOCTYPE html>
 <html lang="en" ng-app="movieApp">
 <head>
@@ -263,7 +265,7 @@ Once done run
 ### 2.1 Model
 As first thing I want to define the object model should be persisted, retrieved and finally show off in the client user interface. So in '../lib/models' define
 
-```javascript /lib/models/product.js
+``` javascript /lib/models/product.js
 'use strict';
 
 var mongoose = require('mongoose'),
@@ -276,6 +278,7 @@ var ProductSchema = new Schema({
 
 mongoose.model('Product', ProductSchema);
 ```
+
 I have decided to use [mongoose] [mongoose] in order to reduce boilerplate code for validation, read/write operation and so on.
 
 >With Mongoose, everything is derived from a Schema. Each [schema] [mongoose_schema] maps to a MongoDB collection and defines the shape of the documents within that collection.
@@ -317,8 +320,8 @@ exports.products = function (req, res) {
         }
     });
 };
-
 ```
+
 In order to retrieve all the product documents stored in the data source, use static method `find`. Documents are instances of the model.
 
 The module `products.js` exports the function `products()` adding it to the `exports` object. The function will be added to the root of the module.
@@ -346,7 +349,7 @@ A nice way to implement _CRUD operations_ in [Angular] is using `$resource` fact
 
 
 ### 4.1 Consuming a RESTful service
-```javascript /app/scripts/services/movieServices.js
+``` javascript /app/scripts/services/movieServices.js
 'use strict';
 
 var  movieServices = angular.module('movieApp.movieServices', ['ngResource']);
@@ -355,6 +358,7 @@ movieServices.factory('Movie', function($resource){
     return $resource('movies/movies/:id', {id:'@_id'});
 });
 ```
+
 Module `ngResource` needs to be installed and declared in order to use its __service__ `$resource`. The returned resources has __action methods__ providing higher-level behaviors than the low level `$http`.
 
 According to Angular  [api](https://docs.angularjs.org/api/ngResource/service/$resource) a parametrized URL has to be specified, it is the _full endpoint_ address which covers all the URLs for basic CRUD operations.

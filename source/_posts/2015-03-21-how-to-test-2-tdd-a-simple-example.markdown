@@ -3,7 +3,7 @@ layout: post
 title: "How to test 2: TDD a simple example"
 date: 2015-03-21 12:37:14 +0100
 comments: true
-categories: [test, testing, mockito, mock, tdd, java]
+categories:
 ---
 Test Driven Development (TDD) is a software development process based on the _test-first_ approach of [extreme programming](http://en.wikipedia.org/wiki/Extreme_programming). Roughly the idea is creating tests before any implementation and then start development guided by test, finally refactor. We will quickly explore the technique and its _rhythm_ to highlight advantages and disadvantages. __DRAFT 1__
 <!-- more  -->
@@ -20,7 +20,7 @@ Imagine to write a new collector unit which can be plugged into the Cloud Servic
 
 ##### RED
 So let's create the `FacebookCollectorTddTest.class` and implement the first
-```java
+``` java
 public class FacebookCollectorTddTest {
 
     @Test
@@ -31,27 +31,30 @@ public class FacebookCollectorTddTest {
     }
 }
 ```
+
 the code won't compile because the classes still do not exist. You can ask your IDE to implement the classes for you. For instance in [IntelliJ IDEA](https://www.jetbrains.com/idea/) you can exploit the class creation functionality as the screenshot below
 {% img center /images/posts/idea_class_creation.png %}
 
 The class we are going to implement should implement the `Collector.java` interface
-```java
+``` java
 public class FacebookCollector implements Collector {
 }
 ```
+
 The `Collector` interface is already the result of some rough idea about the service, but can be improved or extended in orde to support new features or requirements.
 
 Once the code compile, run the test and make it fails, __Red__. But wait a minute! The assertion does not have any message and when the test fails does not tell us anything interesting.
-```
+
+``` java
 java.lang.AssertionError
 	at org.junit.Assert.fail(Assert.java:86)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at org.junit.Assert.assertTrue(Assert.java:52)
 	at com.contrastofbeauty.tutorial.collectors.FacebookCollectorTddTest.testAcceptGoldenPath(FacebookCollectorTddTest.java:15)
-	...
 ```
+
 Let's improve the assertion with a test message
-```java
+``` java
 @Test
 public void testAcceptGoldenPath() throws Exception {
 
@@ -63,7 +66,7 @@ public void testAcceptGoldenPath() throws Exception {
 
 ##### GREEN
 Make the test passes with the minimum and simplest amount of code. As result the _first version_ of the constructor and the `accept` method could be
-```java
+``` java
 public class FacebookCollector implements Collector {
 
 private Map<Long, List<FacebookPost>> facebookPostMap;
@@ -89,7 +92,7 @@ Now re-running the test it passes. Comparing this way of implementing with the o
 
 ##### REFACTOR
 Refactor both test and the class to make them more readable such as the `setUp()` method, the assertion message and the constant
-```java
+``` java
 public class FacebookCollectorTddTest {
 
     private static final long USER_ID = 1L;
@@ -111,12 +114,14 @@ public class FacebookCollectorTddTest {
     }
 }
 ```
+
 ***
+
 ### Second test
 
 ##### RED
 The test is marked as _GoldenPath_ in order to highlight it is the most common case, where everything should run smooth. But what happens at the borders? Our implementation always return true except when an exception happens. So let's implement another test.
-```java
+``` java
 @Test
 public void testAcceptWrongObjectType() throws Exception {
     Integer fooObject = new Integer(123);
@@ -130,7 +135,7 @@ The test will fail because of a `java.lang.ClassCastException`, the declaration 
 
 ##### GREEN
 It is enough doing a check on the type of object to make the test passes
-```java
+``` java
 @Override
 public boolean accept(Object object, long userId) {
 
@@ -158,7 +163,7 @@ Roughly a collector starts to collect posts from a user, when a certain number o
 
 ##### RED
 Let's write a failing test
-```java
+``` java
 @Test
 public void testAcceptCallFlushMethod() throws Exception {
 
@@ -176,7 +181,7 @@ The test sets the _buffer size_ equal to two so it is enough adding two posts to
 
 ##### GREEN
 A solution for the method could be
-```java
+``` java
 @Override
 public boolean accept(Object object, long userId) {
 
@@ -208,7 +213,7 @@ public boolean accept(Object object, long userId) {
 
  To make the test work we have to implement other three methods such as `flush()`, `setNewBufferSize()` and setCallbackFunction(). SO it is possible to temporary move to other tests and then come back or just provide a fake implementation to produce the call of the method we want to verify. It depends a lot on experience, confidence with the task and how strict we want to adhere to TDD approach. Two methods are setters and they should not be tested, the third one could be temporary implemented as
 
-```java
+``` java
 @Override
 public void flush(long userId) {
 
@@ -220,11 +225,12 @@ public void flush(long userId) {
     }, userId);
 }
 ```
+
 The test passes.
 
 ##### REFACTOR
 Improve a bit the `accept()` method to make it more readable and compact. One solution could be
-```java
+``` java
 @Override
 public boolean accept(Object object, long userId) {
 
@@ -256,7 +262,7 @@ When the `flush()` method is called, it creates a task and invokes a method agai
 
 ##### RED
 The failing test
-```java
+``` java
 @Test
 public void testFlushGoldenPath() throws Exception {
 
@@ -275,6 +281,7 @@ public void testFlushGoldenPath() throws Exception {
     verify(callbackMock, times(1)).addTask(any(Callable.class), anyInt());
 }
 ```
+
 We test
 
     - posts have been correctly added
@@ -283,7 +290,7 @@ We test
 
 ##### GREEN
 Solution
-```java
+``` java
 @Override
 public void flush(long userId) {
 
@@ -295,6 +302,7 @@ public void flush(long userId) {
     callbackFunction.addTask(facebookTask, userId);
 }
 ```
+
 The test run fine.
 
 ##### REFACTOR

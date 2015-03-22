@@ -47,7 +47,7 @@ In the ``index.html`` a minimal form has been implemented to allow login and reg
 #### 2.1 Kii JavaScript SDK
 The SDK has been used to perform _login_ and _registration_ action.
 
-```javascript js/script.js https://github.com/blackat/kii-sdk-js-101/blob/master/js/script.js
+``` javascript js/script.js https://github.com/blackat/kii-sdk-js-101/blob/master/js/script.js
 $scope.login = function () {
 
     KiiUser.authenticate($scope.user.username, $scope.user.password, {
@@ -67,7 +67,7 @@ Some details has been remove just to focus on the ``authenticate`` function. Onc
 
 The registration function is a bit different, a new ``KiiUser`` object has to be created with the data coming from the ``form`` and then the function ``register`` has to be called. As for the ``login`` function two callbacks are available to manage possible process outcomes.
 
-```javascript js/script.js https://github.com/blackat/kii-sdk-js-101/blob/master/js/script.js
+``` javascript js/script.js https://github.com/blackat/kii-sdk-js-101/blob/master/js/script.js
 $scope.register = function () {
 
     // Create the KiiUser object

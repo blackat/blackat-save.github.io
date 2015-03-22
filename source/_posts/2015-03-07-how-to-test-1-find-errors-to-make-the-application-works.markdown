@@ -3,7 +3,7 @@ layout: post
 title: "How to test 1: find errors to make the application works"
 date: 2015-03-07 09:37:33 +0100
 comments: true
-categories: [test, testing, mockito, mock, tdd, java]
+categories:
 ---
 This is an _experiment tutorial_ to better learn some _101_ practices and how testing can be a better replacement of developing by debugging.
 
@@ -16,41 +16,41 @@ This tutorial is still in __DRAFT 3__.
 Clone the project from [Github](https://github.com/blackat/tutorial-howtotest-1-collectors) and import it in you preferred IDE, [IntelliJ IDEA](https://www.jetbrains.com/idea/) in my case.
 
 ## 2 Scaffolding
-```
-├── README.md
-├── example.log
-├── exercise-api
-│   ├── exercise-api.iml
-│   ├── pom.xml
-│   └── src
-│       └── main
-│           └── java
-│               └── com
-│                   └── contrastofbeauty
-│                       └── tutorial
-│                           └── api
-│                               ├── collectors
-│                               │   └── Collector.java
-│                               ├── domain
-│                               │   ├── AcknoledgeService.java
-│                               │   └── Callback.java
-│                               └── services
-│                                   └── Service.java
-├── exercise-to-be-corrected
-│   ├── exercise-to-be-corrected.iml
-│   ├── pom.xml
-│   └── src
-│       ...
-│
-├── exercise-working
-│   ├── example.log
-│   ├── exercise-working.iml
-│   ├── pom.xml
-│   └── src
-│       ...
-│
-└── pom.xml
-```
+
+  ├── README.md
+  ├── example.log
+  ├── exercise-api
+  │   ├── exercise-api.iml
+  │   ├── pom.xml
+  │   └── src
+  │       └── main
+  │           └── java
+  │               └── com
+  │                   └── contrastofbeauty
+  │                       └── tutorial
+  │                           └── api
+  │                               ├── collectors
+  │                               │   └── Collector.java
+  │                               ├── domain
+  │                               │   ├── AcknoledgeService.java
+  │                               │   └── Callback.java
+  │                               └── services
+  │                                   └── Service.java
+  ├── exercise-to-be-corrected
+  │   ├── exercise-to-be-corrected.iml
+  │   ├── pom.xml
+  │   └── src
+  │       ...
+  │
+  ├── exercise-working
+  │   ├── example.log
+  │   ├── exercise-working.iml
+  │   ├── pom.xml
+  │   └── src
+  │       ...
+  │
+  └── pom.xml
+
 
 The maven project is composed by three modules:
 
@@ -63,7 +63,7 @@ The application is composed by a [Cloud Service](https://github.com/blackat/tuto
 
 {% img center /images/posts/tutorial_1_tweet_uml.png %}
 
-```java RunMeWorking.java https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-working/src/main/java/com/contrastofbeauty/tutorial/RunMeWorking.java
+``` java RunMeWorking.java https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-working/src/main/java/com/contrastofbeauty/tutorial/RunMeWorking.java
 public class RunMeWorking {
 
     public static void main(String[] args) {
@@ -81,7 +81,7 @@ public class RunMeWorking {
 ```
 
 ### 3.1 How the service is used
-```java RunMeWorking.java https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-working/src/main/java/com/contrastofbeauty/tutorial/RunMeWorking.java
+``` java RunMeWorking.java https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-working/src/main/java/com/contrastofbeauty/tutorial/RunMeWorking.java
 public class RunMeWorking {
 
     public static void main(String[] args) {
@@ -118,7 +118,7 @@ __Tip__ Make sure the path `src/test/java` exists, otherwise Idea will create th
 
 ### 4.1.1 TweeterCollectorTest.class
 Populate the `setUp()` method creating a new `TweetCollector`.
-```java
+``` java
 public class TweetCollectorTest {
 
     private Collector collector;
@@ -132,10 +132,7 @@ public class TweetCollectorTest {
 
 #### 4.1.2 Method accept(), 3 errors
 Let's start working on the method `accept(Object object, long userId)`, run the first test that has been renamed `testAcceptGoldenPath()` and contains just one assertion:
-
-// explain why the golden path and import static
-
-```java
+``` java
 @Test
 public void testAcceptGoldenPath() throws Exception {
     assertTrue(collector.accept(new Tweet("foo tweet"), 1L));
@@ -146,7 +143,7 @@ public void testAcceptGoldenPath() throws Exception {
 __Issue:__ a `NullPointerException` will be thrown.
 
 __Solution:__ the object `processingList` has not been initialized. Add the initialization in the constructor for instance and _rerun the test_.
-```java
+``` java
 public TweetCollector() {
     processingList = new HashMap<>();
 }
@@ -154,12 +151,12 @@ public TweetCollector() {
 
 ##### Error 2
 __Issue:__ another `NullPointerException` is thrown because the data structure is accessed but not initialized for a given user:
-```java
+``` java
 processingList.get(userId).add((Tweet) object);
 ```
 
 __Solution:__ check if a given `userId` already exists in the map, if not create and add to the map the pair and _rerun the test_.
-```java
+``` java
 if (processingList.get(userId) == null) {
     processingList.put(userId, new ArrayList<Tweet>());
 }
@@ -169,7 +166,7 @@ if (processingList.get(userId) == null) {
 __Issue:__ an `AssertionError` is thrown. All the `NPE` have been fixed but it seems the collector has not accepted the `Tweet` object.
 
 __Solution:__ a missing `return true` prevent the method to behave correctly. Add the aforementioned statement and _rerun the test_. Now the test passes and this is the complete code for the method `accept`:
-```java
+``` java
 @Override
 public boolean accept(Object object, long userId) {
 
@@ -198,7 +195,7 @@ public boolean accept(Object object, long userId) {
 
 ##### Additional tests
 The method now seems correct but has been tested in case of a different obejct? Add a new test method which will be part of the _automatic test suite_ we are going to be create. This automatic test suite will help us during phases such as refactoring, improving code readability and method evolution.
-```java
+``` java
 @Test
 public void testAcceptObjectNotAcceptedBecauseDifferentType() throws Exception {
     assertFalse(collector.accept(new Object(), 1L));
@@ -207,17 +204,18 @@ public void testAcceptObjectNotAcceptedBecauseDifferentType() throws Exception {
 
 #### 4.1.3 Method flush(), 1 error
 If not done yet by the IDE, create method `testFlushGoldenPath()` and invoke the method `flush()` as following:
-```java
+``` java
 @Test
 public void testFlushGoldenPath() throws Exception {
     collector.flush(USER_ID);
 }
 ```
+
 ##### Error 1
 __Issue:__ a `NullPointerException` is thrown. This is not a good behavior, the map has not been initialized and we do not in advance if the method will be called after an `accept()` or not, for the time being different scenarios are possible.
 
 __Pre-solution:__ check if in the map exist a `List` for the given `userId`, if not simply exit from the method execution (other solutions are acceptable, depends on requirements), _rerun the method_.
-```java
+``` java
 if (processingList.get(userId) == null) {
     return;
 }
@@ -228,7 +226,7 @@ The test passes, but __no verification__ is done, so the test is pretty useless.
 __Idea:__ the `callbackFunction` has not been set yet so a possible `NPE` could arise or in the future in will be inject by means of _DI_, we still do not know. So we can use [Mockito](https://code.google.com/p/mockito/) to verify if the method `addTask()` has been called.
 
 __Solution:__ mock a `Callback.class` class in order to make a verification on an expected behavior and change a bit the `setUp()` method to initialize mocks via annotations as follows:
-```java
+``` java
 @Mock
 private Callback callbackFunctionMock;
 
@@ -248,12 +246,13 @@ public void testFlushGoldenPath() throws Exception {
     verify(callbackFunctionMock, times(1)).addTask(any(TweetTask.class), anyInt());
 }
 ```
+
 So we set the callback function and we invoke the `accept()` method to fill the list for a given user. Notice that a test class is not just a tests on methods but it is a _test to verify the correct behavior of the all unit_.
 
 
 ##### Error 1 - Alternative solution with Mockito.spy()
 Instead of doing the check on `processingList.get(userId)` at the beginning of the class it is possible to refactor the tweet creation in a separate method as
-```java
+``` java
 @Override
 public void flush(long userId) {
 
@@ -276,7 +275,7 @@ protected TweetTask getTweetTask(long userId) {
 ```
 
 and the corresponding modified test using `Mokito.spy()` to avoid the invoke on method `accept()`
-```java
+``` java
 @Test
 public void testFlushWithSpyGoldenPath() throws Exception {
 
@@ -293,7 +292,7 @@ public void testFlushWithSpyGoldenPath() throws Exception {
 
 ##### Error 1 - Alternative solution with @Override
 Just to make a simple comparison, the above test could have been written without _Mockito_ as follows:
-```java
+``` java
 @Test
 public void testFlushWithOverrideGoldenPath() throws Exception {
 
@@ -319,11 +318,12 @@ public void testFlushWithOverrideGoldenPath() throws Exception {
     assertTrue(taskAdded.get());
 }
 ```
+
 The use of _Mockito_ makes the code more concise, easy to read and understand. Moreover the _behavior verification_ is easy to understand than using a variable and check its value. By using 'verify()' we directly verify if the method has been called and how many times, it is clear that we are doing _behavior verification_.
 
 ##### Additional tests
 Another test can be written to test the exception along with the message in case the `callbackFunction` is not set.
-```java
+``` java
 @Test
 public void testFlushExceptionThrownWithNullCallbackFunction() throws Exception {
     exception.expect(IllegalArgumentException.class);
@@ -332,6 +332,7 @@ public void testFlushExceptionThrownWithNullCallbackFunction() throws Exception 
     collector.flush(USER_ID);
 }
 ```
+
 Exception messages are really important in order to immediately find the root cause of the issue.
 
 ***
@@ -342,7 +343,7 @@ Once the service is created, once or more collectors are added in order to provi
 
 #### 4.2.1 CloudServiceTest.class
 Create the class as done for the previous example and initialize the _SUT_.
-```java
+``` java
 public class CloudServiceTest {
 
     private CloudService cloudService;
@@ -360,7 +361,7 @@ public class CloudServiceTest {
 
 #### 4.2.2 Method addCollector() - 2 errors
 Create the first test for method `addCollector()`
-```java
+``` java
 @Test
 public void testAddCollectorGoldenPath() throws Exception {
 
@@ -374,7 +375,7 @@ public void testAddCollectorGoldenPath() throws Exception {
 __Issue:__ a `NullPointerException` will be thrown.
 
 __Solution:__ the object `processingCollectors` has not been initialized. Add the initialization in the constructor for instance and _rerun the test_.
-```java
+``` java
 public CloudService(Callback callback) {
 
     processingFutureList = new HashMap<>();
@@ -382,7 +383,7 @@ public CloudService(Callback callback) {
 ```
 
 ##### Error 1 - Alternative solution
-```java
+``` java
 @Test
 public void testAddCollectorVerifyCallbackFunctionAddedWithOverride() {
 
@@ -405,7 +406,7 @@ public void testAddCollectorVerifyCallbackFunctionAddedWithOverride() {
 A collector should be added along with the set of the callback function. A collector should be able to submit the job to be done when necessary using the callback function. The collector in this situation acts as a collaborator and we want to verify that a specific method in invoke on the collaborator.
 
 In order to verify a method call, i.e. _indirect output_, we use Mockito, so add `tweetCollecorMock` variable and init mocks inside of the `setUp()` method adding `MockitoAnnotations.initMocks(this)` and _run the test_
-```java
+``` java
 @Mock
 private TweetCollector tweetCollectorMock;
 
@@ -428,7 +429,7 @@ public void testAddCollectorVerifyCallbackFunctionAddedWithMockito() {
 __Issue:__ an error is thrown `Wanted but not invoked:...` that means the method `setCallbackFunction()` has not been called.
 
 __Solution:__ in the method `addCollector()` add the call to set the callback function and  _rerun the test_.
-```java
+``` java
 @Override
 public void addCollector(Collector collector) throws RuntimeException {
 
@@ -437,11 +438,12 @@ public void addCollector(Collector collector) throws RuntimeException {
     collector.setCallbackFunction(callbackFunction);
 }
 ```
+
 Now the test passes. The `addCollector()` function was empty and by tests it has been implemented. The two tests could have been put in a single one and step by step modifying the method call to make the test passed. _Test Driven Development (TDD)_.
 
 #### 4.2.3 Method openConnection() - 1 error
 Let's create a new test and run it
-```java
+``` java
 @Test
 public void testOpenConnectionGoldenPath() {
     cloudService.openConnection(USER_ID);
@@ -453,7 +455,7 @@ public void testOpenConnectionGoldenPath() {
 __Issue:__ a `NullPointerException` will be thrown.
 
 __Solution:__ the object `processingFutureList` has not been initialized. Add the initialization in the constructor for instance and _rerun the test_.
-```java
+``` java
 public CloudService(Callback callback) {
 
     processingFutureList = new HashMap<>();
@@ -461,19 +463,21 @@ public CloudService(Callback callback) {
     processingCollectors = new ArrayList<>();
 }
 ```
+
 Now the test passes.
 
 ##### Additional test
 To build a _net of automatic tests_ is interesting to test different aspects of a method so we can add the following one
+``` java
 @Test
 public void testOpenConnectionUserHasNotOpenConnection() {
     assertFalse(cloudService.isUserConnected(USER_ID));
 }
-
+``
 
 #### 4.2.4 Method saveObject() - 0 errors
 This method does not have any error, but one or more test must be written to build up an efficient _test suite_. Moreover it could be another opportunity to see the difference between using _override_ and _Mockito_ to test _indirect output_.
-```java
+``` java
 @Test
 public void testSaveObjectWithOverrideGoldenPath() throws Exception {
 
@@ -504,7 +508,7 @@ public void testSaveObjectWithOverrideGoldenPath() throws Exception {
 
 and the same test but done using Mockito
 
-```java
+``` java
 @Test
 public void testSaveObjectWithMockitoGoldenPath() throws Exception {
 
@@ -520,10 +524,11 @@ public void testSaveObjectWithMockitoGoldenPath() throws Exception {
     verify(collectorMock, times(1)).accept(any(Tweet.class), anyInt());
 }
 ```
+
 Once again the use of Mockito allows to have a more concise and readable test. The `Mockito.verify()` method highlights the test of the _indirect output_.
 
 ##### Additional test 1
-```java
+``` java
 @Rule
 public ExpectedException exception = ExpectedException.none();
 
@@ -542,7 +547,7 @@ public void testSaveObjectObjectNotAcceptedThrowException() throws Exception {
 ```
 
 ##### Additional test 2
-```java
+``` java
 @Test
 public void testSaveObjectUserNotConnected() throws Exception {
     exception.expect(IllegalArgumentException.class);
