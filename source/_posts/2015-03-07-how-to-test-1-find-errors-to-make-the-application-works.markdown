@@ -9,7 +9,7 @@ This is an _experiment tutorial_ to better learn some _101_ practices and how te
 
 The goal of the _experiment-project_ is find, correct bugs and make the application works by writing tests.
 
-This tutorial is still in __DRAFT 3__.
+This tutorial is still in __DRAFT 4__.
 <!-- more -->
 
 ## 1 Clone the project
@@ -17,39 +17,34 @@ Clone the project from [Github](https://github.com/blackat/tutorial-howtotest-1-
 
 ## 2 Scaffolding
 
-  ├── README.md
-  ├── example.log
-  ├── exercise-api
-  │   ├── exercise-api.iml
-  │   ├── pom.xml
-  │   └── src
-  │       └── main
-  │           └── java
-  │               └── com
-  │                   └── contrastofbeauty
-  │                       └── tutorial
-  │                           └── api
-  │                               ├── collectors
-  │                               │   └── Collector.java
-  │                               ├── domain
-  │                               │   ├── AcknoledgeService.java
-  │                               │   └── Callback.java
-  │                               └── services
-  │                                   └── Service.java
-  ├── exercise-to-be-corrected
-  │   ├── exercise-to-be-corrected.iml
-  │   ├── pom.xml
-  │   └── src
-  │       ...
-  │
-  ├── exercise-working
-  │   ├── example.log
-  │   ├── exercise-working.iml
-  │   ├── pom.xml
-  │   └── src
-  │       ...
-  │
-  └── pom.xml
+    ├── README.md
+    ├── exercise-api
+    │   ├── pom.xml
+    │   └── src
+    │       └── main
+    │           └── java
+    │               └── com
+    │                   └── contrastofbeauty
+    │                       └── tutorial
+    │                           └── api
+    │                               ├── collectors
+    │                               │   └── Collector.java
+    │                               ├── domain
+    │                               │   ├── AcknoledgeService.java
+    │                               │   └── Callback.java
+    │                               └── services
+    │                                   └── Service.java
+    ├── exercise-to-be-corrected
+    │   ├── pom.xml
+    │   └── src
+    │       ...
+    │
+    ├── exercise-working
+    │   ├── pom.xml
+    │   └── src
+    │       ...
+    │
+    └── pom.xml
 
 
 The maven project is composed by three modules:
