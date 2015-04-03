@@ -107,22 +107,22 @@
 
 <p><img class="center" src="/images/posts/genymotion-get-your-box.png"></p>
 
-<!-- more -->
+<div id="toc-table-content"><table cellpadding="0" cellspacing="0" id="toc-container"><tbody><td><section class="toc-panel"><div class="toc-heading"><h3 class="toc-title"><span class="glyphicon glyphicon-list-alt"></span> Contents</h3></div><ul id="toc-listing"><li class="toc-item"><a href="#TOC-1-preview-of-the-application-in-plunker"><span class="tocnumber">1</span> <span class="toctext">Preview of the application in Plunker</span></a></li><li class="toc-item"><a href="#TOC-2-build-steps"><span class="tocnumber">2</span> <span class="toctext">Build steps</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-2-1-1-create-a-kii-cloud-application"><span class="tocnumber">2.1</span> <span class="toctext">1. Create a Kii cloud application</span></a></li><li class="toc-item"><a href="#TOC-2-2-2-clone-github-repository"><span class="tocnumber">2.2</span> <span class="toctext">2. Clone Github repository</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-2-2-1-2-dot-1-kii-javascript-sdk"><span class="tocnumber">2.2.1</span> <span class="toctext">2.1 Kii JavaScript SDK</span></a></li></ul></li><li class="toc-item"><a href="#TOC-2-3-3-local-test-with-node-dot-js"><span class="tocnumber">2.3</span> <span class="toctext">3. Local test with node.js</span></a></li><li class="toc-item"><a href="#TOC-2-4-4-phonegap-slash-apache-cordova-installation"><span class="tocnumber">2.4</span> <span class="toctext">4. PhoneGap/Apache Cordova Installation</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-2-4-1-phonegap-vs-cordova"><span class="tocnumber">2.4.1</span> <span class="toctext">PhoneGap vs Cordova</span></a></li><li class="toc-item"><a href="#TOC-2-4-2-prepare-the-environment"><span class="tocnumber">2.4.2</span> <span class="toctext">Prepare the environment</span></a></li><li class="toc-item"><a href="#TOC-2-4-3-genymotion"><span class="tocnumber">2.4.3</span> <span class="toctext">Genymotion</span></a></li></ul></li><li class="toc-item"><a href="#TOC-2-5-5-create-the-apache-cordova-application"><span class="tocnumber">2.5</span> <span class="toctext">5. Create the Apache Cordova application</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-2-5-1-step-a-create-a-cordova-project"><span class="tocnumber">2.5.1</span> <span class="toctext">Step A - Create a Cordova project</span></a></li><li class="toc-item"><a href="#TOC-2-5-2-step-b-add-project-files"><span class="tocnumber">2.5.2</span> <span class="toctext">Step B - Add project files</span></a></li><li class="toc-item"><a href="#TOC-2-5-3-step-c-add-platforms"><span class="tocnumber">2.5.3</span> <span class="toctext">Step C - Add platforms</span></a></li><li class="toc-item"><a href="#TOC-2-5-4-step-d-build-and-emulate"><span class="tocnumber">2.5.4</span> <span class="toctext">Step D - Build and emulate</span></a></li><li class="toc-item"><a href="#TOC-2-5-5-android-target"><span class="tocnumber">2.5.5</span> <span class="toctext">Android target</span></a></li></ul></li></ul></li><li class="toc-item"><a href="#TOC-3-from-the-kii-team"><span class="tocnumber">3</span> <span class="toctext">From the Kii Team</span></a></li><li class="toc-item"><a href="#TOC-4-trobleshooting"><span class="tocnumber">4</span> <span class="toctext">Trobleshooting</span></a></li></ul></section></td></tbody></table></div>
 
 
-<h2>Preview of the application in Plunker</h2>
+<h2 id="TOC-1-preview-of-the-application-in-plunker">Preview of the application in Plunker</h2>
 
 <p>A preview of the web application that is going to be implemented can be seen and tested in <a href="http://plnkr.co/edit/mSrWyzmmgOeSzCDKRWk8?p=preview" target="_blank">Plunker</a> using <code>jon/dohh</code> as username/password or just registering a new user. Password must be at least 4 charaters and special ones are not allowed</p>
 
 <p>In order to make it work I had to brutally copy/paste the content of the Kii Javascript SDK in a file because Plunker does not allow file upload.</p>
 
-<h2>Build steps</h2>
+<h2 id="TOC-2-build-steps">Build steps</h2>
 
-<h3>1. Create a Kii cloud application</h3>
+<h3 id="TOC-2-1-1-create-a-kii-cloud-application">1. Create a Kii cloud application</h3>
 
 <p>First of all create a Kii account and then a new Kii application, put the name and select the HTML5 logo. Now download the <a href="https://developer.kii.com/v2/apps/5510/downloads-templates" target="_blank">Kii Javascript SDK</a>.</p>
 
-<h3>2. Clone Github repository</h3>
+<h3 id="TOC-2-2-2-clone-github-repository">2. Clone Github repository</h3>
 
 <p>Clone the repository containing the simple application</p>
 
@@ -148,85 +148,85 @@
 
 <p>In the <code>index.html</code> a minimal form has been implemented to allow login and registration of the user. Just to make the UI a bit more fancy and easy to develop, Boostrap and AngularJS frameworks have been added.</p>
 
-<h4>2.1 Kii JavaScript SDK</h4>
+<h4 id="TOC-2-2-1-2-dot-1-kii-javascript-sdk">2.1 Kii JavaScript SDK</h4>
 
 <p>The SDK has been used to perform <em>login</em> and <em>registration</em> action.</p>
 
-<figure class='code'><figcaption><span>js/script.js</span> — <a href='https://github.com/blackat/kii-sdk-js-101/blob/master/js/script.js'>Link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$scope</span><span class="p">.</span><span class="nx">login</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nx">KiiUser</span><span class="p">.</span><span class="nx">authenticate</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">username</span><span class="p">,</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">password</span><span class="p">,</span> <span class="p">{</span>
-</span><span class='line'>        <span class="c1">// Called on successful registration</span>
-</span><span class='line'>        <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">theUser</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="p">},</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="c1">// Called on a failed authentication</span>
-</span><span class='line'>        <span class="nx">failure</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">theUser</span><span class="p">,</span> <span class="nx">errorString</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">})</span>
-</span><span class='line'><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>js/script.js</span> — <a href="https://github.com/blackat/kii-sdk-js-101/blob/master/js/script.js">Link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">$scope</span><span class="p">.</span><span class="nx">login</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class="line">
+</span><span class="line">    <span class="nx">KiiUser</span><span class="p">.</span><span class="nx">authenticate</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">username</span><span class="p">,</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">password</span><span class="p">,</span> <span class="p">{</span>
+</span><span class="line">        <span class="c1">// Called on successful registration</span>
+</span><span class="line">        <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">theUser</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">
+</span><span class="line">        <span class="p">},</span>
+</span><span class="line">
+</span><span class="line">        <span class="c1">// Called on a failed authentication</span>
+</span><span class="line">        <span class="nx">failure</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">theUser</span><span class="p">,</span> <span class="nx">errorString</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">    <span class="p">})</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 <p>Some details has been remove just to focus on the <code>authenticate</code> function. Once the credential has been sent to the cloud one of the two functions will be called according to the outcome of the authentication.</p>
 
 <p>The registration function is a bit different, a new <code>KiiUser</code> object has to be created with the data coming from the <code>form</code> and then the function <code>register</code> has to be called. As for the <code>login</code> function two callbacks are available to manage possible process outcomes.</p>
 
-<figure class='code'><figcaption><span>js/script.js</span> — <a href='https://github.com/blackat/kii-sdk-js-101/blob/master/js/script.js'>Link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$scope</span><span class="p">.</span><span class="nx">register</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// Create the KiiUser object</span>
-</span><span class='line'>    <span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">KiiUser</span><span class="p">.</span><span class="nx">userWithUsername</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">username</span><span class="p">,</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">password</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// Register the user, defining callbacks for when the process completes</span>
-</span><span class='line'>    <span class="nx">user</span><span class="p">.</span><span class="nx">register</span><span class="p">({</span>
-</span><span class='line'>        <span class="c1">// Called on successful registration</span>
-</span><span class='line'>        <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">theUser</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="p">},</span>
-</span><span class='line'>        <span class="c1">// Called on a failed registration</span>
-</span><span class='line'>        <span class="nx">failure</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">theUser</span><span class="p">,</span> <span class="nx">errorString</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">});</span>
-</span><span class='line'><span class="p">};</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>js/script.js</span> — <a href="https://github.com/blackat/kii-sdk-js-101/blob/master/js/script.js">Link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="nx">$scope</span><span class="p">.</span><span class="nx">register</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+</span><span class="line">
+</span><span class="line">    <span class="c1">// Create the KiiUser object</span>
+</span><span class="line">    <span class="kd">var</span> <span class="nx">user</span> <span class="o">=</span> <span class="nx">KiiUser</span><span class="p">.</span><span class="nx">userWithUsername</span><span class="p">(</span><span class="nx">$scope</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">username</span><span class="p">,</span> <span class="nx">$scope</span><span class="p">.</span><span class="nx">user</span><span class="p">.</span><span class="nx">password</span><span class="p">);</span>
+</span><span class="line">
+</span><span class="line">    <span class="c1">// Register the user, defining callbacks for when the process completes</span>
+</span><span class="line">    <span class="nx">user</span><span class="p">.</span><span class="nx">register</span><span class="p">({</span>
+</span><span class="line">        <span class="c1">// Called on successful registration</span>
+</span><span class="line">        <span class="nx">success</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">theUser</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">
+</span><span class="line">        <span class="p">},</span>
+</span><span class="line">        <span class="c1">// Called on a failed registration</span>
+</span><span class="line">        <span class="nx">failure</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">theUser</span><span class="p">,</span> <span class="nx">errorString</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="line">
+</span><span class="line">        <span class="p">}</span>
+</span><span class="line">    <span class="p">});</span>
+</span><span class="line"><span class="p">};</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
-<h3>3. Local test with node.js</h3>
+<h3 id="TOC-2-3-3-local-test-with-node-dot-js">3. Local test with node.js</h3>
 
-<p>In order to locally test in a browser the application <code>node.js</code> can be used. Download and install <a href="http://nodejs.org/download/" target="_blank">node.js</a>. On mac use <a href="http://brew.sh/"target="_blank">homebrew</a></p>
+<p>In order to locally test in a browser the application <code>node.js</code> can be used. Download and install <a href="http://nodejs.org/download/" target="_blank">node.js</a>. On mac use <a href="http://brew.sh/" target="_blank">homebrew</a></p>
 
 <pre><code>$ brew install node
 </code></pre>
@@ -243,19 +243,19 @@
 
 <p>and type in a browser tab <code>http://127.0.0.1:5000/</code> to load the web page.</p>
 
-<h3>4. PhoneGap/Apache Cordova Installation</h3>
+<h3 id="TOC-2-4-4-phonegap-slash-apache-cordova-installation">4. PhoneGap/Apache Cordova Installation</h3>
 
 <p>PhoneGap wraps a native web application written in HTML, CSS and JavaScript in a native application of a given platform such as iOS, Android, Windows8 and more.</p>
 
 <p><a href="http://www.smashingmagazine.com/2014/02/11/four-ways-to-build-a-mobile-app-part3-phonegap/">Here</a> it is possible to find a more detailed tutorial about hot to build a mobile application using PhoneGap.</p>
 
-<h4>PhoneGap vs Cordova</h4>
+<h4 id="TOC-2-4-1-phonegap-vs-cordova">PhoneGap vs Cordova</h4>
 
 <blockquote><p>PhoneGap is a distribution of Apache Cordova. You can think of Apache Cordova as the engine that powers PhoneGap, similar to how WebKit is the engine that powers Chrome or Safari.</p></blockquote>
 
 <p>More <a href="http://phonegap.com/2012/03/19/phonegap-cordova-and-what%E2%80%99s-in-a-name/">here</a></p>
 
-<h4>Prepare the environment</h4>
+<h4 id="TOC-2-4-2-prepare-the-environment">Prepare the environment</h4>
 
 <p><a href="http://nodejs.org/download/">Install Node.js</a> if not yet done.</p>
 
@@ -274,26 +274,26 @@
 <pre><code>$ brew install android
 </code></pre>
 
-<p>Install &lsquo;&#8217;actual SDK stuff&rsquo;&#8217;</p>
+<p>Install ‘&#8217;actual SDK stuff’&#8217;</p>
 
 <pre><code>$ android
 </code></pre>
 
 <p><a href="https://www.genymotion.com/#!/download">Install Genymotion</a> to test the mobile application for Android devices.</p>
 
-<h4>Genymotion</h4>
+<h4 id="TOC-2-4-3-genymotion">Genymotion</h4>
 
 <p>Genymotion offers a better and more straight forward way to test an Android app than the native emulator. Once done register one or more virtual divices according to your preferences.</p>
 
 <p><img class="center" src="/images/posts/genymotion-devices.png"></p>
 
-<p>Pay attention about the specified <code>API version</code> of the virtual devices because it must match the one installed previously when <code>android</code> command has been run to install &lsquo;&#8217;actual SDK stuff&rsquo;&lsquo;, both are at version 21.</p>
+<p>Pay attention about the specified <code>API version</code> of the virtual devices because it must match the one installed previously when <code>android</code> command has been run to install ‘&#8217;actual SDK stuff’‘, both are at version 21.</p>
 
 <p><img class="center" src="/images/posts/android-sdk.png"></p>
 
-<h3>5. Create the Apache Cordova application</h3>
+<h3 id="TOC-2-5-5-create-the-apache-cordova-application">5. Create the Apache Cordova application</h3>
 
-<h4>Step A - Create a Cordova project</h4>
+<h4 id="TOC-2-5-1-step-a-create-a-cordova-project">Step A - Create a Cordova project</h4>
 
 <p>Run the command</p>
 
@@ -302,7 +302,7 @@
 
 <p>This command will create a project named <em>Kii101PhoneGap</em> in the folder <code>kii101phonegap</code>.</p>
 
-<h4>Step B - Add project files</h4>
+<h4 id="TOC-2-5-2-step-b-add-project-files">Step B - Add project files</h4>
 
 <p>Copy the cloned repository content under the <code>www</code> into the project just created.</p>
 
@@ -319,7 +319,7 @@
     └── script.js
 </code></pre>
 
-<h4>Step C - Add platforms</h4>
+<h4 id="TOC-2-5-3-step-c-add-platforms">Step C - Add platforms</h4>
 
 <p>Switch to folder <code>kii101phonegap</code> and add the platforms against which the test will be done, for instance iOS and Android</p>
 
@@ -327,7 +327,7 @@
 $ cordova platform add android
 </code></pre>
 
-<h4>Step D - Build and emulate</h4>
+<h4 id="TOC-2-5-4-step-d-build-and-emulate">Step D - Build and emulate</h4>
 
 <p>Build the application and test it in <strong>iOS</strong> platform running</p>
 
@@ -355,13 +355,13 @@ $ cordova emulate ios
 
 <p>and the application will be deployed into the Genymotion device.</p>
 
-<h2>From the Kii Team</h2>
+<h2 id="TOC-3-from-the-kii-team">From the Kii Team</h2>
 
-<p>If you&rsquo;re interested in more samples that use <strong>Kii Cloud</strong> please take a look at the <a href="https://github.com/KiiCorp">GitHub page</a> from the Kii team. Also, if you&rsquo;re interested in other platforms, please check out their samples section available <a href="http://docs.kii.com/en/samples/">here</a>.</p>
+<p>If you’re interested in more samples that use <strong>Kii Cloud</strong> please take a look at the <a href="https://github.com/KiiCorp">GitHub page</a> from the Kii team. Also, if you’re interested in other platforms, please check out their samples section available <a href="http://docs.kii.com/en/samples/">here</a>.</p>
 
-<h2>Trobleshooting</h2>
+<h2 id="TOC-4-trobleshooting">Trobleshooting</h2>
 
-<h4>Android target</h4>
+<h4 id="TOC-2-5-5-android-target">Android target</h4>
 
 <p>Sometimes could happen that a prject has been created when a previuos <code>android-sdk</code> was installed, then having created a new device based on a more recent <code>API</code> the following error arises</p>
 

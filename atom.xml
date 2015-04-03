@@ -4,7 +4,7 @@
   <title><![CDATA[Contrast Of Beauty]]></title>
   <link href="http://blackat.github.io/atom.xml" rel="self"/>
   <link href="http://blackat.github.io/"/>
-  <updated>2015-03-25T07:10:00+01:00</updated>
+  <updated>2015-04-03T12:27:57+02:00</updated>
   <id>http://blackat.github.io/</id>
   <author>
     <name><![CDATA[black@t]]></name>
@@ -545,18 +545,18 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
     <id>http://blackat.github.io/blog/2015/03/07/how-to-test-1-find-errors-to-make-the-application-works</id>
     <content type="html"><![CDATA[<p>This is an <em>experiment tutorial</em> to better learn some <em>101</em> practices and how testing can be a better replacement of developing by debugging.</p>
 
-<p>The goal of the <em>experiment-project</em> is find, correct bugs and make the application works by writing tests.</p>
+<p>The goal of the <em>experiment-project</em> is to find, to correct bugs and make the application works by writing tests.</p>
 
-<p>This tutorial is still in <strong>DRAFT 4</strong>.</p>
+<p>This tutorial is still in <strong>DRAFT 5</strong>.</p>
 
 <!-- more -->
 
 
-<h2>1 Clone the project</h2>
+<h2>Clone the project</h2>
 
 <p>Clone the project from <a href="https://github.com/blackat/tutorial-howtotest-1-collectors">Github</a> and import it in you preferred IDE, <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a> in my case.</p>
 
-<h2>2 Scaffolding</h2>
+<h2>Scaffolding</h2>
 
 <pre><code>├── README.md
 ├── exercise-api
@@ -588,53 +588,46 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 └── pom.xml
 </code></pre>
 
-<p>The maven project is composed by three modules:</p>
+<p>The maven project is composed by four modules:</p>
 
 <ol>
-<li><strong>exercise-api:</strong> just collection of interfaces used in the other two modules</li>
-<li><strong>exercise-working:</strong> working application with a test suite</li>
-<li><strong>exercise-to-be-corrected:</strong> application with bugs where the test suite has to be created in order to find, correct bugs and make it work.</li>
+<li><strong>exercise-api:</strong> just collection of interfaces used in the other two modules;</li>
+<li><strong>exercise-working:</strong> working application with a test suite;</li>
+<li><strong>exercise-to-be-corrected:</strong> application with bugs where the test suite has to be created in order to find, correct bugs and make it work;</li>
+<li><strong>exercise-tdd:</strong> implementation of some classes by tdd whose description is in the next <a href="http://blackat.github.io/blog/2015/03/21/how-to-test-2-tdd-a-simple-example">tut</a>.</li>
 </ol>
 
 
-<h2>3 Application Description</h2>
+<h2>Application Description</h2>
 
-<p>The application is composed by a <a href="https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-working/src/main/java/com/contrastofbeauty/tutorial/services/CloudService.java">Cloud Service</a> able to post user&rsquo;s tweets in batch by means of a <a href="https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-working/src/main/java/com/contrastofbeauty/tutorial/collectors/TweetCollector.java">Tweet Collector</a>.</p>
+<p>The application is mainly composed by a fake <a href="https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-working/src/main/java/com/contrastofbeauty/tutorial/services/CloudService.java">Cloud Service</a> able to post user&rsquo;s tweets in batch by means of a <a href="https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-working/src/main/java/com/contrastofbeauty/tutorial/collectors/TweetCollector.java">Tweet Collector</a>. <a href="http://yuml.me/edit/3555184c">Here</a> the UML source.</p>
 
-<p><img class="center" src="http://blackat.github.io/images/posts/tutorial_1_tweet_uml.png"></p>
+<p><img class="center" src="http://blackat.github.io/images/posts/tutorial_1_how_to_test.png"></p>
 
-<figure class='code'><figcaption><span>RunMeWorking.java</span> — <a href='https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-working/src/main/java/com/contrastofbeauty/tutorial/RunMeWorking.java'>Link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RunMeWorking</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">Callback</span> <span class="n">callback</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">CallbackImpl</span><span class="o">();</span>
-</span><span class='line'>        <span class="n">Service</span> <span class="n">service</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">CloudService</span><span class="o">(</span><span class="n">callback</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">service</span><span class="o">.</span><span class="na">addCollector</span><span class="o">(</span><span class="k">new</span> <span class="nf">TweetCollector</span><span class="o">());</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">service</span><span class="o">.</span><span class="na">openConnection</span><span class="o">(</span><span class="mi">1L</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">service</span><span class="o">.</span><span class="na">saveObject</span><span class="o">(</span><span class="k">new</span> <span class="nf">Tweet</span><span class="o">(</span><span class="s">&quot;I am Felix the awesome cat.&quot;</span><span class="o">),</span> <span class="mi">1L</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">service</span><span class="o">.</span><span class="na">saveObjectCompleted</span><span class="o">(</span><span class="k">new</span> <span class="nf">AcknoledgeServiceImpl</span><span class="o">(),</span> <span class="mi">1L</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<h4>The workflow</h4>
+
+<ol>
+<li>The <code>CloudService</code> <em>has a</em> certain numbers of different type collectors (hence the association in the UML diagram), in this case just with one able to collect tweets.</li>
+<li>A user who wants to post tweet in batch has to open a connection invoking the method <code>service.openConnection()</code> of the service.</li>
+<li>The user then starts to post tweets using the method <code>service.saveObject()</code>.</li>
+<li>Once done <code>service.saveObjectCompleted()</code> method will be called to tell the service that the user session is finished.</li>
+</ol>
 
 
-<h3>3.1 How the service is used</h3>
+<h4>The workflow in details</h4>
+
+<ol>
+<li>The <code>CloudService</code> <em>has a</em> <code>TweetCollector</code> and a <code>Callback</code> implementation instance (Another approach is to leave the service the initialization of the callback function and substitute the <em>association</em> with a <em>composition</em> in the UML diagram).</li>
+<li>The <code>Callback</code> implementation instance will be set into each added collector by the service.</li>
+<li>Every time a user wants to save a tweet through the service, the collector will stock it in a <em>list</em> as a sort of buffer.</li>
+<li>Once the collector has stocked a certain amount of tweets, for instance 500, it will generates a <em>task</em>.</li>
+<li>A task has a collection of tweets and the implementation of the method <code>call()</code> which will be called by one of the thread of the thread pool. The method specifies how the list of tweets should be treated, for instance: saved, destroyed, sent to Twitter, printed or something else.</li>
+<li>A collector uses the <code>Callback</code> instance to add a task to a <em>processing list</em>.</li>
+<li>The list of active tasks will be then processed by a thread pool.</li>
+</ol>
+
+
+<h4>How to initiliaze the service and run it</h4>
 
 <figure class='code'><figcaption><span>RunMeWorking.java</span> — <a href='https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-working/src/main/java/com/contrastofbeauty/tutorial/RunMeWorking.java'>Link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -667,13 +660,9 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Once the service has been started, a user can just open a connection to it and start to submit tweets to be posted. Once a certain amount of tweets has been reached, the service contacts Twitter to post them. The CloudService uses collectors to collect messages to be posted somewhere. When the service starts, one or more collectors can be registered. In the example one one collector has been registered and it is able to collect <em>tweets</em>. Other collectors can be implemented and added to the service.</p>
+<p><strong>Actually</strong> the service does not post anything to Twitter, it is just a way to show a bit of java concurrency and how to write <em>unit tests</em> when dealing with concurrent structures like <code>Future</code>.</p>
 
-<p>When the user has finished to post tweets, <code>saveObjectCompleted()</code> method is called in order to close the connection with the service and sending the latest tweets to Twitter.</p>
-
-<p><strong>In reality</strong> the service does not post anything to Twitter, it is just a way to show a bit of java concurrency and how to write <em>unit tests</em> when dealing with concurrent structures like <code>Future</code>.</p>
-
-<h2>4 Let&rsquo;s correct the application</h2>
+<h2>Let&rsquo;s correct the application</h2>
 
 <p>Let&rsquo;s create tests for the application starting from <code>TweetCollector.java</code> class, press <code>cmd + shift + T</code> on Mac or <code>crtl + shift + T</code> on Windows and choose methods you want to test, then Idea will create the test class.</p>
 
@@ -681,13 +670,13 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 
 <p><img class="center" src="http://blackat.github.io/images/posts/idea-test-wizard.png"></p>
 
-<h3>4.1 TweeterCollector.class</h3>
+<h3>TweeterCollector.class</h3>
 
 <p><a href="https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-to-be-corrected/src/main/java/com/contrastofbeauty/tutorial/collectors/TweetCollector.java">TweeterCollector.class</a></p>
 
 <p>// add description of class and how the callback will be called.</p>
 
-<h3>4.1.1 TweeterCollectorTest.class</h3>
+<h3>TweeterCollectorTest.class</h3>
 
 <p>Populate the <code>setUp()</code> method creating a new <code>TweetCollector</code>.</p>
 
@@ -712,7 +701,7 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h4>4.1.2 Method accept(), 3 errors</h4>
+<h4>Method accept(), 3 errors</h4>
 
 <p>Let&rsquo;s start working on the method <code>accept(Object object, long userId)</code>, run the first test that has been renamed <code>testAcceptGoldenPath()</code> and contains just one assertion:</p>
 
@@ -834,7 +823,7 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h4>4.1.3 Method flush(), 1 error</h4>
+<h4>Method flush(), 1 error</h4>
 
 <p>If not done yet by the IDE, create method <code>testFlushGoldenPath()</code> and invoke the method <code>flush()</code> as following:</p>
 
@@ -1067,11 +1056,11 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 
 <hr />
 
-<h3>4.2 CloudService.class</h3>
+<h3>CloudService.class</h3>
 
 <p>Once the service is created, once or more collectors are added in order to provide batch submission to one or more social networks or similar services. A user has to open a connection to the service through the method <code>openConnection()</code> and then start to post tweets for instance invoking <code>saveObject()</code>. Once done user will call method <code>saveObjectCompleted()</code> to post latest tweets and close the connection.</p>
 
-<h4>4.2.1 CloudServiceTest.class</h4>
+<h4>CloudServiceTest.class</h4>
 
 <p>Create the class as done for the previous example and initialize the <em>SUT</em>.</p>
 
@@ -1104,7 +1093,7 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h4>4.2.2 Method addCollector() - 2 errors</h4>
+<h4>Method addCollector() - 2 errors</h4>
 
 <p>Create the first test for method <code>addCollector()</code></p>
 
@@ -1245,7 +1234,7 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 
 <p>Now the test passes. The <code>addCollector()</code> function was empty and by tests it has been implemented. The two tests could have been put in a single one and step by step modifying the method call to make the test passed. <em>Test Driven Development (TDD)</em>.</p>
 
-<h4>4.2.3 Method openConnection() - 1 error</h4>
+<h4>Method openConnection() - 1 error</h4>
 
 <p>Let&rsquo;s create a new test and run it</p>
 
@@ -1303,7 +1292,7 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 </span><span class='line'><span class="o">}</span>
 </span><span class='line'><span class="err">``</span>
 </span><span class='line'>
-</span><span class='line'><span class="err">####</span> <span class="mf">4.2</span><span class="o">.</span><span class="mi">4</span> <span class="n">Method</span> <span class="nf">saveObject</span><span class="o">()</span> <span class="o">-</span> <span class="mi">0</span> <span class="n">errors</span>
+</span><span class='line'><span class="err">####</span> <span class="n">Method</span> <span class="nf">saveObject</span><span class="o">()</span> <span class="o">-</span> <span class="mi">0</span> <span class="n">errors</span>
 </span><span class='line'><span class="n">This</span> <span class="n">method</span> <span class="n">does</span> <span class="n">not</span> <span class="n">have</span> <span class="n">any</span> <span class="n">error</span><span class="o">,</span> <span class="n">but</span> <span class="n">one</span> <span class="n">or</span> <span class="n">more</span> <span class="n">test</span> <span class="n">must</span> <span class="n">be</span> <span class="n">written</span> <span class="n">to</span> <span class="n">build</span> <span class="n">up</span> <span class="n">an</span> <span class="n">efficient</span> <span class="n">_test</span> <span class="n">suite_</span><span class="o">.</span> <span class="n">Moreover</span> <span class="n">it</span> <span class="n">could</span> <span class="n">be</span> <span class="n">another</span> <span class="n">opportunity</span> <span class="n">to</span> <span class="n">see</span> <span class="n">the</span> <span class="n">difference</span> <span class="n">between</span> <span class="n">using</span> <span class="n">_override_</span> <span class="n">and</span> <span class="n">_Mockito_</span> <span class="n">to</span> <span class="n">test</span> <span class="n">_indirect</span> <span class="n">output_</span><span class="o">.</span>
 </span></code></pre></td></tr></table></div></figure>
 

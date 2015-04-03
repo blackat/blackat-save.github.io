@@ -100,19 +100,19 @@
   </header>
 
 
-<div class="entry-content"><blockquote><p>The Facade Pattern provides a unified interface to a set of interfaces in a subsystem. Facade defines a higher-level interface that makes the subsystem easier to use.</p><footer><strong>Bates and Sierra,</strong> <cite><a href='http://shop.oreilly.com/product/9780596007126.do'>Head First Design Patterns</a></cite></footer></blockquote>
+<div class="entry-content"><blockquote><p>The Facade Pattern provides a unified interface to a set of interfaces in a subsystem. Facade defines a higher-level interface that makes the subsystem easier to use.</p><footer><strong>Bates and Sierra,</strong> <cite><a href="http://shop.oreilly.com/product/9780596007126.do">Head First Design Patterns</a></cite></footer></blockquote>
 
 
-<!-- more -->
+<div id="toc-table-content"><table cellpadding="0" cellspacing="0" id="toc-container"><tbody><td><section class="toc-panel"><div class="toc-heading"><h3 class="toc-title"><span class="glyphicon glyphicon-list-alt"></span> Contents</h3></div><ul id="toc-listing"><li class="toc-item"><a href="#TOC-1-class-diagram"><span class="tocnumber">1</span> <span class="toctext">Class diagram</span></a></li><li class="toc-item"><a href="#TOC-2-design-principle"><span class="tocnumber">2</span> <span class="toctext">Design Principle</span></a></li><li class="toc-item"><a href="#TOC-3-key-points"><span class="tocnumber">3</span> <span class="toctext">Key Points</span></a></li><li class="toc-item"><a href="#TOC-4-comparison"><span class="tocnumber">4</span> <span class="toctext">Comparison</span></a></li></ul></section></td></tbody></table></div>
 
 
-<h2>Class diagram</h2>
+<h2 id="TOC-1-class-diagram">Class diagram</h2>
 
 <p><img src="/images/posts/design-patterns/facade_pattern.png"></p>
 
-<p>The <code>Facade</code> is a <em>unified interface</em> easily usable by the client which doesn&rsquo;t dialog anymore with the complex subsytem.</p>
+<p>The <code>Facade</code> is a <em>unified interface</em> easily usable by the client which doesn’t dialog anymore with the complex subsytem.</p>
 
-<h2>Design Principle</h2>
+<h2 id="TOC-2-design-principle">Design Principle</h2>
 
 <p>Principle of <em>Least Knowledge</em>, talk only to you immediate friends.</p>
 
@@ -122,20 +122,20 @@
 </ul>
 
 
-<h2>Key Points</h2>
+<h2 id="TOC-3-key-points">Key Points</h2>
 
 <ul>
 <li><strong>Only one friend.</strong> The <em>client</em> has only one friend, the facade.</li>
 <li><strong>Decoupling.</strong> Allow to decouple client implementation from any subsystem. Coding to the facade, rather than to the subystem, allows the client code to not change every time the subsystem changes, just the facade has to update.</li>
 <li><strong>Delegation.</strong> Implementing the facade requires to compose the facade with its subsystem and use <em>delegation</em> to perform the work.</li>
-<li><strong>Subsytem update.</strong> The update doesn&rsquo;t affect the client.</li>
+<li><strong>Subsytem update.</strong> The update doesn’t affect the client.</li>
 <li><strong>Additional facade.</strong> If the subsystem gets too complex <em>additional facade</em> could be introduced to <em>form layers of subsystems</em>.</li>
-<li><strong>Not encapsulate.</strong> The Facade doesn&rsquo;t encapsulate the classes but provides a simpler interface to the client. The subsystem classes can be still used by the client to achieve some low levels functionality.</li>
+<li><strong>Not encapsulate.</strong> The Facade doesn’t encapsulate the classes but provides a simpler interface to the client. The subsystem classes can be still used by the client to achieve some low levels functionality.</li>
 <li><strong>Many facades.</strong> Given a subsystem many facades can be created.</li>
 </ul>
 
 
-<h2>Comparison</h2>
+<h2 id="TOC-4-comparison">Comparison</h2>
 
 <ul>
 <li><strong>Wrap multiple classes.</strong> Both can wrap multiple classes.</li>

@@ -100,19 +100,19 @@
   </header>
 
 
-<div class="entry-content"><blockquote><p>The Singleton Pattern ensures a class has only one instance and provides a global point of access to it.</p><footer><strong>Bates and Sierra,</strong> <cite><a href='http://shop.oreilly.com/product/9780596007126.do'>Head First Design Patterns</a></cite></footer></blockquote>
+<div class="entry-content"><blockquote><p>The Singleton Pattern ensures a class has only one instance and provides a global point of access to it.</p><footer><strong>Bates and Sierra,</strong> <cite><a href="http://shop.oreilly.com/product/9780596007126.do">Head First Design Patterns</a></cite></footer></blockquote>
 
 
-<!-- more -->
+<div id="toc-table-content"><table cellpadding="0" cellspacing="0" id="toc-container"><tbody><td><section class="toc-panel"><div class="toc-heading"><h3 class="toc-title"><span class="glyphicon glyphicon-list-alt"></span> Contents</h3></div><ul id="toc-listing"><li class="toc-item"><a href="#TOC-1-class-diagram"><span class="tocnumber">1</span> <span class="toctext">Class Diagram</span></a></li><li class="toc-item"><a href="#TOC-2-key-points"><span class="tocnumber">2</span> <span class="toctext">Key Points</span></a></li><li class="toc-item"><a href="#TOC-3-implementation"><span class="tocnumber">3</span> <span class="toctext">Implementation</span></a></li><li class="toc-item"><a href="#TOC-4-multi-threaded-application"><span class="tocnumber">4</span> <span class="toctext">Multi-Threaded Application</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-4-1-lazy-implementation"><span class="tocnumber">4.1</span> <span class="toctext">Lazy Implementation</span></a></li><li class="toc-item"><a href="#TOC-4-2-eager-implementation"><span class="tocnumber">4.2</span> <span class="toctext">Eager Implementation</span></a></li><li class="toc-item"><a href="#TOC-4-3-double-checked-locking-implementation"><span class="tocnumber">4.3</span> <span class="toctext">Double-Checked Locking Implementation</span></a></li></ul></li><li class="toc-item"><a href="#TOC-5-drawbacks"><span class="tocnumber">5</span> <span class="toctext">Drawbacks</span></a></li><li class="toc-item"><a href="#TOC-6-references"><span class="tocnumber">6</span> <span class="toctext">References</span></a></li></ul></section></td></tbody></table></div>
 
 
-<h2>Class Diagram</h2>
+<h2 id="TOC-1-class-diagram">Class Diagram</h2>
 
 <p><img src="/images/posts/design-patterns/singleton.jpg"></p>
 
 <p><code>Singleton</code> is name of the class but also the type of the unique <code>instance</code> variable. The variable is <code>static</code> so it belongs to the class. The method <code>getInstance()</code> is <code>static</code> so can be access using <code>Singleton.getInstance()</code>.</p>
 
-<h2>Key Points</h2>
+<h2 id="TOC-2-key-points">Key Points</h2>
 
 <ul>
 <li><p><strong>Private Constructor.</strong> The class cannot be instantiated.</p></li>
@@ -132,147 +132,147 @@
 </ul>
 
 
-<h2>Implementation</h2>
+<h2 id="TOC-3-implementation">Implementation</h2>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
-</span><span class='line'>      <span class="kd">private</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">instance</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">()</span> <span class="o">{</span> <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="kd">public</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>          <span class="k">if</span> <span class="o">(</span><span class="n">instance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>              <span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Singleton</span><span class="o">();</span>
-</span><span class='line'>          <span class="o">}</span>
-</span><span class='line'>          <span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>      <span class="c1">// other data and methods</span>
-</span><span class='line'>  <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
+</span><span class="line">      <span class="kd">private</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">instance</span><span class="o">;</span>
+</span><span class="line">
+</span><span class="line">      <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">()</span> <span class="o">{</span> <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">      <span class="kd">public</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">          <span class="k">if</span> <span class="o">(</span><span class="n">instance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">              <span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Singleton</span><span class="o">();</span>
+</span><span class="line">          <span class="o">}</span>
+</span><span class="line">          <span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
+</span><span class="line">      <span class="o">}</span>
+</span><span class="line">      <span class="c1">// other data and methods</span>
+</span><span class="line">  <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
-<h2>Multi-Threaded Application</h2>
+<h2 id="TOC-4-multi-threaded-application">Multi-Threaded Application</h2>
 
 <p>The <code>Singleton</code> could be used in a multithreaded environment. Two threads could enter the <code>getInstance()</code> method at the same time. Ensure that each thread waits its turn before entering the method.</p>
 
 <p>Different implementations are feasible in order to address the issue.</p>
 
-<h3>Lazy Implementation</h3>
+<h3 id="TOC-4-1-lazy-implementation">Lazy Implementation</h3>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
-</span><span class='line'>      <span class="kd">private</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">instance</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">()</span> <span class="o">{</span> <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="kd">public</span> <span class="kd">static</span> <span class="kd">synchronized</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>          <span class="k">if</span> <span class="o">(</span><span class="n">instance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>              <span class="n">istance</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Singleton</span><span class="o">();</span>
-</span><span class='line'>          <span class="o">}</span>
-</span><span class='line'>          <span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>      <span class="c1">// other data and methods</span>
-</span><span class='line'>  <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
+</span><span class="line">      <span class="kd">private</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">instance</span><span class="o">;</span>
+</span><span class="line">
+</span><span class="line">      <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">()</span> <span class="o">{</span> <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">      <span class="kd">public</span> <span class="kd">static</span> <span class="kd">synchronized</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">          <span class="k">if</span> <span class="o">(</span><span class="n">instance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">              <span class="n">istance</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Singleton</span><span class="o">();</span>
+</span><span class="line">          <span class="o">}</span>
+</span><span class="line">          <span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
+</span><span class="line">      <span class="o">}</span>
+</span><span class="line">      <span class="c1">// other data and methods</span>
+</span><span class="line">  <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 <p><strong>Note.</strong> Synchronizing the <code>getInstance()</code> method creates an important overhead for the application, performance can decrease by a factor of 100.</p>
 
-<h3>Eager Implementation</h3>
+<h3 id="TOC-4-2-eager-implementation">Eager Implementation</h3>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
-</span><span class='line'>      <span class="kd">private</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Singleton</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">()</span> <span class="o">{}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="kd">public</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>          <span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>      <span class="c1">// other data and methods</span>
-</span><span class='line'>  <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
+</span><span class="line">      <span class="kd">private</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Singleton</span><span class="o">();</span>
+</span><span class="line">
+</span><span class="line">      <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">()</span> <span class="o">{}</span>
+</span><span class="line">
+</span><span class="line">      <span class="kd">public</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">          <span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
+</span><span class="line">      <span class="o">}</span>
+</span><span class="line">      <span class="c1">// other data and methods</span>
+</span><span class="line">  <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 <p><strong>Note.</strong> The JVM will create an instance of Singleton when the class is loaded. Fine if the application always uses a Singleton instance.</p>
 
-<h3>Double-Checked Locking Implementation</h3>
+<h3 id="TOC-4-3-double-checked-locking-implementation">Double-Checked Locking Implementation</h3>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
-</span><span class='line'>      <span class="kd">private</span> <span class="kd">volatile</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">instance</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">()</span> <span class="o">{}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="kd">public</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>          <span class="k">if</span> <span class="o">(</span><span class="n">instance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>              <span class="kd">synchronized</span> <span class="o">(</span><span class="n">Singleton</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>                  <span class="k">if</span> <span class="o">(</span><span class="n">instance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>                      <span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Singleton</span><span class="o">();</span>
-</span><span class='line'>                  <span class="o">}</span>
-</span><span class='line'>              <span class="o">}</span>
-</span><span class='line'>          <span class="o">}</span>
-</span><span class='line'>          <span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>      <span class="c1">// other data and methods</span>
-</span><span class='line'>  <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Singleton</span> <span class="o">{</span>
+</span><span class="line">      <span class="kd">private</span> <span class="kd">volatile</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="n">instance</span><span class="o">;</span>
+</span><span class="line">
+</span><span class="line">      <span class="kd">private</span> <span class="nf">Singleton</span><span class="o">()</span> <span class="o">{}</span>
+</span><span class="line">
+</span><span class="line">      <span class="kd">public</span> <span class="kd">static</span> <span class="n">Singleton</span> <span class="nf">getInstance</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">          <span class="k">if</span> <span class="o">(</span><span class="n">instance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">              <span class="kd">synchronized</span> <span class="o">(</span><span class="n">Singleton</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">                  <span class="k">if</span> <span class="o">(</span><span class="n">instance</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">                      <span class="n">instance</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Singleton</span><span class="o">();</span>
+</span><span class="line">                  <span class="o">}</span>
+</span><span class="line">              <span class="o">}</span>
+</span><span class="line">          <span class="o">}</span>
+</span><span class="line">          <span class="k">return</span> <span class="n">instance</span><span class="o">;</span>
+</span><span class="line">      <span class="o">}</span>
+</span><span class="line">      <span class="c1">// other data and methods</span>
+</span><span class="line">  <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 <p><strong>Note.</strong> Just the creation of the instance is <code>synchronized</code> because the issue comes from a possible concurrent creation and avoid the reduction of the performance. Synchronization happens <em>only</em> the first time the issue has to be created. The <code>volatile</code> keyword</p>
 
 <p>Prior Java5 an out-of-order write may allow the reference to be returned before the object was created. The <code>new</code> operator is not atomic.</p>
 
-<h2>Drawbacks</h2>
+<h2 id="TOC-5-drawbacks">Drawbacks</h2>
 
 <ul>
 <li><p><strong>Global state.</strong> Singletons introduce a <em>global state</em> into a program</p>
@@ -283,7 +283,7 @@
 <li>singleton user and singleton class become coupled together so really difficult to test
 
 <ul>
-<li><em>solution:</em> pass the singleton as parameter in the client&rsquo;s constructor so the singleton can be mocked</li>
+<li><em>solution:</em> pass the singleton as parameter in the client’s constructor so the singleton can be mocked</li>
 </ul>
 </li>
 <li>factory class or the client could enforce the singularity eliminating the global state
@@ -300,7 +300,7 @@
 <li><em>issues:</em>
 
 <ul>
-<li>the signatures of the methods do not show their dependency anymore, the method could pull a singleton <em>&ldquo;out of thin air&rdquo;</em> [<a href="https://code.google.com/p/google-singleton-detector/wiki/WhySingletonsAreControversial">4</a>];</li>
+<li>the signatures of the methods do not show their dependency anymore, the method could pull a singleton <em>“out of thin air”</em> [<a href="https://code.google.com/p/google-singleton-detector/wiki/WhySingletonsAreControversial">4</a>];</li>
 <li>becomes more difficult to use and test the code, the developer should have a look at the inner code.</li>
 </ul>
 </li>
@@ -316,7 +316,7 @@
 </ul>
 
 
-<h2>References</h2>
+<h2 id="TOC-6-references">References</h2>
 
 <p>IBM - User Your Singletons Wisely [<a href="http://www.ibm.com/developerworks/webservices/library/co-single/index.html">1</a>]
 Portland Pattern Repository - Pages about singleton [<a href="http://c2.com/cgi/wiki?search=Singleton">2</a>]

@@ -100,13 +100,13 @@
   </header>
 
 
-<div class="entry-content"><blockquote><p>The Command Pattern encapsulates a request as an object, thereby letting you parameterize other objects with different requests, queue or log requests, and support undoable operations.</p><footer><strong>Bates and Sierra,</strong> <cite><a href='http://shop.oreilly.com/product/9780596007126.do'>Head First Design Patterns</a></cite></footer></blockquote>
+<div class="entry-content"><blockquote><p>The Command Pattern encapsulates a request as an object, thereby letting you parameterize other objects with different requests, queue or log requests, and support undoable operations.</p><footer><strong>Bates and Sierra,</strong> <cite><a href="http://shop.oreilly.com/product/9780596007126.do">Head First Design Patterns</a></cite></footer></blockquote>
 
 
-<!-- more -->
+<div id="toc-table-content"><table cellpadding="0" cellspacing="0" id="toc-container"><tbody><td><section class="toc-panel"><div class="toc-heading"><h3 class="toc-title"><span class="glyphicon glyphicon-list-alt"></span> Contents</h3></div><ul id="toc-listing"><li class="toc-item"><a href="#TOC-1-class-diagram"><span class="tocnumber">1</span> <span class="toctext">Class diagram</span></a></li><li class="toc-item"><a href="#TOC-2-key-points"><span class="tocnumber">2</span> <span class="toctext">Key Points</span></a></li><li class="toc-item"><a href="#TOC-3-command-in-action"><span class="tocnumber">3</span> <span class="toctext">Command in Action</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-3-1-command-interface"><span class="tocnumber">3.1</span> <span class="toctext">Command interface</span></a></li><li class="toc-item"><a href="#TOC-3-2-receiver"><span class="tocnumber">3.2</span> <span class="toctext">Receiver</span></a></li><li class="toc-item"><a href="#TOC-3-3-concrete-command"><span class="tocnumber">3.3</span> <span class="toctext">Concrete Command</span></a></li><li class="toc-item"><a href="#TOC-3-4-invoker"><span class="tocnumber">3.4</span> <span class="toctext">Invoker</span></a></li><li class="toc-item"><a href="#TOC-3-5-client"><span class="tocnumber">3.5</span> <span class="toctext">Client</span></a></li></ul></li></ul></section></td></tbody></table></div>
 
 
-<h2>Class diagram</h2>
+<h2 id="TOC-1-class-diagram">Class diagram</h2>
 
 <p><img src="/images/posts/design-patterns/command_pattern.png"></p>
 
@@ -118,59 +118,59 @@
 </ul>
 
 
-<h2>Key Points</h2>
+<h2 id="TOC-2-key-points">Key Points</h2>
 
-<h2>Command in Action</h2>
+<h2 id="TOC-3-command-in-action">Command in Action</h2>
 
 <p><strong>Scenario.</strong> The idea is to implement a remote to control different devices in a house such as the lights, the gate, the door of the garage and so on. Imagine to have a remote having different buttons and to be able to connect to each button a device.</p>
 
 <p>Each device could work in a different way from the others, a gate opens and closes, the light turn on and off. Idea is to abstract from the specific action to be performed and having a common interface.</p>
 
-<h3>Command interface</h3>
+<h3 id="TOC-3-1-command-interface">Command interface</h3>
 
 <p>This interface must be implemented by a command object which <em>wraps</em> the <code>Receiver</code> and collect some action over it in the <code>execute()</code> method.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Command</span> <span class="o">{</span>
-</span><span class='line'>  <span class="kt">void</span> <span class="nf">execute</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Command</span> <span class="o">{</span>
+</span><span class="line">  <span class="kt">void</span> <span class="nf">execute</span><span class="o">();</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
-<h3>Receiver</h3>
+<h3 id="TOC-3-2-receiver">Receiver</h3>
 
 <p>The light is the <code>Receiver</code> of the <em>request</em>, it is the device produced by a <em>specific vendor</em>. It has a specific interface which describes, through the methods, the possible behavior of the device.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Light</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">on</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">on</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">on</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">off</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">on</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Light</span> <span class="o">{</span>
+</span><span class="line">
+</span><span class="line">  <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">on</span><span class="o">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">on</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">      <span class="n">on</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class="line">  <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">off</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">      <span class="n">on</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class="line">  <span class="o">}</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
-<h3>Concrete Command</h3>
+<h3 id="TOC-3-3-concrete-command">Concrete Command</h3>
 
 <p>The <code>LightCommand</code> is a <em>wrapper</em> for the <code>Receiver</code>, the device the request has to be delegated to. The method <code>execute()</code> group a set of action which will be invoked over the <code>Receiver</code>.</p>
 
@@ -179,133 +179,133 @@
 <p>The <em>command object</em> encapsulate a request of a device, it is used to make requests, each request will be delegated to the wrapped <code>Receiver</code>.
 This class is a <em>command</em> and could be implemented by the vendor with specific actions for the controlled device.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LightOnCommand</span> <span class="kd">implements</span> <span class="n">Command</span><span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">Light</span> <span class="n">light</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">public</span> <span class="nf">LightCommand</span><span class="o">(</span><span class="n">Light</span> <span class="n">light</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="k">this</span><span class="o">.</span><span class="na">light</span> <span class="o">=</span> <span class="n">light</span><span class="o">;</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nd">@Override</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">light</span><span class="o">.</span><span class="na">on</span><span class="o">();</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LightOnCommand</span> <span class="kd">implements</span> <span class="n">Command</span><span class="o">{</span>
+</span><span class="line">
+</span><span class="line">  <span class="n">Light</span> <span class="n">light</span><span class="o">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="kd">public</span> <span class="nf">LightCommand</span><span class="o">(</span><span class="n">Light</span> <span class="n">light</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">      <span class="k">this</span><span class="o">.</span><span class="na">light</span> <span class="o">=</span> <span class="n">light</span><span class="o">;</span>
+</span><span class="line">  <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="nd">@Override</span>
+</span><span class="line">  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">      <span class="n">light</span><span class="o">.</span><span class="na">on</span><span class="o">();</span>
+</span><span class="line">  <span class="o">}</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 <p>Another command to be assigned to another button.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LightOffCommand</span> <span class="kd">implements</span> <span class="n">Command</span><span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// same code</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nd">@Override</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">light</span><span class="o">.</span><span class="na">off</span><span class="o">();</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">LightOffCommand</span> <span class="kd">implements</span> <span class="n">Command</span><span class="o">{</span>
+</span><span class="line">
+</span><span class="line">  <span class="c1">// same code</span>
+</span><span class="line">
+</span><span class="line">  <span class="nd">@Override</span>
+</span><span class="line">  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">execute</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">      <span class="n">light</span><span class="o">.</span><span class="na">off</span><span class="o">();</span>
+</span><span class="line">  <span class="o">}</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
-<h3>Invoker</h3>
+<h3 id="TOC-3-4-invoker">Invoker</h3>
 
 <p>The <code>RemoteControl</code> class is the <code>Invoker</code> which, in this case, has only one button as stated by the <code>slot</code> variable, able to <em>hold a device to control</em>. When the <code>Client</code> presses the button, the method <code>buttonPressed()</code> is invoked.</p>
 
 <p>The <code>Invoker</code> manages the command objects, one per button. In this case there is only one button.</p>
 
-<p>The client is decoupled from the specific device interface, he doesn&rsquo;t have to know the details of the device that is how to turn on or of the light, he has just to press a button.</p>
+<p>The client is decoupled from the specific device interface, he doesn’t have to know the details of the device that is how to turn on or of the light, he has just to press a button.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RemoteControl</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">Command</span> <span class="n">slot</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCommand</span><span class="o">(</span><span class="n">Command</span> <span class="n">command</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">slot</span> <span class="o">=</span> <span class="n">command</span><span class="o">;</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">buttonPressed</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">slot</span><span class="o">.</span><span class="na">execute</span><span class="o">();</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">RemoteControl</span> <span class="o">{</span>
+</span><span class="line">  <span class="n">Command</span> <span class="n">slot</span><span class="o">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCommand</span><span class="o">(</span><span class="n">Command</span> <span class="n">command</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">      <span class="n">slot</span> <span class="o">=</span> <span class="n">command</span><span class="o">;</span>
+</span><span class="line">  <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">buttonPressed</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">      <span class="n">slot</span><span class="o">.</span><span class="na">execute</span><span class="o">();</span>
+</span><span class="line">  <span class="o">}</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
-<h3>Client</h3>
+<h3 id="TOC-3-5-client">Client</h3>
 
 <p>The client prepare the remote to be used loading command objects in the specific slots. Each command object encapsulate a request of a device.
-doesn&rsquo;t use the device, that is the <code>Receviver</code>, directly but through the <code>Invoker</code> which is the remote control.</p>
+doesn’t use the device, that is the <code>Receviver</code>, directly but through the <code>Invoker</code> which is the remote control.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="c1">// invoker</span>
-</span><span class='line'>      <span class="n">RemoteControl</span> <span class="n">remoteControl</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">RemoteControl</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="c1">// receiver</span>
-</span><span class='line'>      <span class="n">Light</span> <span class="n">light</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Light</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="c1">// create a command and pass the receiver</span>
-</span><span class='line'>      <span class="n">Command</span> <span class="n">command</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">LightCommand</span><span class="o">(</span><span class="n">light</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="c1">// pass the command to the invoker</span>
-</span><span class='line'>      <span class="n">remoteControl</span><span class="o">.</span><span class="na">setCommand</span><span class="o">(</span><span class="n">command</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="c1">// press the button</span>
-</span><span class='line'>      <span class="n">remoteControl</span><span class="o">.</span><span class="na">buttonPressed</span><span class="o">();</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+</span><span class="line">  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">      <span class="c1">// invoker</span>
+</span><span class="line">      <span class="n">RemoteControl</span> <span class="n">remoteControl</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">RemoteControl</span><span class="o">();</span>
+</span><span class="line">
+</span><span class="line">      <span class="c1">// receiver</span>
+</span><span class="line">      <span class="n">Light</span> <span class="n">light</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Light</span><span class="o">();</span>
+</span><span class="line">
+</span><span class="line">      <span class="c1">// create a command and pass the receiver</span>
+</span><span class="line">      <span class="n">Command</span> <span class="n">command</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">LightCommand</span><span class="o">(</span><span class="n">light</span><span class="o">);</span>
+</span><span class="line">
+</span><span class="line">      <span class="c1">// pass the command to the invoker</span>
+</span><span class="line">      <span class="n">remoteControl</span><span class="o">.</span><span class="na">setCommand</span><span class="o">(</span><span class="n">command</span><span class="o">);</span>
+</span><span class="line">
+</span><span class="line">      <span class="c1">// press the button</span>
+</span><span class="line">      <span class="n">remoteControl</span><span class="o">.</span><span class="na">buttonPressed</span><span class="o">();</span>
+</span><span class="line">  <span class="o">}</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 </div>
 

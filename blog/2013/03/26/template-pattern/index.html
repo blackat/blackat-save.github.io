@@ -100,13 +100,13 @@
   </header>
 
 
-<div class="entry-content"><blockquote><p>The Template Method Pattern defines the skeleton of an algorithm in an operation, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm&#8217;s structure.</p><footer><strong>Bates and Sierra,</strong> <cite><a href='http://shop.oreilly.com/product/9780596007126.do'>Head First Design Patterns</a></cite></footer></blockquote>
+<div class="entry-content"><blockquote><p>The Template Method Pattern defines the skeleton of an algorithm in an operation, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm&#8217;s structure.</p><footer><strong>Bates and Sierra,</strong> <cite><a href="http://shop.oreilly.com/product/9780596007126.do">Head First Design Patterns</a></cite></footer></blockquote>
 
 
-<!-- more -->
+<div id="toc-table-content"><table cellpadding="0" cellspacing="0" id="toc-container"><tbody><td><section class="toc-panel"><div class="toc-heading"><h3 class="toc-title"><span class="glyphicon glyphicon-list-alt"></span> Contents</h3></div><ul id="toc-listing"><li class="toc-item"><a href="#TOC-1-class-diagram"><span class="tocnumber">1</span> <span class="toctext">Class diagram</span></a></li><li class="toc-item"><a href="#TOC-2-design-principle"><span class="tocnumber">2</span> <span class="toctext">Design Principle</span></a></li><li class="toc-item"><a href="#TOC-3-scenario"><span class="tocnumber">3</span> <span class="toctext">Scenario</span></a></li><li class="toc-item"><a href="#TOC-4-key-points"><span class="tocnumber">4</span> <span class="toctext">Key Points</span></a></li><li class="toc-item"><a href="#TOC-5-template-method-vs-strategy"><span class="tocnumber">5</span> <span class="toctext">Template method vs. Strategy</span></a></li><li class="toc-item"><a href="#TOC-6-template-method-in-action"><span class="tocnumber">6</span> <span class="toctext">Template Method in Action</span></a></li></ul></section></td></tbody></table></div>
 
 
-<h2>Class diagram</h2>
+<h2 id="TOC-1-class-diagram">Class diagram</h2>
 
 <p><img src="/images/posts/design-patterns/template_method.png"></p>
 
@@ -116,18 +116,18 @@
 
 <p>The concrete class implements all the abstract operations called by the template method.</p>
 
-<h2>Design Principle</h2>
+<h2 id="TOC-2-design-principle">Design Principle</h2>
 
 <p><a href="/oo-design-principles/index.html#hollywood_principle">The Hollywood Principle.</a></p>
 
-<h2>Scenario</h2>
+<h2 id="TOC-3-scenario">Scenario</h2>
 
 <p>An algorithm is made of steps useful to accomplish some tasks. It can be imagined as a recipe which is a set of instruction to prepare a dish. Some recipes could have some instructions in common so it should be better to avoid <em>code duplication</em>.</p>
 
-<h2>Key Points</h2>
+<h2 id="TOC-4-key-points">Key Points</h2>
 
 <ul>
-<li><strong>Template method.</strong> It defines the skeleton of an algorithm <em>deferring</em> some steps to subclasses. It lets subclasses <em>redefine</em> some steps without changing the algorithm&rsquo;s structure.</li>
+<li><strong>Template method.</strong> It defines the skeleton of an algorithm <em>deferring</em> some steps to subclasses. It lets subclasses <em>redefine</em> some steps without changing the algorithm’s structure.</li>
 <li><strong>Abstract class.</strong>_
 
 <ul>
@@ -139,7 +139,7 @@
 <li><strong>Abstract methods.</strong> They point out that they are just <em>placeholders</em> because they are in common with all the algorithms but their <em>implementation differ</em> from algorithm to algorithm.</li>
 <li><strong>Concrete methods.</strong> Concrete meaning that their <em>implementation is the same and in common</em> among algorithms.</li>
 <li><strong>Inheritance.</strong> It allows all the subclasses, the <em>algorithms</em>, to have the <em>same behaviors</em> of the superclass, if they are <em>abstract</em> they could change across subclasses.</li>
-<li><strong>Interfaces.</strong> They don&rsquo;t have code so <em>no code reuse</em>.</li>
+<li><strong>Interfaces.</strong> They don’t have code so <em>no code reuse</em>.</li>
 <li><strong>Concrete class.</strong> Concrete implementation is a working algorithm which implements each <em>abstract method</em> and <em>could add some other algorithm specific methods</em>.</li>
 <li><strong>Hook methods.</strong>
 
@@ -151,7 +151,7 @@
 </ul>
 
 
-<h2>Template method vs. Strategy</h2>
+<h2 id="TOC-5-template-method-vs-strategy">Template method vs. Strategy</h2>
 
 <ul>
 <li><strong>Focus on</strong>
@@ -164,7 +164,7 @@
 
 <ul>
 <li>Define the <em>outline of an algorithm</em> and let my <em>subclasses</em> do some of the work.</li>
-<li><em>Keep the control</em> over the algorithm&rsquo;s structure and allow be different implementations of individual steps.</li>
+<li><em>Keep the control</em> over the algorithm’s structure and allow be different implementations of individual steps.</li>
 <li>Provide method for <em>code reuse</em> allowing <em>subclasses</em> to specify behavior.</li>
 <li>Depend on method implemented in the superclass.</li>
 </ul>
@@ -183,7 +183,7 @@
 </ul>
 
 
-<h2>Template Method in Action</h2>
+<h2 id="TOC-6-template-method-in-action">Template Method in Action</h2>
 </div>
 
 

@@ -100,17 +100,17 @@
   </header>
 
 
-<div class="entry-content"><blockquote><p>The Strategy Pattern defines a family of algorithms, encapsulates each one and makes them interchangeable. Strategy lets algorithm vary independently from clients that use it.</p><footer><strong>Bates and Sierra,</strong> <cite><a href='http://shop.oreilly.com/product/9780596007126.do'>Head First Design Patterns</a></cite></footer></blockquote>
+<div class="entry-content"><blockquote><p>The Strategy Pattern defines a family of algorithms, encapsulates each one and makes them interchangeable. Strategy lets algorithm vary independently from clients that use it.</p><footer><strong>Bates and Sierra,</strong> <cite><a href="http://shop.oreilly.com/product/9780596007126.do">Head First Design Patterns</a></cite></footer></blockquote>
 
 
-<!-- more -->
+<div id="toc-table-content"><table cellpadding="0" cellspacing="0" id="toc-container"><tbody><td><section class="toc-panel"><div class="toc-heading"><h3 class="toc-title"><span class="glyphicon glyphicon-list-alt"></span> Contents</h3></div><ul id="toc-listing"><li class="toc-item"><a href="#TOC-1-class-diagram"><span class="tocnumber">1</span> <span class="toctext">Class diagram</span></a></li><li class="toc-item"><a href="#TOC-2-design-principles"><span class="tocnumber">2</span> <span class="toctext">Design Principles</span></a></li><li class="toc-item"><a href="#TOC-3-scenario"><span class="tocnumber">3</span> <span class="toctext">Scenario</span></a></li><li class="toc-item"><a href="#TOC-4-design-principles-in-action"><span class="tocnumber">4</span> <span class="toctext">Design Principles in Action</span></a></li><li class="toc-item"><a href="#TOC-5-set-behavior-implementation"><span class="tocnumber">5</span> <span class="toctext">Set Behavior Implementation</span></a></li><li class="toc-item"><a href="#TOC-6-example"><span class="tocnumber">6</span> <span class="toctext">Example</span></a></li></ul></section></td></tbody></table></div>
 
 
-<h2>Class diagram</h2>
+<h2 id="TOC-1-class-diagram">Class diagram</h2>
 
 <p><img src="/images/posts/design-patterns/strategy_pattern.png"></p>
 
-<h2>Design Principles</h2>
+<h2 id="TOC-2-design-principles">Design Principles</h2>
 
 <p>Some design principle can help in the definition and explanation of the pattern.</p>
 
@@ -118,8 +118,8 @@
 <li><strong>Encapsulate what varies.</strong>
 
 <ul>
-<li>Encapsulating what varies <em>don&rsquo;t affect</em> other parts of the code when changes.</li>
-<li>Because of <em>new requirements</em> some <em>aspects</em> of the application could change quite often. <em>Aspects</em> mean <em>behaviors</em> and they have to be separated from <em>aspects</em> that don&rsquo;t change.</li>
+<li>Encapsulating what varies <em>don’t affect</em> other parts of the code when changes.</li>
+<li>Because of <em>new requirements</em> some <em>aspects</em> of the application could change quite often. <em>Aspects</em> mean <em>behaviors</em> and they have to be separated from <em>aspects</em> that don’t change.</li>
 <li>Base scheme for all design patterns, they allow some part of the system to <em>vary independently</em> of all other parts.</li>
 </ul>
 </li>
@@ -142,7 +142,7 @@
 </ul>
 
 
-<h2>Scenario</h2>
+<h2 id="TOC-3-scenario">Scenario</h2>
 
 <p>A product could update quite frequently because of new requirements introducing new behavior. Considering a simple class inheritance is the first solution that comes to mind.</p>
 
@@ -157,7 +157,7 @@
 </ul>
 
 
-<h2>Design Principles in Action</h2>
+<h2 id="TOC-4-design-principles-in-action">Design Principles in Action</h2>
 
 <p>To better design the application apply the design principles explained so far.</p>
 
@@ -203,7 +203,7 @@
 </ul>
 
 
-<h2>Set Behavior Implementation</h2>
+<h2 id="TOC-5-set-behavior-implementation">Set Behavior Implementation</h2>
 
 <p>The behavior implementation can be set via</p>
 
@@ -217,7 +217,7 @@
 
 <p><em>Set of behaviors</em> can be seen as a <strong>family of algorithms</strong>.</p>
 
-<h2>Example</h2>
+<h2 id="TOC-6-example">Example</h2>
 
 <p><img src="/images/posts/design-patterns/behavior_interface.png"></p>
 

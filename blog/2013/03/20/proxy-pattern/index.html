@@ -9,7 +9,7 @@
   <meta name="author" content="black@t">
 
   
-  <meta name="description" content="The Proxy Pattern provides a surrogate or placeholder for another object to control access to it.Bates and Sierra, Head First Design Patterns Class &hellip;">
+  <meta name="description" content="The Proxy Pattern provides a surrogate or placeholder for another object to control access to it.Bates and Sierra, Head First Design Patterns &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -100,13 +100,13 @@
   </header>
 
 
-<div class="entry-content"><blockquote><p>The Proxy Pattern provides a surrogate or placeholder for another object to control access to it.</p><footer><strong>Bates and Sierra,</strong> <cite><a href='http://shop.oreilly.com/product/9780596007126.do'>Head First Design Patterns</a></cite></footer></blockquote>
+<div class="entry-content"><blockquote><p>The Proxy Pattern provides a surrogate or placeholder for another object to control access to it.</p><footer><strong>Bates and Sierra,</strong> <cite><a href="http://shop.oreilly.com/product/9780596007126.do">Head First Design Patterns</a></cite></footer></blockquote>
 
 
-<!-- more -->
+<div id="toc-table-content"><table cellpadding="0" cellspacing="0" id="toc-container"><tbody><td><section class="toc-panel"><div class="toc-heading"><h3 class="toc-title"><span class="glyphicon glyphicon-list-alt"></span> Contents</h3></div><ul id="toc-listing"><li class="toc-item"><a href="#TOC-1-class-diagram"><span class="tocnumber">1</span> <span class="toctext">Class Diagram</span></a></li><li class="toc-item"><a href="#TOC-2-key-points"><span class="tocnumber">2</span> <span class="toctext">Key Points</span></a></li><li class="toc-item"><a href="#TOC-3-comparisons"><span class="tocnumber">3</span> <span class="toctext">Comparisons</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-3-1-proxy-vs-decorator-and-adapter"><span class="tocnumber">3.1</span> <span class="toctext">Proxy vs. Decorator and Adapter</span></a></li></ul></li></ul></section></td></tbody></table></div>
 
 
-<h2>Class Diagram</h2>
+<h2 id="TOC-1-class-diagram">Class Diagram</h2>
 
 <p><img src="/images/posts/design-patterns/proxy.jpg"></p>
 
@@ -147,7 +147,7 @@
 </ul>
 
 
-<h2>Key Points</h2>
+<h2 id="TOC-2-key-points">Key Points</h2>
 
 <ul>
 <li><strong>Proxy pattern</strong>
@@ -161,28 +161,28 @@
 
 <ul>
 <li>In some way the proxy <em>wraps</em> (<code>HAS-A</code>) the real object.</li>
-<li>Proxy <em>&ldquo;intercepts&rdquo;</em> the requests from the client and forwards them to the real object acting a some form of control on them.</li>
-<li>If the real object is remote, there is a sort of <em>&ldquo;remote proxy&rdquo;</em> receiving the request or call over the network invoking the call of the method against the real object it owns.</li>
+<li>Proxy <em>“intercepts”</em> the requests from the client and forwards them to the real object acting a some form of control on them.</li>
+<li>If the real object is remote, there is a sort of <em>“remote proxy”</em> receiving the request or call over the network invoking the call of the method against the real object it owns.</li>
 </ul>
 </li>
 <li><strong>Factory method</strong>    Using a <em>factory method</em> it is possible to <em>wrap</em> the <em>real object</em> into the proxy and return it to the client as it was the real one.</li>
 </ul>
 
 
-<h2>Comparisons</h2>
+<h2 id="TOC-3-comparisons">Comparisons</h2>
 
 <p>All proxies have in common the ability to intercept a method call that a client has done. The client always invoke method on a <em>proxy</em> thinking that it is the <em>real object</em>. <em>Proxies always acts as surrogates.</em></p>
 
-<h3>Proxy vs. Decorator and Adapter</h3>
+<h3 id="TOC-3-1-proxy-vs-decorator-and-adapter">Proxy vs. Decorator and Adapter</h3>
 
 <ul>
 <li><strong>Proxy</strong>
 
 <ul>
 <li>It always <em>control the access</em> to a <em>class</em>.</li>
-<li>Proxy decouples the client from the real object. Controlling the access, the proxy allow the client the use of the real object only when it is available, so the client doesn&rsquo;t have to wait for it.</li>
+<li>Proxy decouples the client from the real object. Controlling the access, the proxy allow the client the use of the real object only when it is available, so the client doesn’t have to wait for it.</li>
 <li>The protection proxy may provides a partial interface to a real object, in this it is similar to an adapter.</li>
-<li>It <strong>wraps the subject</strong>. The client doesn&rsquo;t know what object has been wrapped. Virtual proxy <em>wraps</em> an object that even doesn&rsquo;t exist at the beginning.</li>
+<li>It <strong>wraps the subject</strong>. The client doesn’t know what object has been wrapped. Virtual proxy <em>wraps</em> an object that even doesn’t exist at the beginning.</li>
 </ul>
 </li>
 <li><strong>Decorator</strong>

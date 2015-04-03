@@ -100,13 +100,13 @@
   </header>
 
 
-<div class="entry-content"><blockquote><p>The Adapter Method Pattern converts the interface of a class into another interface the clients expect. Adapter lets classes work together that couldn&#8217;t otherwise because of incompatible interfaces.</p><footer><strong>Bates and Sierra,</strong> <cite><a href='http://shop.oreilly.com/product/9780596007126.do'>Head First Design Patterns</a></cite></footer></blockquote>
+<div class="entry-content"><blockquote><p>The Adapter Method Pattern converts the interface of a class into another interface the clients expect. Adapter lets classes work together that couldn&#8217;t otherwise because of incompatible interfaces.</p><footer><strong>Bates and Sierra,</strong> <cite><a href="http://shop.oreilly.com/product/9780596007126.do">Head First Design Patterns</a></cite></footer></blockquote>
 
 
-<!-- more -->
+<div id="toc-table-content"><table cellpadding="0" cellspacing="0" id="toc-container"><tbody><td><section class="toc-panel"><div class="toc-heading"><h3 class="toc-title"><span class="glyphicon glyphicon-list-alt"></span> Contents</h3></div><ul id="toc-listing"><li class="toc-item"><a href="#TOC-1-class-diagram"><span class="tocnumber">1</span> <span class="toctext">Class diagram</span></a></li><li class="toc-item"><a href="#TOC-2-scenario"><span class="tocnumber">2</span> <span class="toctext">Scenario</span></a></li><li class="toc-item"><a href="#TOC-3-key-points"><span class="tocnumber">3</span> <span class="toctext">Key Points</span></a></li><li class="toc-item"><a href="#TOC-4-adapter-vs-decorator"><span class="tocnumber">4</span> <span class="toctext">Adapter vs. Decorator</span></a></li><li class="toc-item"><a href="#TOC-5-real-world-adapters"><span class="tocnumber">5</span> <span class="toctext">Real World Adapters</span></a></li></ul></section></td></tbody></table></div>
 
 
-<h2>Class diagram</h2>
+<h2 id="TOC-1-class-diagram">Class diagram</h2>
 
 <p><img src="/images/posts/design-patterns/adapter_pattern.png"></p>
 
@@ -117,9 +117,9 @@
 </ul>
 
 
-<h2>Scenario</h2>
+<h2 id="TOC-2-scenario">Scenario</h2>
 
-<h2>Key Points</h2>
+<h2 id="TOC-3-key-points">Key Points</h2>
 
 <ul>
 <li><strong>Object composition.</strong> The pattern <em>wraps</em> the <em>adaptee</em> with an <em>altered interface</em> and it can use any <em>subclass</em> of the adaptee.</li>
@@ -128,7 +128,7 @@
 
 <ul>
 <li><strong>Decouple</strong> the client from the implemented interface.</li>
-<li><strong>Encapsulate what changes</strong> so the client doesn&rsquo;t have to modify each time needs to operate against a different interface.</li>
+<li><strong>Encapsulate what changes</strong> so the client doesn’t have to modify each time needs to operate against a different interface.</li>
 <li><strong>Convert</strong> one interface to another so the <em>adapter</em> could wrap one or more <em>adaptee</em> but it would be a bit messy (see Facade Pattern).</li>
 <li><strong>Implement</strong> the interface of the type the client is expecting.</li>
 <li><strong>Delegate</strong> all the requests to the object it wraps.</li>
@@ -138,7 +138,7 @@
 </ul>
 
 
-<h2>Adapter vs. Decorator</h2>
+<h2 id="TOC-4-adapter-vs-decorator">Adapter vs. Decorator</h2>
 
 <ul>
 <li><strong>Focus on</strong>
@@ -163,7 +163,7 @@
 </ul>
 
 
-<h2>Real World Adapters</h2>
+<h2 id="TOC-5-real-world-adapters">Real World Adapters</h2>
 
 <ul>
 <li>Enumerator. Allow iterate over a collection elements without knowing the collection implementation details.</li>

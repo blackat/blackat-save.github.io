@@ -100,33 +100,33 @@
   </header>
 
 
-<div class="entry-content"><blockquote><p>The Observer Pattern defines a one-to-many dependency between objects so that when one object changes state, all of its dependents are notified and updated automatically.</p><footer><strong>Bates and Sierra,</strong> <cite><a href='http://shop.oreilly.com/product/9780596007126.do'>Head First Design Patterns</a></cite></footer></blockquote>
+<div class="entry-content"><blockquote><p>The Observer Pattern defines a one-to-many dependency between objects so that when one object changes state, all of its dependents are notified and updated automatically.</p><footer><strong>Bates and Sierra,</strong> <cite><a href="http://shop.oreilly.com/product/9780596007126.do">Head First Design Patterns</a></cite></footer></blockquote>
 
 
-<!-- more -->
+<div id="toc-table-content"><table cellpadding="0" cellspacing="0" id="toc-container"><tbody><td><section class="toc-panel"><div class="toc-heading"><h3 class="toc-title"><span class="glyphicon glyphicon-list-alt"></span> Contents</h3></div><ul id="toc-listing"><li class="toc-item"><a href="#TOC-1-class-diagram"><span class="tocnumber">1</span> <span class="toctext">Class diagram</span></a></li><li class="toc-item"><a href="#TOC-2-design-principle"><span class="tocnumber">2</span> <span class="toctext">Design Principle</span></a></li><li class="toc-item"><a href="#TOC-3-scenario"><span class="tocnumber">3</span> <span class="toctext">Scenario</span></a></li><li class="toc-item"><a href="#TOC-4-key-points"><span class="tocnumber">4</span> <span class="toctext">Key Points</span></a></li><li class="toc-item"><a href="#TOC-5-observer-pattern-in-action"><span class="tocnumber">5</span> <span class="toctext">Observer Pattern in Action</span></a></li></ul></section></td></tbody></table></div>
 
 
-<h2>Class diagram</h2>
+<h2 id="TOC-1-class-diagram">Class diagram</h2>
 
 <p><img src="/images/posts/design-patterns/observer_pattern.png"></p>
 
-<p>Use <code>Subject</code> interface to register or remove an observer. A potential <em>observer</em> must implements the <code>Observer</code> interface, its method will be called when the <em>subject&rsquo;s</em> state changes.</p>
+<p>Use <code>Subject</code> interface to register or remove an observer. A potential <em>observer</em> must implements the <code>Observer</code> interface, its method will be called when the <em>subject’s</em> state changes.</p>
 
 <p>The <code>ConcreteSubject</code> contains and controls the <em>state</em>, it is the sole <em>owner of the data</em>.</p>
 
-<h2>Design Principle</h2>
+<h2 id="TOC-2-design-principle">Design Principle</h2>
 
 <p><a href="/oo-design-principles/index.html#loosely_coupled_principle">Loosely Coupled Design Principle.</a></p>
 
-<h2>Scenario</h2>
+<h2 id="TOC-3-scenario">Scenario</h2>
 
-<p>A news stand produces news during all the day. Each person interested in having news has to subscribe to the stand to get notifications. In this way the person doesn&rsquo;t have to check every time if a new article has been published.</p>
+<p>A news stand produces news during all the day. Each person interested in having news has to subscribe to the stand to get notifications. In this way the person doesn’t have to check every time if a new article has been published.</p>
 
-<h2>Key Points</h2>
+<h2 id="TOC-4-key-points">Key Points</h2>
 
 <ul>
 <li><strong>Subject.</strong> It is the observable and updates the observers using a common interface.</li>
-<li><strong>Loosely coupled.</strong> Observable doesn&rsquo;t know anything about observers except that they implement an interface.
+<li><strong>Loosely coupled.</strong> Observable doesn’t know anything about observers except that they implement an interface.
 
 <ul>
 <li>Allow flexible design minimizing the interdependency between objects.</li>
@@ -138,202 +138,202 @@
 </ul>
 
 
-<h2>Observer Pattern in Action</h2>
+<h2 id="TOC-5-observer-pattern-in-action">Observer Pattern in Action</h2>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Subject</span> <span class="o">{</span>
-</span><span class='line'>  <span class="kt">void</span> <span class="nf">registerObserver</span><span class="o">(</span><span class="n">Observer</span> <span class="n">observer</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kt">void</span> <span class="nf">removeObserver</span><span class="o">(</span><span class="n">Observer</span> <span class="n">observer</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kt">void</span> <span class="nf">notifyObservers</span><span class="o">();</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
-</span><span class='line'><span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NewsProvider</span> <span class="kd">implements</span> <span class="n">Subject</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Observer</span><span class="o">&gt;</span> <span class="n">observerList</span><span class="o">;</span>
-</span><span class='line'>  <span class="kd">private</span> <span class="n">News</span> <span class="n">news</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">public</span> <span class="nf">NewsProvider</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">observerList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Observer</span><span class="o">&gt;();</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nd">@Override</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">registerObserver</span><span class="o">(</span><span class="n">Observer</span> <span class="n">observer</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">observerList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">observer</span><span class="o">);</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nd">@Override</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">removeObserver</span><span class="o">(</span><span class="n">Observer</span> <span class="n">observer</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">observerList</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">observer</span><span class="o">);</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nd">@Override</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">notifyObservers</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="k">for</span> <span class="o">(</span><span class="n">Observer</span> <span class="n">o</span> <span class="o">:</span> <span class="n">observerList</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>          <span class="n">o</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="n">news</span><span class="o">);</span>
-</span><span class='line'>      <span class="o">}</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kt">void</span> <span class="nf">setNews</span><span class="o">(</span><span class="n">News</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">news</span> <span class="o">=</span> <span class="n">n</span><span class="o">;</span>
-</span><span class='line'>      <span class="n">notifyObservers</span><span class="o">();</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Subject</span> <span class="o">{</span>
+</span><span class="line">  <span class="kt">void</span> <span class="nf">registerObserver</span><span class="o">(</span><span class="n">Observer</span> <span class="n">observer</span><span class="o">);</span>
+</span><span class="line">
+</span><span class="line">  <span class="kt">void</span> <span class="nf">removeObserver</span><span class="o">(</span><span class="n">Observer</span> <span class="n">observer</span><span class="o">);</span>
+</span><span class="line">
+</span><span class="line">  <span class="kt">void</span> <span class="nf">notifyObservers</span><span class="o">();</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Observer</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="n">News</span> <span class="n">news</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+<span class="line-number">28</span>
+<span class="line-number">29</span>
+<span class="line-number">30</span>
+<span class="line-number">31</span>
+<span class="line-number">32</span>
+<span class="line-number">33</span>
+<span class="line-number">34</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+</span><span class="line"><span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NewsProvider</span> <span class="kd">implements</span> <span class="n">Subject</span> <span class="o">{</span>
+</span><span class="line">
+</span><span class="line">  <span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Observer</span><span class="o">&gt;</span> <span class="n">observerList</span><span class="o">;</span>
+</span><span class="line">  <span class="kd">private</span> <span class="n">News</span> <span class="n">news</span><span class="o">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="kd">public</span> <span class="nf">NewsProvider</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">      <span class="n">observerList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Observer</span><span class="o">&gt;();</span>
+</span><span class="line">  <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="nd">@Override</span>
+</span><span class="line">  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">registerObserver</span><span class="o">(</span><span class="n">Observer</span> <span class="n">observer</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">      <span class="n">observerList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">observer</span><span class="o">);</span>
+</span><span class="line">  <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="nd">@Override</span>
+</span><span class="line">  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">removeObserver</span><span class="o">(</span><span class="n">Observer</span> <span class="n">observer</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">      <span class="n">observerList</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">observer</span><span class="o">);</span>
+</span><span class="line">  <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="nd">@Override</span>
+</span><span class="line">  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">notifyObservers</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">      <span class="k">for</span> <span class="o">(</span><span class="n">Observer</span> <span class="n">o</span> <span class="o">:</span> <span class="n">observerList</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">          <span class="n">o</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="n">news</span><span class="o">);</span>
+</span><span class="line">      <span class="o">}</span>
+</span><span class="line">  <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="kt">void</span> <span class="nf">setNews</span><span class="o">(</span><span class="n">News</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">      <span class="n">news</span> <span class="o">=</span> <span class="n">n</span><span class="o">;</span>
+</span><span class="line">      <span class="n">notifyObservers</span><span class="o">();</span>
+</span><span class="line">  <span class="o">}</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NewsObserver</span> <span class="kd">implements</span> <span class="n">Observer</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">private</span> <span class="n">Subject</span> <span class="n">subject</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">public</span> <span class="nf">NewsObserver</span><span class="o">(</span><span class="n">Subject</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">subject</span> <span class="o">=</span> <span class="n">s</span><span class="o">;</span>
-</span><span class='line'>      <span class="n">s</span><span class="o">.</span><span class="na">registerObserver</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nd">@Override</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="n">News</span> <span class="n">news</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;new news published: &quot;</span> <span class="o">+</span> <span class="n">news</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Observer</span> <span class="o">{</span>
+</span><span class="line">    <span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="n">News</span> <span class="n">news</span><span class="o">);</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">News</span> <span class="o">{</span>
-</span><span class='line'>  <span class="kd">private</span> <span class="n">String</span> <span class="n">title</span><span class="o">;</span>
-</span><span class='line'>  <span class="kd">private</span> <span class="n">String</span> <span class="n">author</span><span class="o">;</span>
-</span><span class='line'>  <span class="kd">private</span> <span class="n">String</span> <span class="n">content</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">public</span> <span class="nf">News</span><span class="o">(</span><span class="n">String</span> <span class="n">t</span><span class="o">,</span> <span class="n">String</span> <span class="n">a</span><span class="o">,</span> <span class="n">String</span> <span class="n">c</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">title</span> <span class="o">=</span> <span class="n">t</span><span class="o">;</span>
-</span><span class='line'>      <span class="n">author</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
-</span><span class='line'>      <span class="n">content</span> <span class="o">=</span> <span class="n">c</span><span class="o">;</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nd">@Override</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">title</span> <span class="o">+</span> <span class="s">&quot; &quot;</span> <span class="o">+</span> <span class="n">author</span> <span class="o">+</span> <span class="s">&quot;: &quot;</span> <span class="o">+</span> <span class="n">content</span><span class="o">;</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NewsObserver</span> <span class="kd">implements</span> <span class="n">Observer</span> <span class="o">{</span>
+</span><span class="line">
+</span><span class="line">  <span class="kd">private</span> <span class="n">Subject</span> <span class="n">subject</span><span class="o">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="kd">public</span> <span class="nf">NewsObserver</span><span class="o">(</span><span class="n">Subject</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">      <span class="n">subject</span> <span class="o">=</span> <span class="n">s</span><span class="o">;</span>
+</span><span class="line">      <span class="n">s</span><span class="o">.</span><span class="na">registerObserver</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+</span><span class="line">    <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="nd">@Override</span>
+</span><span class="line">  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="n">News</span> <span class="n">news</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">      <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"new news published: "</span> <span class="o">+</span> <span class="n">news</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+</span><span class="line">  <span class="o">}</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NewsStand</span> <span class="o">{</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">NewsProvider</span> <span class="n">newsProvider</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">NewsProvider</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="n">Observer</span> <span class="n">userOne</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">NewsObserver</span><span class="o">(</span><span class="n">newsProvider</span><span class="o">);</span>
-</span><span class='line'>      <span class="n">Observer</span> <span class="n">userTwo</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">NewsObserver</span><span class="o">(</span><span class="n">newsProvider</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="n">newsProvider</span><span class="o">.</span><span class="na">setNews</span><span class="o">(</span><span class="k">new</span> <span class="nf">News</span><span class="o">(</span><span class="s">&quot;New economy&quot;</span><span class="o">,</span> <span class="s">&quot;Barry Lindon&quot;</span><span class="o">,</span> <span class="s">&quot;Many new changes happened.&quot;</span><span class="o">));</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">News</span> <span class="o">{</span>
+</span><span class="line">  <span class="kd">private</span> <span class="n">String</span> <span class="n">title</span><span class="o">;</span>
+</span><span class="line">  <span class="kd">private</span> <span class="n">String</span> <span class="n">author</span><span class="o">;</span>
+</span><span class="line">  <span class="kd">private</span> <span class="n">String</span> <span class="n">content</span><span class="o">;</span>
+</span><span class="line">
+</span><span class="line">  <span class="kd">public</span> <span class="nf">News</span><span class="o">(</span><span class="n">String</span> <span class="n">t</span><span class="o">,</span> <span class="n">String</span> <span class="n">a</span><span class="o">,</span> <span class="n">String</span> <span class="n">c</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">      <span class="n">title</span> <span class="o">=</span> <span class="n">t</span><span class="o">;</span>
+</span><span class="line">      <span class="n">author</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
+</span><span class="line">      <span class="n">content</span> <span class="o">=</span> <span class="n">c</span><span class="o">;</span>
+</span><span class="line">  <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">  <span class="nd">@Override</span>
+</span><span class="line">  <span class="kd">public</span> <span class="n">String</span> <span class="nf">toString</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">      <span class="k">return</span> <span class="n">title</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">author</span> <span class="o">+</span> <span class="s">": "</span> <span class="o">+</span> <span class="n">content</span><span class="o">;</span>
+</span><span class="line">  <span class="o">}</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+
+
+<div class="bogus-wrapper"><notextile><figure class="code"><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NewsStand</span> <span class="o">{</span>
+</span><span class="line">  <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">      <span class="n">NewsProvider</span> <span class="n">newsProvider</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">NewsProvider</span><span class="o">();</span>
+</span><span class="line">
+</span><span class="line">      <span class="n">Observer</span> <span class="n">userOne</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">NewsObserver</span><span class="o">(</span><span class="n">newsProvider</span><span class="o">);</span>
+</span><span class="line">      <span class="n">Observer</span> <span class="n">userTwo</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">NewsObserver</span><span class="o">(</span><span class="n">newsProvider</span><span class="o">);</span>
+</span><span class="line">
+</span><span class="line">      <span class="n">newsProvider</span><span class="o">.</span><span class="na">setNews</span><span class="o">(</span><span class="k">new</span> <span class="nf">News</span><span class="o">(</span><span class="s">"New economy"</span><span class="o">,</span> <span class="s">"Barry Lindon"</span><span class="o">,</span> <span class="s">"Many new changes happened."</span><span class="o">));</span>
+</span><span class="line">  <span class="o">}</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 </div>
 

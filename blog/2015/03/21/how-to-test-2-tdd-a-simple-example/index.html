@@ -105,137 +105,137 @@
 
 <div class="entry-content"><p>Test Driven Development (TDD) is a software development process based on the <em>test-first</em> approach of <a href="http://en.wikipedia.org/wiki/Extreme_programming">extreme programming</a>. Roughly the idea is creating tests before any implementation and then start development guided by test, finally refactor. We will quickly explore the technique and its <em>rhythm</em> to highlight advantages and disadvantages. <strong>DRAFT 1</strong></p>
 
-<!-- more  -->
+<div id="toc-table-content"><table cellpadding="0" cellspacing="0" id="toc-container"><tbody><td><section class="toc-panel"><div class="toc-heading"><h3 class="toc-title"><span class="glyphicon glyphicon-list-alt"></span> Contents</h3></div><ul id="toc-listing"><li class="toc-item"><a href="#TOC-1-a-bit-of-theory"><span class="tocnumber">1</span> <span class="toctext">A bit of theory</span></a></li><li class="toc-item"><a href="#TOC-2-learning-by-example"><span class="tocnumber">2</span> <span class="toctext">Learning by example</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-2-1-first-test"><span class="tocnumber">2.1</span> <span class="toctext">First test</span></a></li><li class="toc-item"><a href="#TOC-2-2-second-test"><span class="tocnumber">2.2</span> <span class="toctext">Second test</span></a></li><li class="toc-item"><a href="#TOC-2-3-third-test"><span class="tocnumber">2.3</span> <span class="toctext">Third test</span></a></li><li class="toc-item"><a href="#TOC-2-4-fourth-test"><span class="tocnumber">2.4</span> <span class="toctext">Fourth test</span></a></li><li class="toc-item"><a href="#TOC-2-5-fifth-test"><span class="tocnumber">2.5</span> <span class="toctext">Fifth test</span></a></li></ul></li></ul></section></td></tbody></table></div>
 
 
 <h3>Components and material</h3>
 
 <p>This tutorial is part of an experiment done to simply explain fundamental concepts of testing. In the <a href="http://blackat.github.io/blog/2015/03/07/how-to-test-1-find-errors-to-make-the-application-works/">previous one</a> you can find concepts and jargon of the testing world along with some exercises which can help you to get in confidence with unit testing and mock objects. The code experiment used in this tutorial is described in the previous article and can be found on <a href="https://github.com/blackat/tutorial-howtotest-1-collectors">GitHub</a>, so please clone it to experiment or just follow some code snippet on this page.</p>
 
-<h2>A bit of theory</h2>
+<h2 id="TOC-1-a-bit-of-theory">A bit of theory</h2>
 
-<h2>Learning by example</h2>
+<h2 id="TOC-2-learning-by-example">Learning by example</h2>
 
 <p>Imagine to write a new collector unit which can be plugged into the Cloud Service. At the beginning not all the details are clear and well defined, but with some imagination we can define some functionalities. Just a sort of rough idea and then start to apply the TDD steps one by one.</p>
 
-<h3>First test</h3>
+<h3 id="TOC-2-1-first-test">First test</h3>
 
 <h5>RED</h5>
 
-<p>So let&rsquo;s create the <code>FacebookCollectorTddTest.class</code> and implement the first</p>
+<p>So let’s create the <code>FacebookCollectorTddTest.class</code> and implement the first</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FacebookCollectorTddTest</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Test</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAcceptGoldenPath</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">FacebookCollector</span> <span class="n">collector</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FacebookCollector</span><span class="o">();</span>
-</span><span class='line'>        <span class="n">assertTrue</span><span class="o">(</span><span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="k">new</span> <span class="nf">FacebookPost</span><span class="o">(</span><span class="s">&quot;Just a foo post&quot;</span><span class="o">),</span> <span class="mi">1L</span><span class="o">));</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FacebookCollectorTddTest</span> <span class="o">{</span>
+</span><span class="line">
+</span><span class="line">    <span class="nd">@Test</span>
+</span><span class="line">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAcceptGoldenPath</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class="line">
+</span><span class="line">        <span class="n">FacebookCollector</span> <span class="n">collector</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FacebookCollector</span><span class="o">();</span>
+</span><span class="line">        <span class="n">assertTrue</span><span class="o">(</span><span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="k">new</span> <span class="nf">FacebookPost</span><span class="o">(</span><span class="s">"Just a foo post"</span><span class="o">),</span> <span class="mi">1L</span><span class="o">));</span>
+</span><span class="line">    <span class="o">}</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
-<p>the code won&rsquo;t compile because the classes still do not exist. You can ask your IDE to implement the classes for you. For instance in <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a> you can exploit the class creation functionality as the screenshot below
+<p>the code won’t compile because the classes still do not exist. You can ask your IDE to implement the classes for you. For instance in <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a> you can exploit the class creation functionality as the screenshot below
 <img class="center" src="/images/posts/idea_class_creation.png"></p>
 
 <p>The class we are going to implement should implement the <code>Collector.java</code> interface</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FacebookCollector</span> <span class="kd">implements</span> <span class="n">Collector</span> <span class="o">{</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FacebookCollector</span> <span class="kd">implements</span> <span class="n">Collector</span> <span class="o">{</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 <p>The <code>Collector</code> interface is already the result of some rough idea about the service, but can be improved or extended in orde to support new features or requirements.</p>
 
 <p>Once the code compile, run the test and make it fails, <strong>Red</strong>. But wait a minute! The assertion does not have any message and when the test fails does not tell us anything interesting.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">AssertionError</span>
-</span><span class='line'>  <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">fail</span><span class="o">(</span><span class="n">Assert</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">86</span><span class="o">)</span>
-</span><span class='line'>  <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">Assert</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">41</span><span class="o">)</span>
-</span><span class='line'>  <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">Assert</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">52</span><span class="o">)</span>
-</span><span class='line'>  <span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">contrastofbeauty</span><span class="o">.</span><span class="na">tutorial</span><span class="o">.</span><span class="na">collectors</span><span class="o">.</span><span class="na">FacebookCollectorTddTest</span><span class="o">.</span><span class="na">testAcceptGoldenPath</span><span class="o">(</span><span class="n">FacebookCollectorTddTest</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">15</span><span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="n">java</span><span class="o">.</span><span class="na">lang</span><span class="o">.</span><span class="na">AssertionError</span>
+</span><span class="line">  <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">fail</span><span class="o">(</span><span class="n">Assert</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">86</span><span class="o">)</span>
+</span><span class="line">  <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">Assert</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">41</span><span class="o">)</span>
+</span><span class="line">  <span class="n">at</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">assertTrue</span><span class="o">(</span><span class="n">Assert</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">52</span><span class="o">)</span>
+</span><span class="line">  <span class="n">at</span> <span class="n">com</span><span class="o">.</span><span class="na">contrastofbeauty</span><span class="o">.</span><span class="na">tutorial</span><span class="o">.</span><span class="na">collectors</span><span class="o">.</span><span class="na">FacebookCollectorTddTest</span><span class="o">.</span><span class="na">testAcceptGoldenPath</span><span class="o">(</span><span class="n">FacebookCollectorTddTest</span><span class="o">.</span><span class="na">java</span><span class="o">:</span><span class="mi">15</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
-<p>Let&rsquo;s improve the assertion with a test message</p>
+<p>Let’s improve the assertion with a test message</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAcceptGoldenPath</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">FacebookCollector</span> <span class="n">collector</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FacebookCollector</span><span class="o">();</span>
-</span><span class='line'>    <span class="n">FacebookPost</span> <span class="n">facebookPost</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FacebookPost</span><span class="o">(</span><span class="s">&quot;Just a foo post&quot;</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">assertTrue</span><span class="o">(</span><span class="s">&quot;Object &quot;</span> <span class="o">+</span> <span class="n">facebookPost</span> <span class="o">+</span> <span class="s">&quot; for user &quot;</span> <span class="o">+</span> <span class="n">USER_ID</span> <span class="o">+</span> <span class="s">&quot; has not been accepted.&quot;</span><span class="o">,</span> <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">facebookPost</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">));</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="nd">@Test</span>
+</span><span class="line"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAcceptGoldenPath</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">FacebookCollector</span> <span class="n">collector</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FacebookCollector</span><span class="o">();</span>
+</span><span class="line">    <span class="n">FacebookPost</span> <span class="n">facebookPost</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FacebookPost</span><span class="o">(</span><span class="s">"Just a foo post"</span><span class="o">);</span>
+</span><span class="line">    <span class="n">assertTrue</span><span class="o">(</span><span class="s">"Object "</span> <span class="o">+</span> <span class="n">facebookPost</span> <span class="o">+</span> <span class="s">" for user "</span> <span class="o">+</span> <span class="n">USER_ID</span> <span class="o">+</span> <span class="s">" has not been accepted."</span><span class="o">,</span> <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">facebookPost</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">));</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 <h5>GREEN</h5>
 
 <p>Make the test passes with the minimum and simplest amount of code. As result the <em>first version</em> of the constructor and the <code>accept</code> method could be</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FacebookCollector</span> <span class="kd">implements</span> <span class="n">Collector</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">FacebookPost</span><span class="o">&gt;&gt;</span> <span class="n">facebookPostMap</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="nf">FacebookCollector</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">facebookPostMap</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@Override</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">accept</span><span class="o">(</span><span class="n">Object</span> <span class="n">object</span><span class="o">,</span> <span class="kt">long</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">if</span><span class="o">(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">userId</span><span class="o">,</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">FacebookPost</span><span class="o">&gt;());</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">add</span><span class="o">((</span><span class="n">FacebookPost</span><span class="o">)</span> <span class="n">object</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FacebookCollector</span> <span class="kd">implements</span> <span class="n">Collector</span> <span class="o">{</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">private</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">Long</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">FacebookPost</span><span class="o">&gt;&gt;</span> <span class="n">facebookPostMap</span><span class="o">;</span>
+</span><span class="line">
+</span><span class="line"><span class="kd">public</span> <span class="nf">FacebookCollector</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">    <span class="n">facebookPostMap</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
+</span><span class="line"><span class="o">}</span>
+</span><span class="line">
+</span><span class="line"><span class="nd">@Override</span>
+</span><span class="line"><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">accept</span><span class="o">(</span><span class="n">Object</span> <span class="n">object</span><span class="o">,</span> <span class="kt">long</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">if</span><span class="o">(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">        <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">userId</span><span class="o">,</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">FacebookPost</span><span class="o">&gt;());</span>
+</span><span class="line">    <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">add</span><span class="o">((</span><span class="n">FacebookPost</span><span class="o">)</span> <span class="n">object</span><span class="o">);</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 <p>Now re-running the test it passes. Comparing this way of implementing with the one seen to correct the class by testing you can notice we have some quite a good amount of time because of <code>NullPointerException</code>, they have been spotted immediately and corrected without allowing them to propagate.</p>
@@ -244,70 +244,70 @@
 
 <p>Refactor both test and the class to make them more readable such as the <code>setUp()</code> method, the assertion message and the constant</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FacebookCollectorTddTest</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">long</span> <span class="n">USER_ID</span> <span class="o">=</span> <span class="mi">1L</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">private</span> <span class="n">FacebookCollector</span> <span class="n">collector</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">private</span> <span class="n">FacebookPost</span> <span class="n">facebookPost</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Before</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUp</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">collector</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FacebookCollector</span><span class="o">();</span>
-</span><span class='line'>        <span class="n">facebookPost</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FacebookPost</span><span class="o">(</span><span class="s">&quot;Just a foo post&quot;</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Test</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAcceptGoldenPath</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;Object &quot;</span> <span class="o">+</span> <span class="n">facebookPost</span> <span class="o">+</span> <span class="s">&quot; for user &quot;</span> <span class="o">+</span> <span class="n">USER_ID</span> <span class="o">+</span> <span class="s">&quot; has not been accepted.&quot;</span><span class="o">;</span>
-</span><span class='line'>        <span class="n">assertTrue</span><span class="o">(</span><span class="n">message</span><span class="o">,</span> <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">facebookPost</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">));</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FacebookCollectorTddTest</span> <span class="o">{</span>
+</span><span class="line">
+</span><span class="line">    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">long</span> <span class="n">USER_ID</span> <span class="o">=</span> <span class="mi">1L</span><span class="o">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="kd">private</span> <span class="n">FacebookCollector</span> <span class="n">collector</span><span class="o">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="kd">private</span> <span class="n">FacebookPost</span> <span class="n">facebookPost</span><span class="o">;</span>
+</span><span class="line">
+</span><span class="line">    <span class="nd">@Before</span>
+</span><span class="line">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUp</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">        <span class="n">collector</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FacebookCollector</span><span class="o">();</span>
+</span><span class="line">        <span class="n">facebookPost</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FacebookPost</span><span class="o">(</span><span class="s">"Just a foo post"</span><span class="o">);</span>
+</span><span class="line">    <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="nd">@Test</span>
+</span><span class="line">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAcceptGoldenPath</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class="line">        <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="s">"Object "</span> <span class="o">+</span> <span class="n">facebookPost</span> <span class="o">+</span> <span class="s">" for user "</span> <span class="o">+</span> <span class="n">USER_ID</span> <span class="o">+</span> <span class="s">" has not been accepted."</span><span class="o">;</span>
+</span><span class="line">        <span class="n">assertTrue</span><span class="o">(</span><span class="n">message</span><span class="o">,</span> <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">facebookPost</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">));</span>
+</span><span class="line">    <span class="o">}</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
-<hr />
+<hr>
 
-<h3>Second test</h3>
+<h3 id="TOC-2-2-second-test">Second test</h3>
 
 <h5>RED</h5>
 
-<p>The test is marked as <em>GoldenPath</em> in order to highlight it is the most common case, where everything should run smooth. But what happens at the borders? Our implementation always return true except when an exception happens. So let&rsquo;s implement another test.</p>
+<p>The test is marked as <em>GoldenPath</em> in order to highlight it is the most common case, where everything should run smooth. But what happens at the borders? Our implementation always return true except when an exception happens. So let’s implement another test.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAcceptWrongObjectType</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">Integer</span> <span class="n">fooObject</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Integer</span><span class="o">(</span><span class="mi">123</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;Object &quot;</span> <span class="o">+</span> <span class="n">fooObject</span> <span class="o">+</span> <span class="s">&quot; for user &quot;</span> <span class="o">+</span> <span class="n">USER_ID</span> <span class="o">+</span> <span class="s">&quot; must not be accepted.&quot;</span><span class="o">;</span>
-</span><span class='line'>    <span class="n">assertFalse</span><span class="o">(</span><span class="n">message</span><span class="o">,</span> <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">fooObject</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">));</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="nd">@Test</span>
+</span><span class="line"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAcceptWrongObjectType</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class="line">    <span class="n">Integer</span> <span class="n">fooObject</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Integer</span><span class="o">(</span><span class="mi">123</span><span class="o">);</span>
+</span><span class="line">    <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="s">"Object "</span> <span class="o">+</span> <span class="n">fooObject</span> <span class="o">+</span> <span class="s">" for user "</span> <span class="o">+</span> <span class="n">USER_ID</span> <span class="o">+</span> <span class="s">" must not be accepted."</span><span class="o">;</span>
+</span><span class="line">    <span class="n">assertFalse</span><span class="o">(</span><span class="n">message</span><span class="o">,</span> <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">fooObject</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">));</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 <p>The test will fail because of a <code>java.lang.ClassCastException</code>, the declaration of the list <code>List&lt;FacebookPost&gt;</code> prevents some wrong addition to the list.</p>
@@ -316,76 +316,76 @@
 
 <p>It is enough doing a check on the type of object to make the test passes</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Override</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">accept</span><span class="o">(</span><span class="n">Object</span> <span class="n">object</span><span class="o">,</span> <span class="kt">long</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">object</span> <span class="k">instanceof</span> <span class="n">FacebookPost</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">userId</span><span class="o">,</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">FacebookPost</span><span class="o">&gt;());</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">add</span><span class="o">((</span><span class="n">FacebookPost</span><span class="o">)</span> <span class="n">object</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="nd">@Override</span>
+</span><span class="line"><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">accept</span><span class="o">(</span><span class="n">Object</span> <span class="n">object</span><span class="o">,</span> <span class="kt">long</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">if</span> <span class="o">(</span><span class="n">object</span> <span class="k">instanceof</span> <span class="n">FacebookPost</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">        <span class="k">if</span> <span class="o">(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">            <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">userId</span><span class="o">,</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">FacebookPost</span><span class="o">&gt;());</span>
+</span><span class="line">        <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">        <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">add</span><span class="o">((</span><span class="n">FacebookPost</span><span class="o">)</span> <span class="n">object</span><span class="o">);</span>
+</span><span class="line">
+</span><span class="line">            <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class="line">    <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 <h5>REFACTOR</h5>
 
 <p>Test and class should be fine.</p>
 
-<hr />
+<hr>
 
-<h3>Third test</h3>
+<h3 id="TOC-2-3-third-test">Third test</h3>
 
 <p>Roughly a collector starts to collect posts from a user, when a certain number of posts is reached, the collector calls the method <code>flush()</code> to submit the job.</p>
 
 <h5>RED</h5>
 
-<p>Let&rsquo;s write a failing test</p>
+<p>Let’s write a failing test</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAcceptCallFlushMethod</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">collector</span><span class="o">.</span><span class="na">setNewBufferSize</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">collector</span><span class="o">.</span><span class="na">setCallbackFunction</span><span class="o">(</span><span class="n">callbackMock</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">facebookPost</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">facebookPost</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">verify</span><span class="o">(</span><span class="n">callbackMock</span><span class="o">,</span> <span class="n">times</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">addTask</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Callable</span><span class="o">.</span><span class="na">class</span><span class="o">),</span> <span class="n">anyInt</span><span class="o">());</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="nd">@Test</span>
+</span><span class="line"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAcceptCallFlushMethod</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">collector</span><span class="o">.</span><span class="na">setNewBufferSize</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
+</span><span class="line">    <span class="n">collector</span><span class="o">.</span><span class="na">setCallbackFunction</span><span class="o">(</span><span class="n">callbackMock</span><span class="o">);</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">facebookPost</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">);</span>
+</span><span class="line">    <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">facebookPost</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">);</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">verify</span><span class="o">(</span><span class="n">callbackMock</span><span class="o">,</span> <span class="n">times</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">addTask</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Callable</span><span class="o">.</span><span class="na">class</span><span class="o">),</span> <span class="n">anyInt</span><span class="o">());</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 <p>The test sets the <em>buffer size</em> equal to two so it is enough adding two posts to have the <code>flush</code> method called. By using Mockito it is possible to verify if a certain method has been called and how many times. This is <em>behavior verification</em> and happens on <em>indirect outputs</em>.</p>
@@ -394,86 +394,86 @@
 
 <p>A solution for the method could be</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Override</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">accept</span><span class="o">(</span><span class="n">Object</span> <span class="n">object</span><span class="o">,</span> <span class="kt">long</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">object</span> <span class="k">instanceof</span> <span class="n">FacebookPost</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>                <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">userId</span><span class="o">,</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">FacebookPost</span><span class="o">&gt;());</span>
-</span><span class='line'>            <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">add</span><span class="o">((</span><span class="n">FacebookPost</span><span class="o">)</span> <span class="n">object</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">newBufferSize</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="n">newBufferSize</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>                <span class="n">flush</span><span class="o">(</span><span class="n">userId</span><span class="o">);</span>
-</span><span class='line'>            <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="n">BUFFER_SIZE</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>                <span class="n">flush</span><span class="o">(</span><span class="n">userId</span><span class="o">);</span>
-</span><span class='line'>            <span class="o">}</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+<span class="line-number">22</span>
+<span class="line-number">23</span>
+<span class="line-number">24</span>
+<span class="line-number">25</span>
+<span class="line-number">26</span>
+<span class="line-number">27</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="nd">@Override</span>
+</span><span class="line"><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">accept</span><span class="o">(</span><span class="n">Object</span> <span class="n">object</span><span class="o">,</span> <span class="kt">long</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">if</span> <span class="o">(</span><span class="n">object</span> <span class="k">instanceof</span> <span class="n">FacebookPost</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">            <span class="k">if</span> <span class="o">(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">                <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">userId</span><span class="o">,</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">FacebookPost</span><span class="o">&gt;());</span>
+</span><span class="line">            <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">        <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">add</span><span class="o">((</span><span class="n">FacebookPost</span><span class="o">)</span> <span class="n">object</span><span class="o">);</span>
+</span><span class="line">
+</span><span class="line">        <span class="k">if</span> <span class="o">(</span><span class="n">newBufferSize</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">
+</span><span class="line">            <span class="k">if</span> <span class="o">(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="n">newBufferSize</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">                <span class="n">flush</span><span class="o">(</span><span class="n">userId</span><span class="o">);</span>
+</span><span class="line">            <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class="line">            <span class="k">if</span> <span class="o">(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="n">BUFFER_SIZE</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">                <span class="n">flush</span><span class="o">(</span><span class="n">userId</span><span class="o">);</span>
+</span><span class="line">            <span class="o">}</span>
+</span><span class="line">        <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">        <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class="line">    <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 <p> To make the test work we have to implement other three methods such as <code>flush()</code>, <code>setNewBufferSize()</code> and setCallbackFunction(). SO it is possible to temporary move to other tests and then come back or just provide a fake implementation to produce the call of the method we want to verify. It depends a lot on experience, confidence with the task and how strict we want to adhere to TDD approach. Two methods are setters and they should not be tested, the third one could be temporary implemented as</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Override</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">flush</span><span class="o">(</span><span class="kt">long</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">callbackFunction</span><span class="o">.</span><span class="na">addTask</span><span class="o">(</span><span class="k">new</span> <span class="nf">Callable</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="nd">@Override</span>
-</span><span class='line'>        <span class="kd">public</span> <span class="n">Object</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">},</span> <span class="n">userId</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="nd">@Override</span>
+</span><span class="line"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">flush</span><span class="o">(</span><span class="kt">long</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">callbackFunction</span><span class="o">.</span><span class="na">addTask</span><span class="o">(</span><span class="k">new</span> <span class="nf">Callable</span><span class="o">()</span> <span class="o">{</span>
+</span><span class="line">        <span class="nd">@Override</span>
+</span><span class="line">        <span class="kd">public</span> <span class="n">Object</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class="line">            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class="line">        <span class="o">}</span>
+</span><span class="line">    <span class="o">},</span> <span class="n">userId</span><span class="o">);</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 <p>The test passes.</p>
@@ -482,97 +482,97 @@
 
 <p>Improve a bit the <code>accept()</code> method to make it more readable and compact. One solution could be</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Override</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">accept</span><span class="o">(</span><span class="n">Object</span> <span class="n">object</span><span class="o">,</span> <span class="kt">long</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">object</span> <span class="k">instanceof</span> <span class="n">FacebookPost</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>         <span class="k">if</span> <span class="o">(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>             <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">userId</span><span class="o">,</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">FacebookPost</span><span class="o">&gt;());</span>
-</span><span class='line'>         <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>         <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">add</span><span class="o">((</span><span class="n">FacebookPost</span><span class="o">)</span> <span class="n">object</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>         <span class="kt">int</span> <span class="n">bufferSize</span> <span class="o">=</span> <span class="n">newBufferSize</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">newBufferSize</span> <span class="o">:</span> <span class="n">BUFFER_SIZE</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>         <span class="k">if</span> <span class="o">(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="n">bufferSize</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>             <span class="n">flush</span><span class="o">(</span><span class="n">userId</span><span class="o">);</span>
-</span><span class='line'>         <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>         <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+<span class="line-number">18</span>
+<span class="line-number">19</span>
+<span class="line-number">20</span>
+<span class="line-number">21</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="nd">@Override</span>
+</span><span class="line"><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">accept</span><span class="o">(</span><span class="n">Object</span> <span class="n">object</span><span class="o">,</span> <span class="kt">long</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">if</span> <span class="o">(</span><span class="n">object</span> <span class="k">instanceof</span> <span class="n">FacebookPost</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">         <span class="k">if</span> <span class="o">(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">)</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">             <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">userId</span><span class="o">,</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">FacebookPost</span><span class="o">&gt;());</span>
+</span><span class="line">         <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">         <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">add</span><span class="o">((</span><span class="n">FacebookPost</span><span class="o">)</span> <span class="n">object</span><span class="o">);</span>
+</span><span class="line">
+</span><span class="line">         <span class="kt">int</span> <span class="n">bufferSize</span> <span class="o">=</span> <span class="n">newBufferSize</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">newBufferSize</span> <span class="o">:</span> <span class="n">BUFFER_SIZE</span><span class="o">;</span>
+</span><span class="line">
+</span><span class="line">         <span class="k">if</span> <span class="o">(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="n">bufferSize</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">             <span class="n">flush</span><span class="o">(</span><span class="n">userId</span><span class="o">);</span>
+</span><span class="line">         <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">         <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class="line">    <span class="o">}</span>
+</span><span class="line">
+</span><span class="line">    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
-<hr />
+<hr>
 
-<h3>Fourth test</h3>
+<h3 id="TOC-2-4-fourth-test">Fourth test</h3>
 
-<p>It&rsquo;s time to test the <code>flush()</code> method. Write a unit test, make it fails and re-implement it in a more appropriate way than what done before.
+<p>It’s time to test the <code>flush()</code> method. Write a unit test, make it fails and re-implement it in a more appropriate way than what done before.
 When the <code>flush()</code> method is called, it creates a task and invokes a method against a callback function, the list for a given user is cleared.</p>
 
 <h5>RED</h5>
 
 <p>The failing test</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testFlushGoldenPath</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">collector</span><span class="o">.</span><span class="na">setCallbackFunction</span><span class="o">(</span><span class="n">callbackMock</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">facebookPost</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">facebookPost</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">String</span> <span class="n">message1</span> <span class="o">=</span> <span class="s">&quot;The list size for the user &quot;</span> <span class="o">+</span> <span class="n">USER_ID</span> <span class="o">+</span> <span class="s">&quot; must be equal to 2&quot;</span><span class="o">;</span>
-</span><span class='line'>    <span class="n">assertEquals</span><span class="o">(</span><span class="n">message1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="n">collector</span><span class="o">.</span><span class="na">getListSizeByUserId</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">));</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">collector</span><span class="o">.</span><span class="na">flush</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">String</span> <span class="n">message2</span> <span class="o">=</span> <span class="s">&quot;The list size after a call to flush() must be 0&quot;</span><span class="o">;</span>
-</span><span class='line'>    <span class="n">assertEquals</span><span class="o">(</span><span class="n">message2</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">collector</span><span class="o">.</span><span class="na">getListSizeByUserId</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">));</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">verify</span><span class="o">(</span><span class="n">callbackMock</span><span class="o">,</span> <span class="n">times</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">addTask</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Callable</span><span class="o">.</span><span class="na">class</span><span class="o">),</span> <span class="n">anyInt</span><span class="o">());</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+<span class="line-number">11</span>
+<span class="line-number">12</span>
+<span class="line-number">13</span>
+<span class="line-number">14</span>
+<span class="line-number">15</span>
+<span class="line-number">16</span>
+<span class="line-number">17</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="nd">@Test</span>
+</span><span class="line"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testFlushGoldenPath</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">collector</span><span class="o">.</span><span class="na">setCallbackFunction</span><span class="o">(</span><span class="n">callbackMock</span><span class="o">);</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">facebookPost</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">);</span>
+</span><span class="line">    <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">facebookPost</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">);</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">String</span> <span class="n">message1</span> <span class="o">=</span> <span class="s">"The list size for the user "</span> <span class="o">+</span> <span class="n">USER_ID</span> <span class="o">+</span> <span class="s">" must be equal to 2"</span><span class="o">;</span>
+</span><span class="line">    <span class="n">assertEquals</span><span class="o">(</span><span class="n">message1</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="n">collector</span><span class="o">.</span><span class="na">getListSizeByUserId</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">));</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">collector</span><span class="o">.</span><span class="na">flush</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">);</span>
+</span><span class="line">    <span class="n">String</span> <span class="n">message2</span> <span class="o">=</span> <span class="s">"The list size after a call to flush() must be 0"</span><span class="o">;</span>
+</span><span class="line">    <span class="n">assertEquals</span><span class="o">(</span><span class="n">message2</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">collector</span><span class="o">.</span><span class="na">getListSizeByUserId</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">));</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">verify</span><span class="o">(</span><span class="n">callbackMock</span><span class="o">,</span> <span class="n">times</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">addTask</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Callable</span><span class="o">.</span><span class="na">class</span><span class="o">),</span> <span class="n">anyInt</span><span class="o">());</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 <p>We test</p>
@@ -586,27 +586,27 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 
 <p>Solution</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Override</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">flush</span><span class="o">(</span><span class="kt">long</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">List</span><span class="o">&lt;</span><span class="n">FacebookPost</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">));</span>
-</span><span class='line'>    <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">clear</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">FacebookTask</span> <span class="n">facebookTask</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FacebookTask</span><span class="o">(</span><span class="n">list</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">callbackFunction</span><span class="o">.</span><span class="na">addTask</span><span class="o">(</span><span class="n">facebookTask</span><span class="o">,</span> <span class="n">userId</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+<span class="line-number">8</span>
+<span class="line-number">9</span>
+<span class="line-number">10</span>
+</pre></td><td class="code"><pre><code class="java"><span class="line"><span class="nd">@Override</span>
+</span><span class="line"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">flush</span><span class="o">(</span><span class="kt">long</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">List</span><span class="o">&lt;</span><span class="n">FacebookPost</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;(</span><span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">));</span>
+</span><span class="line">    <span class="n">facebookPostMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">userId</span><span class="o">).</span><span class="na">clear</span><span class="o">();</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">FacebookTask</span> <span class="n">facebookTask</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">FacebookTask</span><span class="o">(</span><span class="n">list</span><span class="o">);</span>
+</span><span class="line">
+</span><span class="line">    <span class="n">callbackFunction</span><span class="o">.</span><span class="na">addTask</span><span class="o">(</span><span class="n">facebookTask</span><span class="o">,</span> <span class="n">userId</span><span class="o">);</span>
+</span><span class="line"><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
 <p>The test run fine.</p>
@@ -615,9 +615,9 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 
 <p>The class seems fine.</p>
 
-<hr />
+<hr>
 
-<h3>Fifth test</h3>
+<h3 id="TOC-2-5-fifth-test">Fifth test</h3>
 
 <p>Add exception in case the callback function is not set. This is a borderline test</p>
 </div>
