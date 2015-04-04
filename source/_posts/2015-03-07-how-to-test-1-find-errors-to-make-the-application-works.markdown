@@ -7,15 +7,15 @@ categories:
 ---
 This is an _experiment tutorial_ to better learn some _101_ practices and how testing can be a better replacement of developing by debugging.
 
-The goal of the _experiment-project_ is find, correct bugs and make the application works by writing tests.
+The goal of the _experiment-project_ is to find, to correct bugs and make the application works by writing tests.
 
-This tutorial is still in __DRAFT 4__.
+This tutorial is still in __DRAFT 5__.
 <!-- more -->
 
-## 1 Clone the project
+## Clone the project
 Clone the project from [Github](https://github.com/blackat/tutorial-howtotest-1-collectors) and import it in you preferred IDE, [IntelliJ IDEA](https://www.jetbrains.com/idea/) in my case.
 
-## 2 Scaffolding
+## Scaffolding
 
     ├── README.md
     ├── exercise-api
@@ -47,17 +47,38 @@ Clone the project from [Github](https://github.com/blackat/tutorial-howtotest-1-
     └── pom.xml
 
 
-The maven project is composed by three modules:
+The maven project is composed by four modules:
 
-1. __exercise-api:__ just collection of interfaces used in the other two modules
-2. __exercise-working:__ working application with a test suite
-3. __exercise-to-be-corrected:__ application with bugs where the test suite has to be created in order to find, correct bugs and make it work.
+1. __exercise-api:__ just collection of interfaces used in the other two modules;
+2. __exercise-working:__ working application with a test suite;
+3. __exercise-to-be-corrected:__ application with bugs where the test suite has to be created in order to find, correct bugs and make it work;
+4. __exercise-tdd:__ implementation of some classes by tdd whose description is in the next [tut](/blog/2015/03/21/how-to-test-2-tdd-a-simple-example).
 
-## 3 Application Description
-The application is composed by a [Cloud Service](https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-working/src/main/java/com/contrastofbeauty/tutorial/services/CloudService.java) able to post user's tweets in batch by means of a [Tweet Collector](https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-working/src/main/java/com/contrastofbeauty/tutorial/collectors/TweetCollector.java).
+In the module `exercise-to-be-corrected` run the class `RunMeToBeCorrected.java` and see that it fails some some reason, may be a `NullPointerException` is thrown. We do not care so much because we do not want to make it work by a common pattern __running/debugging__ rather we want to _implement missing tests_ demonstrating how they can help us to find and correct bug make our application more robust.
 
-{% img center /images/posts/tutorial_1_tweet_uml.png %}
+## Application Description
+The application is mainly composed by a fake [Cloud Service](https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-working/src/main/java/com/contrastofbeauty/tutorial/services/CloudService.java) able to post user's tweets in batch by means of a [Tweet Collector](https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-working/src/main/java/com/contrastofbeauty/tutorial/collectors/TweetCollector.java). [Here](http://yuml.me/edit/3555184c) the UML source.
 
+{% img center /images/posts/tutorial_1_how_to_test.png %}
+
+#### The workflow
+
+1. The `CloudService` _has a_ certain numbers of different type collectors (hence the association in the UML diagram), in this case just with one able to collect tweets.
+2. A user who wants to post tweet in batch has to open a connection invoking the method `service.openConnection()` of the service.
+3. The user then starts to post tweets using the method `service.saveObject()`.
+4. Once done `service.saveObjectCompleted()` method will be called to tell the service that the user session is finished.
+
+#### The workflow in details
+
+1. The `CloudService` _has a_ `TweetCollector` and a `Callback` implementation instance (Another approach is to leave the service the initialization of the callback function and substitute the _association_ with a _composition_ in the UML diagram).
+2. The `Callback` implementation instance will be set into each added collector by the service.
+3. Every time a user wants to save a tweet through the service, the collector will stock it in a _list_ as a sort of buffer.
+4. Once the collector has stocked a certain amount of tweets, for instance 500, it will generates a _task_.
+5. A task has a collection of tweets and the implementation of the method `call()` which will be called by one of the thread of the thread pool. The method specifies how the list of tweets should be treated, for instance: saved, destroyed, sent to Twitter, printed or something else.
+6. A collector uses the `Callback` instance to add a task to a _processing list_.
+7. The list of active tasks will be then processed by a thread pool.
+
+#### How to initiliaze the service and run it
 ``` java RunMeWorking.java https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-working/src/main/java/com/contrastofbeauty/tutorial/RunMeWorking.java
 public class RunMeWorking {
 
@@ -75,43 +96,23 @@ public class RunMeWorking {
 }
 ```
 
-### 3.1 How the service is used
-``` java RunMeWorking.java https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-working/src/main/java/com/contrastofbeauty/tutorial/RunMeWorking.java
-public class RunMeWorking {
+__Actually__ the service does not post anything to Twitter, it is just a way to show a bit of java concurrency and how to write _unit tests_ when dealing with concurrent structures like `Future`.
 
-    public static void main(String[] args) {
+## Let's correct the application
+Let's create tests for the application starting from `TweetCollector.java` class, press `cmd + shift + T` on Mac or `crtl + shift + T` on Windows and choose methods you want to test, then Idea will create the test class in the right place
 
-        Callback callback = new CallbackImpl();
-        Service service = new CloudService(callback);
-
-        service.addCollector(new TweetCollector());
-
-        service.openConnection(1L);
-        service.saveObject(new Tweet("I am Felix the awesome cat."), 1L);
-        service.saveObjectCompleted(new AcknoledgeServiceImpl(), 1L);
-    }
-}
-```
-
-Once the service has been started, a user can just open a connection to it and start to submit tweets to be posted. Once a certain amount of tweets has been reached, the service contacts Twitter to post them. The CloudService uses collectors to collect messages to be posted somewhere. When the service starts, one or more collectors can be registered. In the example one one collector has been registered and it is able to collect _tweets_. Other collectors can be implemented and added to the service.
-
-When the user has finished to post tweets, `saveObjectCompleted()` method is called in order to close the connection with the service and sending the latest tweets to Twitter.
-
-__In reality__ the service does not post anything to Twitter, it is just a way to show a bit of java concurrency and how to write _unit tests_ when dealing with concurrent structures like `Future`.
-
-## 4 Let's correct the application
-Let's create tests for the application starting from `TweetCollector.java` class, press `cmd + shift + T` on Mac or `crtl + shift + T` on Windows and choose methods you want to test, then Idea will create the test class.
+    src/test/java/com/contrastofbeauty/tutorial/collectors/TweetCollectorTest.java.
 
 __Tip__ Make sure the path `src/test/java` exists, otherwise Idea will create the test class together with the source one.
 
 {% img center /images/posts/idea-test-wizard.png %}
 
-### 4.1 TweeterCollector.class
+### TweeterCollector.class
 [TweeterCollector.class](https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-to-be-corrected/src/main/java/com/contrastofbeauty/tutorial/collectors/TweetCollector.java)
 
 // add description of class and how the callback will be called.
 
-### 4.1.1 TweeterCollectorTest.class
+### TweeterCollectorTest.class
 Populate the `setUp()` method creating a new `TweetCollector`.
 ``` java
 public class TweetCollectorTest {
@@ -125,7 +126,7 @@ public class TweetCollectorTest {
 }
 ```
 
-#### 4.1.2 Method accept(), 3 errors
+#### Method accept(), 3 errors
 Let's start working on the method `accept(Object object, long userId)`, run the first test that has been renamed `testAcceptGoldenPath()` and contains just one assertion:
 ``` java
 @Test
@@ -197,7 +198,7 @@ public void testAcceptObjectNotAcceptedBecauseDifferentType() throws Exception {
 }
 ```
 
-#### 4.1.3 Method flush(), 1 error
+#### Method flush(), 1 error
 If not done yet by the IDE, create method `testFlushGoldenPath()` and invoke the method `flush()` as following:
 ``` java
 @Test
@@ -332,11 +333,11 @@ Exception messages are really important in order to immediately find the root ca
 
 ***
 
-### 4.2 CloudService.class
+### CloudService.class
 Once the service is created, once or more collectors are added in order to provide batch submission to one or more social networks or similar services. A user has to open a connection to the service through the method `openConnection()` and then start to post tweets for instance invoking `saveObject()`. Once done user will call method `saveObjectCompleted()` to post latest tweets and close the connection.
 
 
-#### 4.2.1 CloudServiceTest.class
+#### CloudServiceTest.class
 Create the class as done for the previous example and initialize the _SUT_.
 ``` java
 public class CloudServiceTest {
@@ -354,7 +355,7 @@ public class CloudServiceTest {
 }
 ```
 
-#### 4.2.2 Method addCollector() - 2 errors
+#### Method addCollector() - 2 errors
 Create the first test for method `addCollector()`
 ``` java
 @Test
@@ -436,7 +437,7 @@ public void addCollector(Collector collector) throws RuntimeException {
 
 Now the test passes. The `addCollector()` function was empty and by tests it has been implemented. The two tests could have been put in a single one and step by step modifying the method call to make the test passed. _Test Driven Development (TDD)_.
 
-#### 4.2.3 Method openConnection() - 1 error
+#### Method openConnection() - 1 error
 Let's create a new test and run it
 ``` java
 @Test
@@ -470,7 +471,7 @@ public void testOpenConnectionUserHasNotOpenConnection() {
 }
 ``
 
-#### 4.2.4 Method saveObject() - 0 errors
+#### Method saveObject() - 0 errors
 This method does not have any error, but one or more test must be written to build up an efficient _test suite_. Moreover it could be another opportunity to see the difference between using _override_ and _Mockito_ to test _indirect output_.
 ``` java
 @Test
