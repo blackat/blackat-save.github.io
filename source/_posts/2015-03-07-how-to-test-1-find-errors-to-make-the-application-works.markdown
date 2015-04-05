@@ -9,7 +9,7 @@ This is an _experiment tutorial_ to better learn some _101_ practices and how te
 
 The goal of the _experiment-project_ is to find, to correct bugs and make the application works by writing tests.
 
-This tutorial is still in __DRAFT 5__.
+This tutorial is still in __DRAFT 6__.
 <!-- more -->
 
 ## Clone the project
@@ -107,13 +107,21 @@ __Tip__ Make sure the path `src/test/java` exists, otherwise Idea will create th
 
 {% img center /images/posts/idea-test-wizard.png %}
 
-### TweeterCollector.class
-[TweeterCollector.class](https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-to-be-corrected/src/main/java/com/contrastofbeauty/tutorial/collectors/TweetCollector.java)
+### TweetCollector
+{% img center /images/posts/tweet-collector.png %}
 
-// add description of class and how the callback will be called.
+[TweetCollector](https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-to-be-corrected/src/main/java/com/contrastofbeauty/tutorial/collectors/TweetCollector.java) is specific implementation of `Collector` interface able to stores an object of a specific type in a `List` by `userId` when its method `accept()` is invoked (e.g. by the service cloud).
 
-### TweeterCollectorTest.class
-Populate the `setUp()` method creating a new `TweetCollector`.
+Once the tweet collector has collected a certain number of tweet objects, `flush()` method is called, a `TweetTask` object is created and passed an parameter to `callbackFunction.addTask()`. The task in then put in a queue to be processed. A task is a computation unit, it owns:
+
+- `call()` method: called by a thread when the task is available in the task queue;
+- processing list: a set of object on which the aforementioned method will work.
+
+Once the task is added to the queue the list is emptied, ready to accept new object to be processed.
+
+
+### TweeterCollectorTest
+Populate the `setUp()` method creating a new `TweetCollector` and annotate it with `@Before` in order to get it run automatically before any method annotated with `@Test` as specfied by [JUnit doc](http://junit.sourceforge.net/javadoc/org/junit/Before.html). Evrytime a test method is run, the `setUp()` method is invoked to have a fresh and clean collector object.
 ``` java
 public class TweetCollectorTest {
 
@@ -126,8 +134,8 @@ public class TweetCollectorTest {
 }
 ```
 
-#### Method accept(), 3 errors
-Let's start working on the method `accept(Object object, long userId)`, run the first test that has been renamed `testAcceptGoldenPath()` and contains just one assertion:
+#### Method accept() - 3 errors
+Let's start working on the method `accept(Object object, long userId)`. Create, or rename the method if already created by the IDE, `testAcceptGoldenPath()` and add the following assertion:
 ``` java
 @Test
 public void testAcceptGoldenPath() throws Exception {
@@ -135,8 +143,10 @@ public void testAcceptGoldenPath() throws Exception {
 }
 ```
 
+In the first test we want to test the _standard scenario_ when everything run smooth, no exceptional situations. So for this reason it has been added the suffix _GoldenPath_, an alternative to [Happy Path](http://en.wikipedia.org/wiki/Happy_path). After that some borderline scenario tests will be added. _So run the test!_
+
 ##### Error 1
-__Issue:__ a `NullPointerException` will be thrown.
+__Issue:__ a `NullPointerException` is thrown.
 
 __Solution:__ the object `processingList` has not been initialized. Add the initialization in the constructor for instance and _rerun the test_.
 ``` java
@@ -190,7 +200,7 @@ public boolean accept(Object object, long userId) {
 ```
 
 ##### Additional tests
-The method now seems correct but has been tested in case of a different obejct? Add a new test method which will be part of the _automatic test suite_ we are going to be create. This automatic test suite will help us during phases such as refactoring, improving code readability and method evolution.
+The method now seems correct but has been tested in case of a different obejcts? Add a new test method which will be part of the _automatic test suite_ we are going to create. This automatic test suite will help us during phases such as refactoring, improving code readability and method evolution.
 ``` java
 @Test
 public void testAcceptObjectNotAcceptedBecauseDifferentType() throws Exception {
@@ -198,8 +208,14 @@ public void testAcceptObjectNotAcceptedBecauseDifferentType() throws Exception {
 }
 ```
 
-#### Method flush(), 1 error
-If not done yet by the IDE, create method `testFlushGoldenPath()` and invoke the method `flush()` as following:
+Our automatic net of tests starts to take shape.
+
+#### Method flush() - 1 error
+The method `flush()` does not have a return type, so how can we test the _correct behavior_?
+
+__Idea:__ indeed, we want to test the correct behavior! we need to find a way to check if the behavior of the method is the expected one so if it follows the right path. When `flush()` is invoke we expect the creation of a `TweetTask` object and the invocation of `addTask()` method.
+
+Let's try step by step. If not done yet by the IDE, create method `testFlushGoldenPath()` and invoke the method `flush()`, then _run the test!_
 ``` java
 @Test
 public void testFlushGoldenPath() throws Exception {
@@ -208,7 +224,7 @@ public void testFlushGoldenPath() throws Exception {
 ```
 
 ##### Error 1
-__Issue:__ a `NullPointerException` is thrown. This is not a good behavior, the map has not been initialized and we do not in advance if the method will be called after an `accept()` or not, for the time being different scenarios are possible.
+__Issue:__ a `NullPointerException` is thrown. This is not a good behavior, the map has not been initialized if the method will be directly called.
 
 __Pre-solution:__ check if in the map exist a `List` for the given `userId`, if not simply exit from the method execution (other solutions are acceptable, depends on requirements), _rerun the method_.
 ``` java
@@ -217,11 +233,11 @@ if (processingList.get(userId) == null) {
 }
 ```
 
-The test passes, but __no verification__ is done, so the test is pretty useless. We want to verify that if there is an item, a new `TweetTask` is created and the method `callbackFunction.addTask()` is invoked.
+The test passes, but __no verification__ is done, so the test is pretty _useless_. We want to verify that if there is an item, a new `TweetTask` is created and the method `callbackFunction.addTask()` is invoked.
 
-__Idea:__ the `callbackFunction` has not been set yet so a possible `NPE` could arise or in the future in will be inject by means of _DI_, we still do not know. So we can use [Mockito](https://code.google.com/p/mockito/) to verify if the method `addTask()` has been called.
+__Idea:__ the `callbackFunction` has not been set yet so a possible `NPE` could arise. May be in the future it will be inject by _DI_. So we can use [Mockito](https://code.google.com/p/mockito/) to create a mock object and verify if the method `addTask()` has been called.
 
-__Solution:__ mock a `Callback.class` class in order to make a verification on an expected behavior and change a bit the `setUp()` method to initialize mocks via annotations as follows:
+__Solution:__ mock a `Callback.class` class in order to make a verification on an _expected behavior_ and change a bit the `setUp()` method to initialize mocks via annotations. Moreover set the callback and add at least one tweet object just to reproduce a small common scenario.
 ``` java
 @Mock
 private Callback callbackFunctionMock;
@@ -243,11 +259,17 @@ public void testFlushGoldenPath() throws Exception {
 }
 ```
 
-So we set the callback function and we invoke the `accept()` method to fill the list for a given user. Notice that a test class is not just a tests on methods but it is a _test to verify the correct behavior of the all unit_.
+So we set the callback function, we invoke the `accept()` method to put one tweet into the list for a given user and finally we call the `flush()` method. A mock object is useful to verify behaviors for instance if a given method has been called. In our case we want to verify if the method `addTask()` has been called _exactly one time_. `any(java.lang.Class)` and `anyInt()` belongs to `org.mockito.Matchers` library. A _matcher_ is an entity that helps to match _parameters_ and _arguments_. For instance, in the test, we need to mach method call _parameters_, `addTask(java.util.concurrent.Callable task, long userId)`, but we are not interested to pass specific _arguments_ so we use _matchers_ to say whatever object implementing `Callable` class is fine.
 
+__Why?__ Well, we are not directly call the `addTask`, we just call a method from a public interface that, under certain condition, should call `addTask` with a newly created object. We do not control and we do not want to control the creation of the object, just let it be, but we want to verify if the method has been invoked with some instances of a given class. In Mockito if we use a matcher for an argument, all the other arguments must be substituted with matchers.
 
-##### Error 1 - Alternative solution with Mockito.spy()
-Instead of doing the check on `processingList.get(userId)` at the beginning of the class it is possible to refactor the tweet creation in a separate method as
+__Best practice__ Name a mock variable with `mock` prefix in order to recognize at first sight which variable is a reference to a real object or to a mock. Other patterns are possible, chose the one you like and keep the whole project consistent.
+
+__Attention__ A test class is not just a test on methods but it is a _test to verify the correct behavior of the all unit_.
+
+##### Alternative solution with Mockito.spy()
+A _mock object_ has been used, but another kind of test double exists, the _spy_. A `spy` is a _stub_ (state verification) able to record _calling information_, it is a _"partial mock"_. Instead of doing the check on `processingList.get(userId)` at the beginning of the class it is possible to refactor the tweet creation in a separate method as
+
 ``` java
 @Override
 public void flush(long userId) {
@@ -271,6 +293,7 @@ protected TweetTask getTweetTask(long userId) {
 ```
 
 and the corresponding modified test using `Mokito.spy()` to avoid the invoke on method `accept()`
+
 ``` java
 @Test
 public void testFlushWithSpyGoldenPath() throws Exception {
@@ -285,16 +308,20 @@ public void testFlushWithSpyGoldenPath() throws Exception {
     verify(callbackFunctionMock, times(1)).addTask(any(TweetTask.class), anyInt());
 }
 ```
+__Best practice__ Name a spy variable with `spyOn` prefix in order to recognize at first sight which variable is a reference to a real object, to a spy or to a mock.
 
-##### Error 1 - Alternative solution with @Override
+__Attention__ We do not have invoked `accept()` method
+
+##### Another alternative solution without Mockito but with @Override
 Just to make a simple comparison, the above test could have been written without _Mockito_ as follows:
+
 ``` java
 @Test
 public void testFlushWithOverrideGoldenPath() throws Exception {
 
     final AtomicBoolean taskAdded = new AtomicBoolean();
 
-    Callback callbackFunction = new CallbackImpl(null){
+    Callback callbackFunction = new CallbackImpl(){
         @Override
         public void addTask(TweetTask tweetTask, long userId) {
             taskAdded.set(true);
@@ -315,7 +342,7 @@ public void testFlushWithOverrideGoldenPath() throws Exception {
 }
 ```
 
-The use of _Mockito_ makes the code more concise, easy to read and understand. Moreover the _behavior verification_ is easy to understand than using a variable and check its value. By using 'verify()' we directly verify if the method has been called and how many times, it is clear that we are doing _behavior verification_.
+The use of _Mockito_ makes the code more concise, easy to read, maintain and understand. Moreover the _behavior verification_ is easy to understand than using a variable and check its value. By using 'verify()' we directly verify if the method has been called and how many times, it is __clear__ that we are doing _behavior verification_.
 
 ##### Additional tests
 Another test can be written to test the exception along with the message in case the `callbackFunction` is not set.
