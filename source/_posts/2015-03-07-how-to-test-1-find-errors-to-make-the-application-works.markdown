@@ -30,7 +30,7 @@ A test has four phases:
 ## Clone the project
 Clone the project from [Github](https://github.com/blackat/tutorial-howtotest-1-collectors) and import it in you preferred IDE, [IntelliJ IDEA](https://www.jetbrains.com/idea/) in my case.
 
-## Scaffolding
+## Project Structure
 
     ├── README.md
     ├── exercise-api
