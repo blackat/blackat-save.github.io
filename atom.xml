@@ -4,7 +4,7 @@
   <title><![CDATA[Contrast Of Beauty]]></title>
   <link href="http://blackat.github.io/atom.xml" rel="self"/>
   <link href="http://blackat.github.io/"/>
-  <updated>2015-04-06T16:36:12+02:00</updated>
+  <updated>2015-04-06T17:21:45+02:00</updated>
   <id>http://blackat.github.io/</id>
   <author>
     <name><![CDATA[black@t]]></name>
@@ -693,7 +693,7 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 
 <p><img class="center" src="http://blackat.github.io/images/posts/idea-test-wizard.png"></p>
 
-<h3>TweetCollector</h3>
+<h3>TweetCollector Class</h3>
 
 <p><img class="center" src="http://blackat.github.io/images/posts/tweet-collector.png"></p>
 
@@ -1107,11 +1107,13 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 
 <hr />
 
-<h3>CloudService.class</h3>
+<h3>CloudService Class</h3>
+
+<p><img class="center" src="http://blackat.github.io/images/posts/cloud-service.png"></p>
 
 <p>Once the service is created, once or more collectors are added in order to provide batch processing to one or more social networks or other services. A user has to open a connection to the service through the method <code>openConnection()</code> and then start to post tweets invoking <code>saveObject()</code>. Once done the user calls method <code>saveObjectCompleted()</code> to post latest tweets and close the connection.</p>
 
-<h4>CloudServiceTest.class</h4>
+<h4>CloudServiceTest Class</h4>
 
 <p>Create the class as done for the previous example and initialize the <em>System Under Test (SUT)</em>. The test class is the API client exposed by the SUT. The <code>setUp()</code> method properly initializes the SUT in order to be ready for the test method.</p>
 

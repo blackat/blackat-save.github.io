@@ -31,6 +31,7 @@
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,700,600' rel='stylesheet' type='text/css'>
 <link href='http://fonts.googleapis.com/css?family=Sorts+Mill+Goudy:400,400italic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,700italic,500,500italic' rel='stylesheet' type='text/css'>
 
   
   <script type="text/javascript">
@@ -109,7 +110,7 @@
 
 <p>This tutorial is still in <strong>DRAFT 8 (almost done ;-) )</strong>.</p>
 
-<div id="toc-table-content"><table cellpadding="0" cellspacing="0" id="toc-container"><tbody><td><section class="toc-panel"><div class="toc-heading"><h3 class="toc-title"><span class="glyphicon glyphicon-list-alt"></span> Contents</h3></div><ul id="toc-listing"><li class="toc-item"><a href="#TOC-1-a-bit-of-theory-and-jargon"><span class="tocnumber">1</span> <span class="toctext">A bit of theory and jargon</span></a></li><li class="toc-item"><a href="#TOC-2-clone-the-project"><span class="tocnumber">2</span> <span class="toctext">Clone the project</span></a></li><li class="toc-item"><a href="#TOC-3-scaffolding"><span class="tocnumber">3</span> <span class="toctext">Scaffolding</span></a></li><li class="toc-item"><a href="#TOC-4-application-description"><span class="tocnumber">4</span> <span class="toctext">Application Description</span></a></li><li class="toc-item"><a href="#TOC-5-lets-correct-the-application"><span class="tocnumber">5</span> <span class="toctext">Let’s correct the application</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-5-1-tweetcollector"><span class="tocnumber">5.1</span> <span class="toctext">TweetCollector</span></a></li><li class="toc-item"><a href="#TOC-5-2-tweetercollectortest"><span class="tocnumber">5.2</span> <span class="toctext">TweeterCollectorTest</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-5-2-1-method-accept-3-errors"><span class="tocnumber">5.2.1</span> <span class="toctext">Method accept() - 3 errors</span></a></li><li class="toc-item"><a href="#TOC-5-2-2-method-flush-1-error"><span class="tocnumber">5.2.2</span> <span class="toctext">Method flush() - 1 error</span></a></li></ul></li><li class="toc-item"><a href="#TOC-5-3-cloudservice-dot-class"><span class="tocnumber">5.3</span> <span class="toctext">CloudService.class</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-5-3-1-cloudservicetest-dot-class"><span class="tocnumber">5.3.1</span> <span class="toctext">CloudServiceTest.class</span></a></li><li class="toc-item"><a href="#TOC-5-3-2-method-addcollector-2-errors"><span class="tocnumber">5.3.2</span> <span class="toctext">Method addCollector() - 2 errors</span></a></li><li class="toc-item"><a href="#TOC-5-3-3-method-openconnection-1-error"><span class="tocnumber">5.3.3</span> <span class="toctext">Method openConnection() - 1 error</span></a></li><li class="toc-item"><a href="#TOC-5-3-4-method-saveobject-0-errors"><span class="tocnumber">5.3.4</span> <span class="toctext">Method saveObject() - 0 errors</span></a></li><li class="toc-item"><a href="#TOC-5-3-5-additional-class-behavior-tests"><span class="tocnumber">5.3.5</span> <span class="toctext">Additional class behavior tests</span></a></li></ul></li></ul></li></ul></section></td></tbody></table></div>
+<div id="toc-table-content"><table cellpadding="0" cellspacing="0" id="toc-container"><tbody><td><section class="toc-panel"><div class="toc-heading"><h3 class="toc-title"><span class="glyphicon glyphicon-list-alt"></span> Contents</h3></div><ul id="toc-listing"><li class="toc-item"><a href="#TOC-1-a-bit-of-theory-and-jargon"><span class="tocnumber">1</span> <span class="toctext">A bit of theory and jargon</span></a></li><li class="toc-item"><a href="#TOC-2-clone-the-project"><span class="tocnumber">2</span> <span class="toctext">Clone the project</span></a></li><li class="toc-item"><a href="#TOC-3-scaffolding"><span class="tocnumber">3</span> <span class="toctext">Scaffolding</span></a></li><li class="toc-item"><a href="#TOC-4-application-description"><span class="tocnumber">4</span> <span class="toctext">Application Description</span></a></li><li class="toc-item"><a href="#TOC-5-lets-correct-the-application"><span class="tocnumber">5</span> <span class="toctext">Let’s correct the application</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-5-1-tweetcollector-class"><span class="tocnumber">5.1</span> <span class="toctext">TweetCollector Class</span></a></li><li class="toc-item"><a href="#TOC-5-2-tweetercollectortest"><span class="tocnumber">5.2</span> <span class="toctext">TweeterCollectorTest</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-5-2-1-method-accept-3-errors"><span class="tocnumber">5.2.1</span> <span class="toctext">Method accept() - 3 errors</span></a></li><li class="toc-item"><a href="#TOC-5-2-2-method-flush-1-error"><span class="tocnumber">5.2.2</span> <span class="toctext">Method flush() - 1 error</span></a></li></ul></li><li class="toc-item"><a href="#TOC-5-3-cloudservice-class"><span class="tocnumber">5.3</span> <span class="toctext">CloudService Class</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-5-3-1-cloudservicetest-class"><span class="tocnumber">5.3.1</span> <span class="toctext">CloudServiceTest Class</span></a></li><li class="toc-item"><a href="#TOC-5-3-2-method-addcollector-2-errors"><span class="tocnumber">5.3.2</span> <span class="toctext">Method addCollector() - 2 errors</span></a></li><li class="toc-item"><a href="#TOC-5-3-3-method-openconnection-1-error"><span class="tocnumber">5.3.3</span> <span class="toctext">Method openConnection() - 1 error</span></a></li><li class="toc-item"><a href="#TOC-5-3-4-method-saveobject-0-errors"><span class="tocnumber">5.3.4</span> <span class="toctext">Method saveObject() - 0 errors</span></a></li><li class="toc-item"><a href="#TOC-5-3-5-additional-class-behavior-tests"><span class="tocnumber">5.3.5</span> <span class="toctext">Additional class behavior tests</span></a></li></ul></li></ul></li></ul></section></td></tbody></table></div>
 
 
 <h2 id="TOC-1-a-bit-of-theory-and-jargon">A bit of theory and jargon</h2>
@@ -253,7 +254,7 @@
 
 <p><img class="center" src="/images/posts/idea-test-wizard.png"></p>
 
-<h3 id="TOC-5-1-tweetcollector">TweetCollector</h3>
+<h3 id="TOC-5-1-tweetcollector-class">TweetCollector Class</h3>
 
 <p><img class="center" src="/images/posts/tweet-collector.png"></p>
 
@@ -667,11 +668,13 @@
 
 <hr>
 
-<h3 id="TOC-5-3-cloudservice-dot-class">CloudService.class</h3>
+<h3 id="TOC-5-3-cloudservice-class">CloudService Class</h3>
+
+<p><img class="center" src="/images/posts/cloud-service.png"></p>
 
 <p>Once the service is created, once or more collectors are added in order to provide batch processing to one or more social networks or other services. A user has to open a connection to the service through the method <code>openConnection()</code> and then start to post tweets invoking <code>saveObject()</code>. Once done the user calls method <code>saveObjectCompleted()</code> to post latest tweets and close the connection.</p>
 
-<h4 id="TOC-5-3-1-cloudservicetest-dot-class">CloudServiceTest.class</h4>
+<h4 id="TOC-5-3-1-cloudservicetest-class">CloudServiceTest Class</h4>
 
 <p>Create the class as done for the previous example and initialize the <em>System Under Test (SUT)</em>. The test class is the API client exposed by the SUT. The <code>setUp()</code> method properly initializes the SUT in order to be ready for the test method.</p>
 
