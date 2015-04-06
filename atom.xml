@@ -4,7 +4,7 @@
   <title><![CDATA[Contrast Of Beauty]]></title>
   <link href="http://blackat.github.io/atom.xml" rel="self"/>
   <link href="http://blackat.github.io/"/>
-  <updated>2015-04-03T12:27:57+02:00</updated>
+  <updated>2015-04-06T16:36:12+02:00</updated>
   <id>http://blackat.github.io/</id>
   <author>
     <name><![CDATA[black@t]]></name>
@@ -547,9 +547,27 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 
 <p>The goal of the <em>experiment-project</em> is to find, to correct bugs and make the application works by writing tests.</p>
 
-<p>This tutorial is still in <strong>DRAFT 5</strong>.</p>
+<p>This tutorial is still in <strong>DRAFT 8 (almost done ;-) )</strong>.</p>
 
 <!-- more -->
+
+
+<h2>A bit of theory and jargon</h2>
+
+<p><em>SUT:</em> the System Under Test, in a unit test it could be a <em>class</em>.</p>
+
+<p><em>Test class:</em> the <em>client</em> of the interface exposed by the SUT.</p>
+
+<p><em>test fixture:</em> the context under which a test is run, it is a baseline under which running tests. It is a set of operations to bring the <em>System Under Test (SUT)</em> in a given state, run the test and verify the <em>expected outcome</em>. Test fixture and the expected outcome are tightly coupled, the test fixture allows the test to be repeatable for ever and ever. Method <code>setUp()</code> or <code>initialization</code> is used to create fixture while <code>tearDown()</code> or <code>distruction</code> is invoked to restore the original state.</p>
+
+<p>A test has four phases:</p>
+
+<ol>
+<li><strong>set up</strong> to <em>apply</em> the test fixture;</li>
+<li><strong>exercise</strong> to <em>interact</em> with the API exposed by the SUT;</li>
+<li><strong>verifiy</strong> to check if the expected outcome has been <em>matched</em>;</li>
+<li><strong>tear down</strong> to return to the <em>original state</em> tearing down the test fixture.</li>
+</ol>
 
 
 <h2>Clone the project</h2>
@@ -597,6 +615,8 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 <li><strong>exercise-tdd:</strong> implementation of some classes by tdd whose description is in the next <a href="http://blackat.github.io/blog/2015/03/21/how-to-test-2-tdd-a-simple-example">tut</a>.</li>
 </ol>
 
+
+<p>In the module <code>exercise-to-be-corrected</code> run the class <code>RunMeToBeCorrected.java</code> and see that it fails some some reason, may be a <code>NullPointerException</code> is thrown. We do not care so much because we do not want to make it work by a common pattern <strong>running/debugging</strong> rather we want to <em>implement missing tests</em> demonstrating how they can help us to find and correct bug make our application more robust.</p>
 
 <h2>Application Description</h2>
 
@@ -664,21 +684,34 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 
 <h2>Let&rsquo;s correct the application</h2>
 
-<p>Let&rsquo;s create tests for the application starting from <code>TweetCollector.java</code> class, press <code>cmd + shift + T</code> on Mac or <code>crtl + shift + T</code> on Windows and choose methods you want to test, then Idea will create the test class.</p>
+<p>Let&rsquo;s create tests for the application starting from <code>TweetCollector.java</code> class, press <code>cmd + shift + T</code> on Mac or <code>crtl + shift + T</code> on Windows and choose methods you want to test, then Idea will create the test class in the right place</p>
+
+<pre><code>src/test/java/com/contrastofbeauty/tutorial/collectors/TweetCollectorTest.java.
+</code></pre>
 
 <p><strong>Tip</strong> Make sure the path <code>src/test/java</code> exists, otherwise Idea will create the test class together with the source one.</p>
 
 <p><img class="center" src="http://blackat.github.io/images/posts/idea-test-wizard.png"></p>
 
-<h3>TweeterCollector.class</h3>
+<h3>TweetCollector</h3>
 
-<p><a href="https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-to-be-corrected/src/main/java/com/contrastofbeauty/tutorial/collectors/TweetCollector.java">TweeterCollector.class</a></p>
+<p><img class="center" src="http://blackat.github.io/images/posts/tweet-collector.png"></p>
 
-<p>// add description of class and how the callback will be called.</p>
+<p><a href="https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-to-be-corrected/src/main/java/com/contrastofbeauty/tutorial/collectors/TweetCollector.java">TweetCollector</a> is specific implementation of <code>Collector</code> interface able to stores an object of a specific type in a <code>List</code> by <code>userId</code> when its method <code>accept()</code> is invoked (e.g. by the service cloud).</p>
 
-<h3>TweeterCollectorTest.class</h3>
+<p>Once the tweet collector has collected a certain number of tweet objects, <code>flush()</code> method is called, a <code>TweetTask</code> object is created and passed an parameter to <code>callbackFunction.addTask()</code>. The task in then put in a queue to be processed. A task is a computation unit, it owns:</p>
 
-<p>Populate the <code>setUp()</code> method creating a new <code>TweetCollector</code>.</p>
+<ul>
+<li><code>call()</code> method: called by a thread when the task is available in the task queue;</li>
+<li>processing list: a set of object on which the aforementioned method will work.</li>
+</ul>
+
+
+<p>Once the task is added to the queue the list is emptied, ready to accept new object to be processed.</p>
+
+<h3>TweeterCollectorTest</h3>
+
+<p>Populate the <code>setUp()</code> method creating a new <code>TweetCollector</code> and annotate it with <code>@Before</code> in order to get it run automatically before any method annotated with <code>@Test</code> as specfied by <a href="http://junit.sourceforge.net/javadoc/org/junit/Before.html">JUnit doc</a>. Evrytime a test method is run, the <code>setUp()</code> method is invoked to have a fresh and clean collector object.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -701,9 +734,9 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h4>Method accept(), 3 errors</h4>
+<h4>Method accept() - 3 errors</h4>
 
-<p>Let&rsquo;s start working on the method <code>accept(Object object, long userId)</code>, run the first test that has been renamed <code>testAcceptGoldenPath()</code> and contains just one assertion:</p>
+<p>Let&rsquo;s start working on the method <code>accept(Object object, long userId)</code>. Create, or rename the method if already created by the IDE, <code>testAcceptGoldenPath()</code> and add the following assertion:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -716,9 +749,11 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>In the first test we want to test the <em>standard scenario</em> when everything run smooth, no exceptional situations. So for this reason it has been added the suffix <em>GoldenPath</em>, an alternative to <a href="http://en.wikipedia.org/wiki/Happy_path">Happy Path</a>. After that some borderline scenario tests will be added. <em>So run the test!</em></p>
+
 <h5>Error 1</h5>
 
-<p><strong>Issue:</strong> a <code>NullPointerException</code> will be thrown.</p>
+<p><strong>Issue:</strong> a <code>NullPointerException</code> is thrown.</p>
 
 <p><strong>Solution:</strong> the object <code>processingList</code> has not been initialized. Add the initialization in the constructor for instance and <em>rerun the test</em>.</p>
 
@@ -810,7 +845,7 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 
 <h5>Additional tests</h5>
 
-<p>The method now seems correct but has been tested in case of a different obejct? Add a new test method which will be part of the <em>automatic test suite</em> we are going to be create. This automatic test suite will help us during phases such as refactoring, improving code readability and method evolution.</p>
+<p>The method now seems correct but has been tested in case of a different obejcts? Add a new test method which will be part of the <em>automatic test suite</em> we are going to create. This automatic test suite will help us during phases such as refactoring, improving code readability and method evolution.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -823,9 +858,15 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h4>Method flush(), 1 error</h4>
+<p>Our automatic net of tests starts to take shape.</p>
 
-<p>If not done yet by the IDE, create method <code>testFlushGoldenPath()</code> and invoke the method <code>flush()</code> as following:</p>
+<h4>Method flush() - 1 error</h4>
+
+<p>The method <code>flush()</code> does not have a return type, so how can we test the <em>correct behavior</em>?</p>
+
+<p><strong>Idea:</strong> indeed, we want to test the correct behavior! we need to find a way to check if the behavior of the method is the expected one so if it follows the right path. When <code>flush()</code> is invoke we expect the creation of a <code>TweetTask</code> object and the invocation of <code>addTask()</code> method.</p>
+
+<p>Let&rsquo;s try step by step. If not done yet by the IDE, create method <code>testFlushGoldenPath()</code> and invoke the method <code>flush()</code>, then <em>run the test!</em></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -840,7 +881,7 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 
 <h5>Error 1</h5>
 
-<p><strong>Issue:</strong> a <code>NullPointerException</code> is thrown. This is not a good behavior, the map has not been initialized and we do not in advance if the method will be called after an <code>accept()</code> or not, for the time being different scenarios are possible.</p>
+<p><strong>Issue:</strong> a <code>NullPointerException</code> is thrown. This is not a good behavior, the map has not been initialized if the method will be directly called.</p>
 
 <p><strong>Pre-solution:</strong> check if in the map exist a <code>List</code> for the given <code>userId</code>, if not simply exit from the method execution (other solutions are acceptable, depends on requirements), <em>rerun the method</em>.</p>
 
@@ -853,11 +894,11 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The test passes, but <strong>no verification</strong> is done, so the test is pretty useless. We want to verify that if there is an item, a new <code>TweetTask</code> is created and the method <code>callbackFunction.addTask()</code> is invoked.</p>
+<p>The test passes, but <strong>no verification</strong> is done, so the test is pretty <em>useless</em>. We want to verify that if there is an item, a new <code>TweetTask</code> is created and the method <code>callbackFunction.addTask()</code> is invoked.</p>
 
-<p><strong>Idea:</strong> the <code>callbackFunction</code> has not been set yet so a possible <code>NPE</code> could arise or in the future in will be inject by means of <em>DI</em>, we still do not know. So we can use <a href="https://code.google.com/p/mockito/">Mockito</a> to verify if the method <code>addTask()</code> has been called.</p>
+<p><strong>Idea:</strong> the <code>callbackFunction</code> has not been set yet so a possible <code>NPE</code> could arise. May be in the future it will be inject by <em>DI</em>. So we can use <a href="https://code.google.com/p/mockito/">Mockito</a> to create a mock object and verify if the method <code>addTask()</code> has been called.</p>
 
-<p><strong>Solution:</strong> mock a <code>Callback.class</code> class in order to make a verification on an expected behavior and change a bit the <code>setUp()</code> method to initialize mocks via annotations as follows:</p>
+<p><strong>Solution:</strong> mock a <code>Callback.class</code> class in order to make a verification on an <em>expected behavior</em> and change a bit the <code>setUp()</code> method to initialize mocks via annotations. Moreover set the callback and add at least one tweet object just to reproduce a small common scenario.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -898,11 +939,17 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>So we set the callback function and we invoke the <code>accept()</code> method to fill the list for a given user. Notice that a test class is not just a tests on methods but it is a <em>test to verify the correct behavior of the all unit</em>.</p>
+<p>So we set the callback function, we invoke the <code>accept()</code> method to put one tweet into the list for a given user and finally we call the <code>flush()</code> method. A mock object is useful to verify behaviors for instance if a given method has been called. In our case we want to verify if the method <code>addTask()</code> has been called <em>exactly one time</em>. <code>any(java.lang.Class)</code> and <code>anyInt()</code> belongs to <code>org.mockito.Matchers</code> library. A <em>matcher</em> is an entity that helps to match <em>parameters</em> and <em>arguments</em>. For instance, in the test, we need to mach method call <em>parameters</em>, <code>addTask(java.util.concurrent.Callable task, long userId)</code>, but we are not interested to pass specific <em>arguments</em> so we use <em>matchers</em> to say whatever object implementing <code>Callable</code> class is fine.</p>
 
-<h5>Error 1 - Alternative solution with Mockito.spy()</h5>
+<p><strong>Why?</strong> Well, we are not directly call the <code>addTask</code>, we just call a method from a public interface that, under certain condition, should call <code>addTask</code> with a newly created object. We do not control and we do not want to control the creation of the object, just let it be, but we want to verify if the method has been invoked with some instances of a given class. In Mockito if we use a matcher for an argument, all the other arguments must be substituted with matchers.</p>
 
-<p>Instead of doing the check on <code>processingList.get(userId)</code> at the beginning of the class it is possible to refactor the tweet creation in a separate method as</p>
+<p><strong>Best practice</strong> Name a mock variable with <code>mock</code> prefix in order to recognize at first sight which variable is a reference to a real object or to a mock. Other patterns are possible, chose the one you like and keep the whole project consistent.</p>
+
+<p><strong>Attention</strong> A test class is not just a test on methods but it is a <em>test to verify the correct behavior of the all unit</em>.</p>
+
+<h5>Alternative solution with Mockito.spy()</h5>
+
+<p>A <em>mock object</em> has been used, but another kind of test double exists, the <em>spy</em>. A <code>spy</code> is a <em>stub</em> (state verification) able to record <em>calling information</em>, it is a <em>&ldquo;partial mock&rdquo;</em>. Instead of doing the check on <code>processingList.get(userId)</code> at the beginning of the class it is possible to refactor the tweet creation in a separate method as</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -974,7 +1021,11 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h5>Error 1 - Alternative solution with @Override</h5>
+<p><strong>Best practice</strong> Name a spy variable with <code>spyOn</code> prefix in order to recognize at first sight which variable is a reference to a real object, to a spy or to a mock.</p>
+
+<p><strong>Attention</strong> We do not have invoked <code>accept()</code> method</p>
+
+<h5>Another alternative solution without Mockito but with @Override</h5>
 
 <p>Just to make a simple comparison, the above test could have been written without <em>Mockito</em> as follows:</p>
 
@@ -1007,7 +1058,7 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 </span><span class='line'>
 </span><span class='line'>    <span class="kd">final</span> <span class="n">AtomicBoolean</span> <span class="n">taskAdded</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">AtomicBoolean</span><span class="o">();</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="n">Callback</span> <span class="n">callbackFunction</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">CallbackImpl</span><span class="o">(</span><span class="kc">null</span><span class="o">){</span>
+</span><span class='line'>    <span class="n">Callback</span> <span class="n">callbackFunction</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">CallbackImpl</span><span class="o">(){</span>
 </span><span class='line'>        <span class="nd">@Override</span>
 </span><span class='line'>        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addTask</span><span class="o">(</span><span class="n">TweetTask</span> <span class="n">tweetTask</span><span class="o">,</span> <span class="kt">long</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>            <span class="n">taskAdded</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
@@ -1029,11 +1080,11 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>The use of <em>Mockito</em> makes the code more concise, easy to read and understand. Moreover the <em>behavior verification</em> is easy to understand than using a variable and check its value. By using &lsquo;verify()&rsquo; we directly verify if the method has been called and how many times, it is clear that we are doing <em>behavior verification</em>.</p>
+<p>The use of <em>Mockito</em> makes the code more concise, easy to read, maintain and understand. Moreover the <em>behavior verification</em> is easy to understand than using a variable and check its value. By using &lsquo;verify()&rsquo; we directly verify if the method has been called and how many times, it is <strong>clear</strong> that we are doing <em>behavior verification</em>.</p>
 
 <h5>Additional tests</h5>
 
-<p>Another test can be written to test the exception along with the message in case the <code>callbackFunction</code> is not set.</p>
+<p>Another test can be written to <a href="http://junit.org/apidocs/org/junit/rules/ExpectedException.html">test the exception</a> along with the message in case the <code>callbackFunction</code> is not set.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1045,7 +1096,7 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 </pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
 </span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testFlushExceptionThrownWithNullCallbackFunction</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
 </span><span class='line'>    <span class="n">exception</span><span class="o">.</span><span class="na">expect</span><span class="o">(</span><span class="n">IllegalArgumentException</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">exception</span><span class="o">.</span><span class="na">expectMessage</span><span class="o">(</span><span class="s">&quot;Callback function must be set by the service.&quot;</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">exception</span><span class="o">.</span><span class="na">expectMessage</span><span class="o">(</span><span class="s">&quot;Callback function is null, it must be set by the service.&quot;</span><span class="o">);</span>
 </span><span class='line'>    <span class="n">collector</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="k">new</span> <span class="nf">Tweet</span><span class="o">(</span><span class="s">&quot;foo tweet&quot;</span><span class="o">),</span> <span class="n">USER_ID</span><span class="o">);</span>
 </span><span class='line'>    <span class="n">collector</span><span class="o">.</span><span class="na">flush</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">);</span>
 </span><span class='line'><span class="o">}</span>
@@ -1058,11 +1109,11 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 
 <h3>CloudService.class</h3>
 
-<p>Once the service is created, once or more collectors are added in order to provide batch submission to one or more social networks or similar services. A user has to open a connection to the service through the method <code>openConnection()</code> and then start to post tweets for instance invoking <code>saveObject()</code>. Once done user will call method <code>saveObjectCompleted()</code> to post latest tweets and close the connection.</p>
+<p>Once the service is created, once or more collectors are added in order to provide batch processing to one or more social networks or other services. A user has to open a connection to the service through the method <code>openConnection()</code> and then start to post tweets invoking <code>saveObject()</code>. Once done the user calls method <code>saveObjectCompleted()</code> to post latest tweets and close the connection.</p>
 
 <h4>CloudServiceTest.class</h4>
 
-<p>Create the class as done for the previous example and initialize the <em>SUT</em>.</p>
+<p>Create the class as done for the previous example and initialize the <em>System Under Test (SUT)</em>. The test class is the API client exposed by the SUT. The <code>setUp()</code> method properly initializes the SUT in order to be ready for the test method.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1116,9 +1167,9 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 
 <h5>Error 1</h5>
 
-<p><strong>Issue:</strong> a <code>NullPointerException</code> will be thrown.</p>
+<p><strong>Issue:</strong> a <code>NullPointerException</code> will be thrown when <code>CloudService.getCollectorSize()</code> is called in the assertion.</p>
 
-<p><strong>Solution:</strong> the object <code>processingCollectors</code> has not been initialized. Add the initialization in the constructor for instance and <em>rerun the test</em>.</p>
+<p><strong>Solution:</strong> the object <code>processingCollectors</code> has not been initialized. Add the initialization in the constructor, for instance, and <em>rerun the test</em>.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1126,53 +1177,16 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 <span class='line-number'>4</span>
 </pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="nf">CloudService</span><span class="o">(</span><span class="n">Callback</span> <span class="n">callback</span><span class="o">)</span> <span class="o">{</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="n">processingFutureList</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h5>Error 1 - Alternative solution</h5>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAddCollectorVerifyCallbackFunctionAddedWithOverride</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kd">final</span> <span class="n">AtomicInteger</span> <span class="n">functionCalled</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">AtomicInteger</span><span class="o">();</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">addCollector</span><span class="o">(</span><span class="k">new</span> <span class="nf">TweetCollector</span><span class="o">(){</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Override</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCallbackFunction</span><span class="o">(</span><span class="n">Callback</span> <span class="n">callback</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="n">functionCalled</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">});</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">assertEquals</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">functionCalled</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
+</span><span class='line'>    <span class="n">processingCollectors</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;();</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <h5>Error 2 - Test Driven Development (TDD)</h5>
 
-<p>A collector should be added along with the set of the callback function. A collector should be able to submit the job to be done when necessary using the callback function. The collector in this situation acts as a collaborator and we want to verify that a specific method in invoke on the collaborator.</p>
+<p>Spot this error is not easy, it is a missing code. As it has been seen before, a collector uses a callback function to post a batch processing. When a collector is added the callback function must be set by the service. The collector in this situation acts as a <em>collaborator</em> and we want to verify that a specific method is invoke on the collaborator itself. Create the <em>test before</em> and <em>implementation later on</em> to make the test passes (TDD).</p>
 
-<p>In order to verify a method call, i.e. <em>indirect output</em>, we use Mockito, so add <code>tweetCollecorMock</code> variable and init mocks inside of the <code>setUp()</code> method adding <code>MockitoAnnotations.initMocks(this)</code> and <em>run the test</em></p>
+<p>In order to verify a method call, i.e. <em>indirect output</em>, we use Mockito, so add <code>tweetCollectorMock</code> variable and init mocks inside of the <code>setUp()</code> (initialization of the test fixture) method adding <code>MockitoAnnotations.initMocks(this)</code> and <em>run the test</em></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1232,7 +1246,56 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Now the test passes. The <code>addCollector()</code> function was empty and by tests it has been implemented. The two tests could have been put in a single one and step by step modifying the method call to make the test passed. <em>Test Driven Development (TDD)</em>.</p>
+<p>Now the test passes. The <code>addCollector()</code> function has been corrected by tests. The tests have been left separated for two reasons:</p>
+
+<ol>
+<li>test two different aspects of the same function</li>
+<li>how <em>Test Driven Development (TDD)</em> helps building a solid net of automated tests and a more reliable code, tests come directly from requirements.</li>
+</ol>
+
+
+<p><strong>Attention!</strong> TDD helps creating a tests net, tests represent the requirements, the documentation as code that can be read to understand the behavior of the class. The code satisfying the tests is consistent with the requirements, its behavior is something to <em>rely on</em> for the next development iteration.</p>
+
+<h5>Error 2 - Alternative solution with @Override</h5>
+
+<p>Instead of using a mocking framework, it is possible to <em>&ldquo;intercept&rdquo;</em> the call of the method and register a status that can be used for verification later on as following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testAddCollectorVerifyCallbackFunctionAddedWithOverride</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">final</span> <span class="n">AtomicInteger</span> <span class="n">functionCalled</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">AtomicInteger</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">addCollector</span><span class="o">(</span><span class="k">new</span> <span class="nf">TweetCollector</span><span class="o">(){</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCallbackFunction</span><span class="o">(</span><span class="n">Callback</span> <span class="n">callback</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">functionCalled</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">});</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">assertEquals</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">functionCalled</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The use of a mock object and a mocking framework as Mockito allows to have a more concise and readable code. Methods and matchers such as  <code>verify</code>, <code>times()</code> and <code>any()</code> make the comprehension of the test easier. Moreover using a mock for a collector makes clearer that in this context it a <em>collaborator</em> and not the object of the test, it is even closer to a documentation purpose.</p>
 
 <h4>Method openConnection() - 1 error</h4>
 
@@ -1282,119 +1345,283 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testOpenConnectionUserHasNotOpenConnection</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">assertFalse</span><span class="o">(</span><span class="n">cloudService</span><span class="o">.</span><span class="na">isUserConnected</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">));</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Method saveObject() - 0 errors</h4>
+
+<p>This method does not have errors anymore, but one or more test must be written to build up an efficient <em>test suite</em>. It is a small workflow able to test the interface exposed by the class.</p>
+
+<p><strong>Remember!</strong> Test the behavior of <em>all the unit</em> not just single and separated methods, the focus is on the all unit.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testSaveObjectWithOverrideGoldenPath</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">final</span> <span class="n">AtomicBoolean</span> <span class="n">accepted</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">AtomicBoolean</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Collector</span> <span class="n">tweetCollector</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">TweetCollector</span><span class="o">(){</span>
+</span><span class='line'>        <span class="nd">@Override</span>
+</span><span class='line'>        <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">accept</span><span class="o">(</span><span class="n">Object</span> <span class="n">object</span><span class="o">,</span> <span class="kt">long</span> <span class="n">userId</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">object</span> <span class="k">instanceof</span> <span class="n">Tweet</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">accepted</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+</span><span class='line'>                <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">};</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">addCollector</span><span class="o">(</span><span class="n">tweetCollector</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">openConnection</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">saveObject</span><span class="o">(</span><span class="k">new</span> <span class="nf">Tweet</span><span class="o">(</span><span class="s">&quot;foo tweet&quot;</span><span class="o">),</span> <span class="n">USER_ID</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">assertTrue</span><span class="o">(</span><span class="n">accepted</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Once again pay attention on the difference between using <em>override</em> and <em>Mockito</em> to test <em>indirect output</em> as follows</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testSaveObjectWithMockitoGoldenPath</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Collector</span> <span class="n">collectorMock</span> <span class="o">=</span> <span class="n">mock</span><span class="o">(</span><span class="n">TweetCollector</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">when</span><span class="o">(</span><span class="n">collectorMock</span><span class="o">.</span><span class="na">accept</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Tweet</span><span class="o">.</span><span class="na">class</span><span class="o">),</span> <span class="n">anyInt</span><span class="o">())).</span><span class="na">thenReturn</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">addCollector</span><span class="o">(</span><span class="n">collectorMock</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">openConnection</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">saveObject</span><span class="o">(</span><span class="n">tweetMock</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">verify</span><span class="o">(</span><span class="n">collectorMock</span><span class="o">,</span> <span class="n">times</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">accept</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">Tweet</span><span class="o">.</span><span class="na">class</span><span class="o">),</span> <span class="n">anyInt</span><span class="o">());</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Once again the use of Mockito allows to have a more concise and readable test. The <code>Mockito.verify()</code> method highlights the test of the <em>indirect output</em>.</p>
+
+<h4>Additional class behavior tests</h4>
+
+<h5>Additional test 1</h5>
+
+<p>It is interesting to enrich the test suite with some other tests, may be a bit redundant but useful to highlight if the code correctly answer to borderline scenarios.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Rule</span>
+</span><span class='line'><span class="kd">public</span> <span class="n">ExpectedException</span> <span class="n">exception</span> <span class="o">=</span> <span class="n">ExpectedException</span><span class="o">.</span><span class="na">none</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testSaveObjectObjectNotAcceptedThrowException</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">exception</span><span class="o">.</span><span class="na">expect</span><span class="o">(</span><span class="n">IllegalArgumentException</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">exception</span><span class="o">.</span><span class="na">expectMessage</span><span class="o">(</span><span class="s">&quot;Entity of type &quot;</span> <span class="o">+</span> <span class="k">new</span> <span class="nf">Object</span><span class="o">().</span><span class="na">getClass</span><span class="o">()</span> <span class="o">+</span> <span class="s">&quot; cannot be accepted.&quot;</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">addCollector</span><span class="o">(</span><span class="k">new</span> <span class="nf">TweetCollector</span><span class="o">());</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">openConnection</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">saveObject</span><span class="o">(</span><span class="k">new</span> <span class="nf">Object</span><span class="o">(),</span> <span class="n">USER_ID</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h5>Additional test 2</h5>
+
+<p>The name of the method makes the test self-explanatory.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 </pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testOpenConnectionUserHasNotOpenConnection</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">assertFalse</span><span class="o">(</span><span class="n">cloudService</span><span class="o">.</span><span class="na">isUserConnected</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">));</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="err">``</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testSaveObjectUserNotConnected</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">exception</span><span class="o">.</span><span class="na">expect</span><span class="o">(</span><span class="n">IllegalArgumentException</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">exception</span><span class="o">.</span><span class="na">expectMessage</span><span class="o">(</span><span class="s">&quot;User with id &quot;</span> <span class="o">+</span> <span class="n">USER_ID</span> <span class="o">+</span> <span class="s">&quot; has not open any connection, please open a connection &quot;</span> <span class="o">+</span>
+</span><span class='line'>        <span class="s">&quot;before trying to save.&quot;</span><span class="o">);</span>
 </span><span class='line'>
-</span><span class='line'><span class="err">####</span> <span class="n">Method</span> <span class="nf">saveObject</span><span class="o">()</span> <span class="o">-</span> <span class="mi">0</span> <span class="n">errors</span>
-</span><span class='line'><span class="n">This</span> <span class="n">method</span> <span class="n">does</span> <span class="n">not</span> <span class="n">have</span> <span class="n">any</span> <span class="n">error</span><span class="o">,</span> <span class="n">but</span> <span class="n">one</span> <span class="n">or</span> <span class="n">more</span> <span class="n">test</span> <span class="n">must</span> <span class="n">be</span> <span class="n">written</span> <span class="n">to</span> <span class="n">build</span> <span class="n">up</span> <span class="n">an</span> <span class="n">efficient</span> <span class="n">_test</span> <span class="n">suite_</span><span class="o">.</span> <span class="n">Moreover</span> <span class="n">it</span> <span class="n">could</span> <span class="n">be</span> <span class="n">another</span> <span class="n">opportunity</span> <span class="n">to</span> <span class="n">see</span> <span class="n">the</span> <span class="n">difference</span> <span class="n">between</span> <span class="n">using</span> <span class="n">_override_</span> <span class="n">and</span> <span class="n">_Mockito_</span> <span class="n">to</span> <span class="n">test</span> <span class="n">_indirect</span> <span class="n">output_</span><span class="o">.</span>
+</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">saveObject</span><span class="o">(</span><span class="n">mock</span><span class="o">(</span><span class="n">Callable</span><span class="o">.</span><span class="na">class</span><span class="o">),</span> <span class="n">USER_ID</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p> java
-@Test
-public void testSaveObjectWithOverrideGoldenPath() throws Exception {</p>
-
-<pre><code>final AtomicBoolean accepted = new AtomicBoolean();
-
-Collector tweetCollector = new TweetCollector(){
-    @Override
-    public boolean accept(Object object, long userId) {
-
-        if (object instanceof Tweet) {
-            accepted.set(true);
-            return true;
-        }
-
-        return false;
-    }
-};
-
-cloudService.addCollector(tweetCollector);
-
-cloudService.openConnection(USER_ID);
-
-cloudService.saveObject(new Tweet("foo tweet"), USER_ID);
-
-assertTrue(accepted.get());
-</code></pre>
-
-<p>}</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">and</span> <span class="n">the</span> <span class="n">same</span> <span class="n">test</span> <span class="n">but</span> <span class="n">done</span> <span class="n">using</span> <span class="n">Mockito</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p> java
-@Test
-public void testSaveObjectWithMockitoGoldenPath() throws Exception {</p>
-
-<pre><code>Collector collectorMock = mock(TweetCollector.class);
-when(collectorMock.accept(any(Tweet.class), anyInt())).thenReturn(true);
-
-cloudService.addCollector(collectorMock);
-
-cloudService.openConnection(USER_ID);
-
-cloudService.saveObject(tweetMock, USER_ID);
-
-verify(collectorMock, times(1)).accept(any(Tweet.class), anyInt());
-</code></pre>
-
-<p>}</p>
+<h5>Additional test 3</h5>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">Once</span> <span class="n">again</span> <span class="n">the</span> <span class="n">use</span> <span class="n">of</span> <span class="n">Mockito</span> <span class="n">allows</span> <span class="n">to</span> <span class="n">have</span> <span class="n">a</span> <span class="n">more</span> <span class="n">concise</span> <span class="n">and</span> <span class="n">readable</span> <span class="n">test</span><span class="o">.</span> <span class="n">The</span> <span class="err">`</span><span class="n">Mockito</span><span class="o">.</span><span class="na">verify</span><span class="o">()</span><span class="err">`</span> <span class="n">method</span> <span class="n">highlights</span> <span class="n">the</span> <span class="n">test</span> <span class="n">of</span> <span class="n">the</span> <span class="n">_indirect</span> <span class="n">output_</span><span class="o">.</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testSaveObjectCompletedUserNotConnectedThrowException</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">exception</span><span class="o">.</span><span class="na">expect</span><span class="o">(</span><span class="n">IllegalArgumentException</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">exception</span><span class="o">.</span><span class="na">expectMessage</span><span class="o">(</span><span class="s">&quot;User with id &quot;</span> <span class="o">+</span> <span class="n">USER_ID</span> <span class="o">+</span> <span class="s">&quot; has not open any connection, please open a connection &quot;</span> <span class="o">+</span>
+</span><span class='line'>        <span class="s">&quot;before trying to save.&quot;</span><span class="o">);</span>
 </span><span class='line'>
-</span><span class='line'><span class="err">#####</span> <span class="n">Additional</span> <span class="n">test</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">saveObjectCompleted</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p> java
-@Rule
-public ExpectedException exception = ExpectedException.none();</p>
-
-<p>@Test
-public void testSaveObjectObjectNotAcceptedThrowException() throws Exception {</p>
-
-<pre><code>exception.expect(IllegalArgumentException.class);
-exception.expectMessage("Entity of type " + new Object().getClass() + " cannot be accepted.");
-
-cloudService.addCollector(new TweetCollector());
-
-cloudService.openConnection(USER_ID);
-
-cloudService.saveObject(new Object(), USER_ID);
-</code></pre>
-
-<p>}</p>
+<h5>Additional test 4</h5>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="err">#####</span> <span class="n">Additional</span> <span class="n">test</span> <span class="mi">2</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testSaveObjectCompletedGoldenPath</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">doNothing</span><span class="o">().</span><span class="na">when</span><span class="o">(</span><span class="n">acknoledgeServiceMock</span><span class="o">).</span><span class="na">sendAckSuccess</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">TweetCollector</span> <span class="n">spyOntweetCollector</span> <span class="o">=</span> <span class="n">spy</span><span class="o">(</span><span class="k">new</span> <span class="nf">TweetCollector</span><span class="o">());</span>
+</span><span class='line'>    <span class="c1">// if you call the real method there will be an exception, use doReturn for stubbing</span>
+</span><span class='line'>    <span class="n">doReturn</span><span class="o">(</span><span class="n">tweetTaskMock</span><span class="o">).</span><span class="na">when</span><span class="o">(</span><span class="n">spyOntweetCollector</span><span class="o">).</span><span class="na">getTweetTask</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">when</span><span class="o">(</span><span class="n">tweetTaskMock</span><span class="o">.</span><span class="na">call</span><span class="o">()).</span><span class="na">thenReturn</span><span class="o">(</span><span class="mi">1L</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">addCollector</span><span class="o">(</span><span class="n">spyOntweetCollector</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">openConnection</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">saveObject</span><span class="o">(</span><span class="k">new</span> <span class="nf">Tweet</span><span class="o">(</span><span class="s">&quot;foo tweet&quot;</span><span class="o">),</span> <span class="n">USER_ID</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">saveObjectCompleted</span><span class="o">(</span><span class="n">acknoledgeServiceMock</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">verify</span><span class="o">(</span><span class="n">tweetTaskMock</span><span class="o">,</span> <span class="n">times</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">call</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">verify</span><span class="o">(</span><span class="n">acknoledgeServiceMock</span><span class="o">,</span> <span class="n">times</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">sendAckSuccess</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p> java
-@Test
-public void testSaveObjectUserNotConnected() throws Exception {
-    exception.expect(IllegalArgumentException.class);
-    exception.expectMessage(&ldquo;User with id &rdquo; + USER_ID + &ldquo; has not open any connection, please open a connection &rdquo; +
-        &ldquo;before trying to save.&rdquo;);</p>
+<h5>Additional test 5</h5>
 
-<pre><code>cloudService.saveObject(mock(Callable.class), USER_ID);
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Test</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">testSaveObjectCompletedExceptionThrown</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">doNothing</span><span class="o">().</span><span class="na">when</span><span class="o">(</span><span class="n">acknoledgeServiceMock</span><span class="o">).</span><span class="na">sendAckSuccess</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">TweetCollector</span> <span class="n">spyOntweetCollector</span> <span class="o">=</span> <span class="n">spy</span><span class="o">(</span><span class="k">new</span> <span class="nf">TweetCollector</span><span class="o">());</span>
+</span><span class='line'>    <span class="c1">// if you call the real method there will be an exception, use doReturn for stubbing</span>
+</span><span class='line'>    <span class="n">doReturn</span><span class="o">(</span><span class="n">tweetTaskMock</span><span class="o">).</span><span class="na">when</span><span class="o">(</span><span class="n">spyOntweetCollector</span><span class="o">).</span><span class="na">getTweetTask</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">when</span><span class="o">(</span><span class="n">tweetTaskMock</span><span class="o">.</span><span class="na">call</span><span class="o">()).</span><span class="na">thenThrow</span><span class="o">(</span><span class="n">InterruptedException</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">addCollector</span><span class="o">(</span><span class="n">spyOntweetCollector</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">openConnection</span><span class="o">(</span><span class="n">USER_ID</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">saveObject</span><span class="o">(</span><span class="k">new</span> <span class="nf">Tweet</span><span class="o">(</span><span class="s">&quot;foo tweet&quot;</span><span class="o">),</span> <span class="n">USER_ID</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">cloudService</span><span class="o">.</span><span class="na">saveObjectCompleted</span><span class="o">(</span><span class="n">acknoledgeServiceMock</span><span class="o">,</span> <span class="n">USER_ID</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">verify</span><span class="o">(</span><span class="n">tweetTaskMock</span><span class="o">,</span> <span class="n">times</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">call</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">verify</span><span class="o">(</span><span class="n">acknoledgeServiceMock</span><span class="o">,</span> <span class="n">times</span><span class="o">(</span><span class="mi">1</span><span class="o">)).</span><span class="na">sendAckFailed</span><span class="o">(</span><span class="n">any</span><span class="o">(</span><span class="n">RuntimeException</span><span class="o">.</span><span class="na">class</span><span class="o">));</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p>}
-&#8220;`</p>
 ]]></content>
   </entry>
   
