@@ -9,8 +9,23 @@ This is an _experiment tutorial_ to better learn some _101_ practices and how te
 
 The goal of the _experiment-project_ is to find, to correct bugs and make the application works by writing tests.
 
-This tutorial is still in __DRAFT 6__.
+This tutorial is still in __DRAFT 8 (almost done ;-) )__.
 <!-- more -->
+
+## A bit of theory and jargon
+
+_SUT:_ the System Under Test, in a unit test it could be a _class_.
+
+_Test class:_ the _client_ of the interface exposed by the SUT.
+
+_test fixture:_ the context under which a test is run, it is a baseline under which running tests. It is a set of operations to bring the _System Under Test (SUT)_ in a given state, run the test and verify the _expected outcome_. Test fixture and the expected outcome are tightly coupled, the test fixture allows the test to be repeatable for ever and ever. Method `setUp()` or `initialization` is used to create fixture while `tearDown()` or `distruction` is invoked to restore the original state.
+
+A test has four phases:
+
+1. __set up__ to _apply_ the test fixture;
+2. __exercise__ to _interact_ with the API exposed by the SUT;
+3. __verifiy__ to check if the expected outcome has been _matched_;
+4. __tear down__ to return to the _original state_ tearing down the test fixture.
 
 ## Clone the project
 Clone the project from [Github](https://github.com/blackat/tutorial-howtotest-1-collectors) and import it in you preferred IDE, [IntelliJ IDEA](https://www.jetbrains.com/idea/) in my case.
@@ -107,7 +122,7 @@ __Tip__ Make sure the path `src/test/java` exists, otherwise Idea will create th
 
 {% img center /images/posts/idea-test-wizard.png %}
 
-### TweetCollector
+### TweetCollector Class
 {% img center /images/posts/tweet-collector.png %}
 
 [TweetCollector](https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-to-be-corrected/src/main/java/com/contrastofbeauty/tutorial/collectors/TweetCollector.java) is specific implementation of `Collector` interface able to stores an object of a specific type in a `List` by `userId` when its method `accept()` is invoked (e.g. by the service cloud).
@@ -345,12 +360,12 @@ public void testFlushWithOverrideGoldenPath() throws Exception {
 The use of _Mockito_ makes the code more concise, easy to read, maintain and understand. Moreover the _behavior verification_ is easy to understand than using a variable and check its value. By using 'verify()' we directly verify if the method has been called and how many times, it is __clear__ that we are doing _behavior verification_.
 
 ##### Additional tests
-Another test can be written to test the exception along with the message in case the `callbackFunction` is not set.
+Another test can be written to [test the exception](http://junit.org/apidocs/org/junit/rules/ExpectedException.html) along with the message in case the `callbackFunction` is not set.
 ``` java
 @Test
 public void testFlushExceptionThrownWithNullCallbackFunction() throws Exception {
     exception.expect(IllegalArgumentException.class);
-    exception.expectMessage("Callback function must be set by the service.");
+    exception.expectMessage("Callback function is null, it must be set by the service.");
     collector.accept(new Tweet("foo tweet"), USER_ID);
     collector.flush(USER_ID);
 }
@@ -360,12 +375,16 @@ Exception messages are really important in order to immediately find the root ca
 
 ***
 
-### CloudService.class
-Once the service is created, once or more collectors are added in order to provide batch submission to one or more social networks or similar services. A user has to open a connection to the service through the method `openConnection()` and then start to post tweets for instance invoking `saveObject()`. Once done user will call method `saveObjectCompleted()` to post latest tweets and close the connection.
+### CloudService Class
+
+{% img center /images/posts/cloud-service.png %}
+
+Once the service is created, once or more collectors are added in order to provide batch processing to one or more social networks or other services. A user has to open a connection to the service through the method `openConnection()` and then start to post tweets invoking `saveObject()`. Once done the user calls method `saveObjectCompleted()` to post latest tweets and close the connection.
 
 
-#### CloudServiceTest.class
-Create the class as done for the previous example and initialize the _SUT_.
+#### CloudServiceTest Class
+Create the class as done for the previous example and initialize the _System Under Test (SUT)_. The test class is the API client exposed by the SUT. The `setUp()` method properly initializes the SUT in order to be ready for the test method.
+
 ``` java
 public class CloudServiceTest {
 
@@ -395,40 +414,20 @@ public void testAddCollectorGoldenPath() throws Exception {
 ```
 
 ##### Error 1
-__Issue:__ a `NullPointerException` will be thrown.
+__Issue:__ a `NullPointerException` will be thrown when `CloudService.getCollectorSize()` is called in the assertion.
 
-__Solution:__ the object `processingCollectors` has not been initialized. Add the initialization in the constructor for instance and _rerun the test_.
+__Solution:__ the object `processingCollectors` has not been initialized. Add the initialization in the constructor, for instance, and _rerun the test_.
 ``` java
 public CloudService(Callback callback) {
 
-    processingFutureList = new HashMap<>();
-}
-```
-
-##### Error 1 - Alternative solution
-``` java
-@Test
-public void testAddCollectorVerifyCallbackFunctionAddedWithOverride() {
-
-    final AtomicInteger functionCalled = new AtomicInteger();
-
-    cloudService.addCollector(new TweetCollector(){
-
-    @Override
-    public void setCallbackFunction(Callback callback) {
-
-            functionCalled.set(1);
-        }
-    });
-
-    assertEquals(1, functionCalled.get());
+    processingCollectors = new HashMap<>();
 }
 ```
 
 ##### Error 2 - Test Driven Development (TDD)
-A collector should be added along with the set of the callback function. A collector should be able to submit the job to be done when necessary using the callback function. The collector in this situation acts as a collaborator and we want to verify that a specific method in invoke on the collaborator.
+Spot this error is not easy, it is a missing code. As it has been seen before, a collector uses a callback function to post a batch processing. When a collector is added the callback function must be set by the service. The collector in this situation acts as a _collaborator_ and we want to verify that a specific method is invoke on the collaborator itself. Create the _test before_ and _implementation later on_ to make the test passes (TDD).
 
-In order to verify a method call, i.e. _indirect output_, we use Mockito, so add `tweetCollecorMock` variable and init mocks inside of the `setUp()` method adding `MockitoAnnotations.initMocks(this)` and _run the test_
+In order to verify a method call, i.e. _indirect output_, we use Mockito, so add `tweetCollectorMock` variable and init mocks inside of the `setUp()` (initialization of the test fixture) method adding `MockitoAnnotations.initMocks(this)` and _run the test_
 ``` java
 @Mock
 private TweetCollector tweetCollectorMock;
@@ -462,7 +461,36 @@ public void addCollector(Collector collector) throws RuntimeException {
 }
 ```
 
-Now the test passes. The `addCollector()` function was empty and by tests it has been implemented. The two tests could have been put in a single one and step by step modifying the method call to make the test passed. _Test Driven Development (TDD)_.
+Now the test passes. The `addCollector()` function has been corrected by tests. The tests have been left separated for two reasons:
+
+1. test two different aspects of the same function
+2. how _Test Driven Development (TDD)_ helps building a solid net of automated tests and a more reliable code, tests come directly from requirements.
+
+__Attention!__ TDD helps creating a tests net, tests represent the requirements, the documentation as code that can be read to understand the behavior of the class. The code satisfying the tests is consistent with the requirements, its behavior is something to _rely on_ for the next development iteration.
+
+##### Error 2 - Alternative solution with @Override
+Instead of using a mocking framework, it is possible to _"intercept"_ the call of the method and register a status that can be used for verification later on as following:
+``` java
+@Test
+public void testAddCollectorVerifyCallbackFunctionAddedWithOverride() {
+
+    final AtomicInteger functionCalled = new AtomicInteger();
+
+    cloudService.addCollector(new TweetCollector(){
+
+    @Override
+    public void setCallbackFunction(Callback callback) {
+
+            functionCalled.set(1);
+        }
+    });
+
+    assertEquals(1, functionCalled.get());
+}
+```
+
+The use of a mock object and a mocking framework as Mockito allows to have a more concise and readable code. Methods and matchers such as  `verify`, `times()` and `any()` make the comprehension of the test easier. Moreover using a mock for a collector makes clearer that in this context it a _collaborator_ and not the object of the test, it is even closer to a documentation purpose.
+
 
 #### Method openConnection() - 1 error
 Let's create a new test and run it
@@ -496,10 +524,12 @@ To build a _net of automatic tests_ is interesting to test different aspects of 
 public void testOpenConnectionUserHasNotOpenConnection() {
     assertFalse(cloudService.isUserConnected(USER_ID));
 }
-``
+```
 
 #### Method saveObject() - 0 errors
-This method does not have any error, but one or more test must be written to build up an efficient _test suite_. Moreover it could be another opportunity to see the difference between using _override_ and _Mockito_ to test _indirect output_.
+This method does not have errors anymore, but one or more test must be written to build up an efficient _test suite_. It is a small workflow able to test the interface exposed by the class.
+
+__Remember!__ Test the behavior of _all the unit_ not just single and separated methods, the focus is on the all unit.
 ``` java
 @Test
 public void testSaveObjectWithOverrideGoldenPath() throws Exception {
@@ -529,8 +559,7 @@ public void testSaveObjectWithOverrideGoldenPath() throws Exception {
 }
 ```
 
-and the same test but done using Mockito
-
+Once again pay attention on the difference between using _override_ and _Mockito_ to test _indirect output_ as follows
 ``` java
 @Test
 public void testSaveObjectWithMockitoGoldenPath() throws Exception {
@@ -550,8 +579,11 @@ public void testSaveObjectWithMockitoGoldenPath() throws Exception {
 
 Once again the use of Mockito allows to have a more concise and readable test. The `Mockito.verify()` method highlights the test of the _indirect output_.
 
+#### Additional class behavior tests
+
 ##### Additional test 1
-``` java
+It is interesting to enrich the test suite with some other tests, may be a bit redundant but useful to highlight if the code correctly answer to borderline scenarios.
+```java
 @Rule
 public ExpectedException exception = ExpectedException.none();
 
@@ -570,7 +602,8 @@ public void testSaveObjectObjectNotAcceptedThrowException() throws Exception {
 ```
 
 ##### Additional test 2
-``` java
+The name of the method makes the test self-explanatory.
+```java
 @Test
 public void testSaveObjectUserNotConnected() throws Exception {
     exception.expect(IllegalArgumentException.class);
@@ -578,5 +611,66 @@ public void testSaveObjectUserNotConnected() throws Exception {
         "before trying to save.");
 
     cloudService.saveObject(mock(Callable.class), USER_ID);
+}
+```
+
+##### Additional test 3
+```java
+@Test
+public void testSaveObjectCompletedUserNotConnectedThrowException() throws Exception {
+    exception.expect(IllegalArgumentException.class);
+    exception.expectMessage("User with id " + USER_ID + " has not open any connection, please open a connection " +
+        "before trying to save.");
+
+    cloudService.saveObjectCompleted(null, USER_ID);
+}
+```
+
+##### Additional test 4
+```java
+@Test
+public void testSaveObjectCompletedGoldenPath() throws Exception {
+
+    doNothing().when(acknoledgeServiceMock).sendAckSuccess();
+
+    TweetCollector spyOntweetCollector = spy(new TweetCollector());
+    // if you call the real method there will be an exception, use doReturn for stubbing
+    doReturn(tweetTaskMock).when(spyOntweetCollector).getTweetTask(USER_ID);
+    when(tweetTaskMock.call()).thenReturn(1L);
+
+    cloudService.addCollector(spyOntweetCollector);
+
+    cloudService.openConnection(USER_ID);
+
+    cloudService.saveObject(new Tweet("foo tweet"), USER_ID);
+
+    cloudService.saveObjectCompleted(acknoledgeServiceMock, USER_ID);
+
+    verify(tweetTaskMock, times(1)).call();
+    verify(acknoledgeServiceMock, times(1)).sendAckSuccess();
+}
+```
+
+##### Additional test 5
+```java
+@Test
+public void testSaveObjectCompletedExceptionThrown() throws Exception {
+    doNothing().when(acknoledgeServiceMock).sendAckSuccess();
+
+    TweetCollector spyOntweetCollector = spy(new TweetCollector());
+    // if you call the real method there will be an exception, use doReturn for stubbing
+    doReturn(tweetTaskMock).when(spyOntweetCollector).getTweetTask(USER_ID);
+    when(tweetTaskMock.call()).thenThrow(InterruptedException.class);
+
+    cloudService.addCollector(spyOntweetCollector);
+
+    cloudService.openConnection(USER_ID);
+
+    cloudService.saveObject(new Tweet("foo tweet"), USER_ID);
+
+    cloudService.saveObjectCompleted(acknoledgeServiceMock, USER_ID);
+
+    verify(tweetTaskMock, times(1)).call();
+    verify(acknoledgeServiceMock, times(1)).sendAckFailed(any(RuntimeException.class));
 }
 ```
