@@ -110,7 +110,7 @@
 
 <p>This tutorial is still in <strong>DRAFT 8 (almost done ;-) )</strong>.</p>
 
-<div id="toc-table-content"><table cellpadding="0" cellspacing="0" id="toc-container"><tbody><td><section class="toc-panel"><div class="toc-heading"><h3 class="toc-title"><span class="glyphicon glyphicon-list-alt"></span> Contents</h3></div><ul id="toc-listing"><li class="toc-item"><a href="#TOC-1-a-bit-of-theory-and-jargon"><span class="tocnumber">1</span> <span class="toctext">A bit of theory and jargon</span></a></li><li class="toc-item"><a href="#TOC-2-clone-the-project"><span class="tocnumber">2</span> <span class="toctext">Clone the project</span></a></li><li class="toc-item"><a href="#TOC-3-scaffolding"><span class="tocnumber">3</span> <span class="toctext">Scaffolding</span></a></li><li class="toc-item"><a href="#TOC-4-application-description"><span class="tocnumber">4</span> <span class="toctext">Application Description</span></a></li><li class="toc-item"><a href="#TOC-5-lets-correct-the-application"><span class="tocnumber">5</span> <span class="toctext">Let’s correct the application</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-5-1-tweetcollector-class"><span class="tocnumber">5.1</span> <span class="toctext">TweetCollector Class</span></a></li><li class="toc-item"><a href="#TOC-5-2-tweetercollectortest"><span class="tocnumber">5.2</span> <span class="toctext">TweeterCollectorTest</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-5-2-1-method-accept-3-errors"><span class="tocnumber">5.2.1</span> <span class="toctext">Method accept() - 3 errors</span></a></li><li class="toc-item"><a href="#TOC-5-2-2-method-flush-1-error"><span class="tocnumber">5.2.2</span> <span class="toctext">Method flush() - 1 error</span></a></li></ul></li><li class="toc-item"><a href="#TOC-5-3-cloudservice-class"><span class="tocnumber">5.3</span> <span class="toctext">CloudService Class</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-5-3-1-cloudservicetest-class"><span class="tocnumber">5.3.1</span> <span class="toctext">CloudServiceTest Class</span></a></li><li class="toc-item"><a href="#TOC-5-3-2-method-addcollector-2-errors"><span class="tocnumber">5.3.2</span> <span class="toctext">Method addCollector() - 2 errors</span></a></li><li class="toc-item"><a href="#TOC-5-3-3-method-openconnection-1-error"><span class="tocnumber">5.3.3</span> <span class="toctext">Method openConnection() - 1 error</span></a></li><li class="toc-item"><a href="#TOC-5-3-4-method-saveobject-0-errors"><span class="tocnumber">5.3.4</span> <span class="toctext">Method saveObject() - 0 errors</span></a></li><li class="toc-item"><a href="#TOC-5-3-5-additional-class-behavior-tests"><span class="tocnumber">5.3.5</span> <span class="toctext">Additional class behavior tests</span></a></li></ul></li></ul></li></ul></section></td></tbody></table></div>
+<div id="toc-table-content"><table cellpadding="0" cellspacing="0" id="toc-container"><tbody><td><section class="toc-panel"><div class="toc-heading"><h3 class="toc-title"><span class="glyphicon glyphicon-list-alt"></span> Contents</h3></div><ul id="toc-listing"><li class="toc-item"><a href="#TOC-1-a-bit-of-theory-and-jargon"><span class="tocnumber">1</span> <span class="toctext">A bit of theory and jargon</span></a></li><li class="toc-item"><a href="#TOC-2-clone-the-project"><span class="tocnumber">2</span> <span class="toctext">Clone the project</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-2-1-project-structure"><span class="tocnumber">2.1</span> <span class="toctext">Project Structure</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-2-1-1-the-workflow"><span class="tocnumber">2.1.1</span> <span class="toctext">The workflow</span></a></li><li class="toc-item"><a href="#TOC-2-1-2-the-workflow-in-details"><span class="tocnumber">2.1.2</span> <span class="toctext">The workflow in details</span></a></li><li class="toc-item"><a href="#TOC-2-1-3-how-to-initiliaze-the-service-and-run-it"><span class="tocnumber">2.1.3</span> <span class="toctext">How to initiliaze the service and run it</span></a></li></ul></li></ul></li><li class="toc-item"><a href="#TOC-3-application-description"><span class="tocnumber">3</span> <span class="toctext">Application Description</span></a></li><li class="toc-item"><a href="#TOC-4-lets-correct-the-application"><span class="tocnumber">4</span> <span class="toctext">Let’s correct the application</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-4-1-tweetcollector-class"><span class="tocnumber">4.1</span> <span class="toctext">TweetCollector Class</span></a></li><li class="toc-item"><a href="#TOC-4-2-tweetercollectortest"><span class="tocnumber">4.2</span> <span class="toctext">TweeterCollectorTest</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-4-2-1-method-accept-3-errors"><span class="tocnumber">4.2.1</span> <span class="toctext">Method accept() - 3 errors</span></a></li><li class="toc-item"><a href="#TOC-4-2-2-method-flush-1-error"><span class="tocnumber">4.2.2</span> <span class="toctext">Method flush() - 1 error</span></a></li></ul></li><li class="toc-item"><a href="#TOC-4-3-cloudservice-class"><span class="tocnumber">4.3</span> <span class="toctext">CloudService Class</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-4-3-1-cloudservicetest-class"><span class="tocnumber">4.3.1</span> <span class="toctext">CloudServiceTest Class</span></a></li><li class="toc-item"><a href="#TOC-4-3-2-method-addcollector-2-errors"><span class="tocnumber">4.3.2</span> <span class="toctext">Method addCollector() - 2 errors</span></a></li><li class="toc-item"><a href="#TOC-4-3-3-method-openconnection-1-error"><span class="tocnumber">4.3.3</span> <span class="toctext">Method openConnection() - 1 error</span></a></li><li class="toc-item"><a href="#TOC-4-3-4-method-saveobject-0-errors"><span class="tocnumber">4.3.4</span> <span class="toctext">Method saveObject() - 0 errors</span></a></li><li class="toc-item"><a href="#TOC-4-3-5-additional-class-behavior-tests"><span class="tocnumber">4.3.5</span> <span class="toctext">Additional class behavior tests</span></a></li></ul></li></ul></li></ul></section></td></tbody></table></div>
 
 
 <h2 id="TOC-1-a-bit-of-theory-and-jargon">A bit of theory and jargon</h2>
@@ -135,7 +135,7 @@
 
 <p>Clone the project from <a href="https://github.com/blackat/tutorial-howtotest-1-collectors">Github</a> and import it in you preferred IDE, <a href="https://www.jetbrains.com/idea/">IntelliJ IDEA</a> in my case.</p>
 
-<h2 id="TOC-3-scaffolding">Scaffolding</h2>
+<h3 id="TOC-2-1-project-structure">Project Structure</h3>
 
 <pre><code>├── README.md
 ├── exercise-api
@@ -179,13 +179,13 @@
 
 <p>In the module <code>exercise-to-be-corrected</code> run the class <code>RunMeToBeCorrected.java</code> and see that it fails some some reason, may be a <code>NullPointerException</code> is thrown. We do not care so much because we do not want to make it work by a common pattern <strong>running/debugging</strong> rather we want to <em>implement missing tests</em> demonstrating how they can help us to find and correct bug make our application more robust.</p>
 
-<h2 id="TOC-4-application-description">Application Description</h2>
+<h2 id="TOC-3-application-description">Application Description</h2>
 
 <p>The application is mainly composed by a fake <a href="https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-working/src/main/java/com/contrastofbeauty/tutorial/services/CloudService.java">Cloud Service</a> able to post user’s tweets in batch by means of a <a href="https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-working/src/main/java/com/contrastofbeauty/tutorial/collectors/TweetCollector.java">Tweet Collector</a>. <a href="http://yuml.me/edit/3555184c">Here</a> the UML source.</p>
 
 <p><img class="center" src="/images/posts/tutorial_1_how_to_test.png"></p>
 
-<h4>The workflow</h4>
+<h4 id="TOC-2-1-1-the-workflow">The workflow</h4>
 
 <ol>
 <li>The <code>CloudService</code> <em>has a</em> certain numbers of different type collectors (hence the association in the UML diagram), in this case just with one able to collect tweets.</li>
@@ -195,7 +195,7 @@
 </ol>
 
 
-<h4>The workflow in details</h4>
+<h4 id="TOC-2-1-2-the-workflow-in-details">The workflow in details</h4>
 
 <ol>
 <li>The <code>CloudService</code> <em>has a</em> <code>TweetCollector</code> and a <code>Callback</code> implementation instance (Another approach is to leave the service the initialization of the callback function and substitute the <em>association</em> with a <em>composition</em> in the UML diagram).</li>
@@ -208,7 +208,7 @@
 </ol>
 
 
-<h4>How to initiliaze the service and run it</h4>
+<h4 id="TOC-2-1-3-how-to-initiliaze-the-service-and-run-it">How to initiliaze the service and run it</h4>
 
 <div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span>RunMeWorking.java</span> — <a href="https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-working/src/main/java/com/contrastofbeauty/tutorial/RunMeWorking.java">Link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
 <span class="line-number">2</span>
@@ -243,7 +243,7 @@
 
 <p><strong>Actually</strong> the service does not post anything to Twitter, it is just a way to show a bit of java concurrency and how to write <em>unit tests</em> when dealing with concurrent structures like <code>Future</code>.</p>
 
-<h2 id="TOC-5-lets-correct-the-application">Let’s correct the application</h2>
+<h2 id="TOC-4-lets-correct-the-application">Let’s correct the application</h2>
 
 <p>Let’s create tests for the application starting from <code>TweetCollector.java</code> class, press <code>cmd + shift + T</code> on Mac or <code>crtl + shift + T</code> on Windows and choose methods you want to test, then Idea will create the test class in the right place</p>
 
@@ -254,7 +254,7 @@
 
 <p><img class="center" src="/images/posts/idea-test-wizard.png"></p>
 
-<h3 id="TOC-5-1-tweetcollector-class">TweetCollector Class</h3>
+<h3 id="TOC-4-1-tweetcollector-class">TweetCollector Class</h3>
 
 <p><img class="center" src="/images/posts/tweet-collector.png"></p>
 
@@ -270,7 +270,7 @@
 
 <p>Once the task is added to the queue the list is emptied, ready to accept new object to be processed.</p>
 
-<h3 id="TOC-5-2-tweetercollectortest">TweeterCollectorTest</h3>
+<h3 id="TOC-4-2-tweetercollectortest">TweeterCollectorTest</h3>
 
 <p>Populate the <code>setUp()</code> method creating a new <code>TweetCollector</code> and annotate it with <code>@Before</code> in order to get it run automatically before any method annotated with <code>@Test</code> as specfied by <a href="http://junit.sourceforge.net/javadoc/org/junit/Before.html">JUnit doc</a>. Evrytime a test method is run, the <code>setUp()</code> method is invoked to have a fresh and clean collector object.</p>
 
@@ -295,7 +295,7 @@
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
-<h4 id="TOC-5-2-1-method-accept-3-errors">Method accept() - 3 errors</h4>
+<h4 id="TOC-4-2-1-method-accept-3-errors">Method accept() - 3 errors</h4>
 
 <p>Let’s start working on the method <code>accept(Object object, long userId)</code>. Create, or rename the method if already created by the IDE, <code>testAcceptGoldenPath()</code> and add the following assertion:</p>
 
@@ -421,7 +421,7 @@
 
 <p>Our automatic net of tests starts to take shape.</p>
 
-<h4 id="TOC-5-2-2-method-flush-1-error">Method flush() - 1 error</h4>
+<h4 id="TOC-4-2-2-method-flush-1-error">Method flush() - 1 error</h4>
 
 <p>The method <code>flush()</code> does not have a return type, so how can we test the <em>correct behavior</em>?</p>
 
@@ -668,13 +668,13 @@
 
 <hr>
 
-<h3 id="TOC-5-3-cloudservice-class">CloudService Class</h3>
+<h3 id="TOC-4-3-cloudservice-class">CloudService Class</h3>
 
 <p><img class="center" src="/images/posts/cloud-service.png"></p>
 
 <p>Once the service is created, once or more collectors are added in order to provide batch processing to one or more social networks or other services. A user has to open a connection to the service through the method <code>openConnection()</code> and then start to post tweets invoking <code>saveObject()</code>. Once done the user calls method <code>saveObjectCompleted()</code> to post latest tweets and close the connection.</p>
 
-<h4 id="TOC-5-3-1-cloudservicetest-class">CloudServiceTest Class</h4>
+<h4 id="TOC-4-3-1-cloudservicetest-class">CloudServiceTest Class</h4>
 
 <p>Create the class as done for the previous example and initialize the <em>System Under Test (SUT)</em>. The test class is the API client exposed by the SUT. The <code>setUp()</code> method properly initializes the SUT in order to be ready for the test method.</p>
 
@@ -707,7 +707,7 @@
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
-<h4 id="TOC-5-3-2-method-addcollector-2-errors">Method addCollector() - 2 errors</h4>
+<h4 id="TOC-4-3-2-method-addcollector-2-errors">Method addCollector() - 2 errors</h4>
 
 <p>Create the first test for method <code>addCollector()</code></p>
 
@@ -860,7 +860,7 @@
 
 <p>The use of a mock object and a mocking framework as Mockito allows to have a more concise and readable code. Methods and matchers such as  <code>verify</code>, <code>times()</code> and <code>any()</code> make the comprehension of the test easier. Moreover using a mock for a collector makes clearer that in this context it a <em>collaborator</em> and not the object of the test, it is even closer to a documentation purpose.</p>
 
-<h4 id="TOC-5-3-3-method-openconnection-1-error">Method openConnection() - 1 error</h4>
+<h4 id="TOC-4-3-3-method-openconnection-1-error">Method openConnection() - 1 error</h4>
 
 <p>Let’s create a new test and run it</p>
 
@@ -915,7 +915,7 @@
 </span></code></pre></td></tr></table></div></figure></notextile></div>
 
 
-<h4 id="TOC-5-3-4-method-saveobject-0-errors">Method saveObject() - 0 errors</h4>
+<h4 id="TOC-4-3-4-method-saveobject-0-errors">Method saveObject() - 0 errors</h4>
 
 <p>This method does not have errors anymore, but one or more test must be written to build up an efficient <em>test suite</em>. It is a small workflow able to test the interface exposed by the class.</p>
 
@@ -1011,7 +1011,7 @@
 
 <p>Once again the use of Mockito allows to have a more concise and readable test. The <code>Mockito.verify()</code> method highlights the test of the <em>indirect output</em>.</p>
 
-<h4 id="TOC-5-3-5-additional-class-behavior-tests">Additional class behavior tests</h4>
+<h4 id="TOC-4-3-5-additional-class-behavior-tests">Additional class behavior tests</h4>
 
 <h5>Additional test 1</h5>
 
