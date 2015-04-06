@@ -4,7 +4,7 @@
   <title><![CDATA[Contrast Of Beauty]]></title>
   <link href="http://blackat.github.io/atom.xml" rel="self"/>
   <link href="http://blackat.github.io/"/>
-  <updated>2015-04-06T17:26:30+02:00</updated>
+  <updated>2015-04-06T17:28:18+02:00</updated>
   <id>http://blackat.github.io/</id>
   <author>
     <name><![CDATA[black@t]]></name>
@@ -624,7 +624,7 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 
 <p><img class="center" src="http://blackat.github.io/images/posts/tutorial_1_how_to_test.png"></p>
 
-<h4>The workflow</h4>
+<h3>The workflow</h3>
 
 <ol>
 <li>The <code>CloudService</code> <em>has a</em> certain numbers of different type collectors (hence the association in the UML diagram), in this case just with one able to collect tweets.</li>
@@ -647,7 +647,7 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
 </ol>
 
 
-<h4>How to initiliaze the service and run it</h4>
+<h3>How to initiliaze the service and run it</h3>
 
 <figure class='code'><figcaption><span>RunMeWorking.java</span> — <a href='https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-working/src/main/java/com/contrastofbeauty/tutorial/RunMeWorking.java'>Link</a></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
