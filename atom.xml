@@ -4,7 +4,7 @@
   <title><![CDATA[Contrast Of Beauty]]></title>
   <link href="http://blackat.github.io/atom.xml" rel="self"/>
   <link href="http://blackat.github.io/"/>
-  <updated>2015-04-06T17:28:18+02:00</updated>
+  <updated>2015-06-22T07:29:01+02:00</updated>
   <id>http://blackat.github.io/</id>
   <author>
     <name><![CDATA[black@t]]></name>
@@ -546,8 +546,6 @@ When the <code>flush()</code> method is called, it creates a task and invokes a 
     <content type="html"><![CDATA[<p>This is an <em>experiment tutorial</em> to better learn some <em>101</em> practices and how testing can be a better replacement of developing by debugging.</p>
 
 <p>The goal of the <em>experiment-project</em> is to find, to correct bugs and make the application works by writing tests.</p>
-
-<p>This tutorial is still in <strong>DRAFT 8 (almost done ;-) )</strong>.</p>
 
 <!-- more -->
 
