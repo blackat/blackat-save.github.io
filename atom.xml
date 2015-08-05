@@ -4,7 +4,7 @@
   <title><![CDATA[Contrast Of Beauty]]></title>
   <link href="http://blackat.github.io/atom.xml" rel="self"/>
   <link href="http://blackat.github.io/"/>
-  <updated>2015-06-22T07:29:01+02:00</updated>
+  <updated>2015-07-31T11:23:56+02:00</updated>
   <id>http://blackat.github.io/</id>
   <author>
     <name><![CDATA[black@t]]></name>
@@ -12,6 +12,151 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Angular E2e Test]]></title>
+    <link href="http://blackat.github.io/blog/2015/07/25/angular-e2e-test/"/>
+    <updated>2015-07-25T16:42:43+02:00</updated>
+    <id>http://blackat.github.io/blog/2015/07/25/angular-e2e-test</id>
+    <content type="html"><![CDATA[<p>An end-to-end (e2e) test aims to test an application from the user perspective, so how to automate the test of the application logic on the full system using the user interface via a web browser, for instance, to check if the application functionalities satisfy the specifications. <strong>[draft 2]</strong></p>
+
+<!-- more -->
+
+
+<h2>Ingredients</h2>
+
+<p>Following applications will be used to setup the environment and run e2e tests.</p>
+
+<ul>
+<li><a href="http://nodejs.org">Node.js</a>, an event-driven framework for server-side and networking applications.</li>
+<li><a href="https://github.com/angular/protractor">Protractor</a> developed by AngularJS team, running on Node.js, run e2e tests in a real browser using a WebDriver.</li>
+<li>WebDriver such as <a href="https://code.google.com/p/selenium/wiki/GettingStarted">Selenium</a> to control the browser and simulate user actions.</li>
+<li><a href="www.google.co.uk/chrome">Google Chrome</a> browser.</li>
+<li><a href="http://karma-runner.github.io/0.13/index.html">Karma</a> test runner.</li>
+</ul>
+
+
+<h3>Install vs. Grunt</h3>
+
+<p>In this tutorial the Grunt approach has been chosen instead of installing Protractor and Selenium WebDriver globally and run them. The advantage is to have everything easier to setup and run, but paying the performance lost of starting a server each time.</p>
+
+<p>Grunt can define and automate task running such as run the application we want to test against a server, run e2e test and then shutdown the server. Everything is described in the <code>Gruntfile.js</code> and can be run by a continuous integration server.</p>
+
+<h2>Project Scaffolding</h2>
+
+<pre><code>├── Gruntfile.js
+├── LICENSE
+├── README.md
+├── css
+│   └── ui-navbar.css
+├── demo
+│   ├── app.js
+│   ├── index.html
+│   ├── package.json
+│   ├── partials
+│   │   ├── home.html
+│   │   ├── state1.html
+│   │   └── state2.html
+│   └── server.js
+├── dist
+│   ├── css
+│   │   ├── ui-navbar.css
+│   │   └── ui-navbar.min.css
+│   └── js
+│       ├── ui-navbar.js
+│       └── ui-navbar.min.js
+├── e2e
+│   ├── navbar.po.js
+│   └── navbar.spec.js
+├── package.json
+├── src
+│   └── navbar.js
+└── template
+    ├── navbar-li.html
+    ├── navbar-li.html.js
+    ├── navbar-ul.html
+    └── navbar-ul.html.js
+</code></pre>
+
+<p>The name of the folders is self-explanatory, the focus is on the <code>e2e</code> folder where acceptance tests are created. Each test file ends with <code>.spec.js</code> to identify a <strong>behavior specification</strong>, simply <strong>spec</strong>,  that should be tested.</p>
+
+<h2>Protractor, Jasmine, Karma and&hellip; what?</h2>
+
+<p>There some ingredients in the recipe, but how are they mixed up? and how do they interact?</p>
+
+<ol>
+<li>Each <code>.spec.js</code> file written in <em>Jasmine</em> defines a <strong>test suite</strong> which is a set of <strong>behavior specifications</strong>, Behaviour Driven Development or <a href="http://dannorth.net/introducing-bdd/">BDD</a>. BDD is a way to use natural language to define behaviors that should be tested. In BDD a test <a href="http://dannorth.net/introducing-bdd/"><em>&ldquo;it’s a sentence describing the next behaviour in which you are interested.&rdquo;</em></a></li>
+<li><p><a href="http://jasmine.github.io">Jasmine</a> is a BDD testing framework, it comes with a web-based test runner to continuously execute test during the development phase. <em>Behaviors</em> are described in <em>specs</em> which are grouped by <em>spec suites</em>, for instance:
+<code>describe</code> function introduces a <em>spec suite</em> defined by the code block of the function. The Jasmine function <code>it</code> defines a <em>spec</em>. Jasmine can be used to write both unit tests and e2e tests.</p>
+
+<pre><code>  describe("A suite is just a function", function() {
+    var a;
+
+    it("and so is a spec", function() {
+      a = true;
+
+      expect(a).toBe(true);
+    });
+  });
+</code></pre></li>
+<li><p><a href="https://github.com/angular/protractor">Protractor</a> is a <code>Node.js</code> application able to run e2e tests written in JavaScript. It uses a WebDriver such as Selenium to control the browser and simulate user interaction with the web application.</p></li>
+<li><a href="http://karma-runner.github.io/0.13/index.html">Karma</a> is a test runner to automate test calling based on <code>karma.conf.js</code> configuration file. Jasmine comes with <code>SpecRunner.html</code> which must load test files we want to run and additional libraries and frameworks such as AngularJS, jQuery and so on. Karma configuration is simpler, some plugins can be used to better monitor the test running and can run tests against multiple browsers. Moreover Karma can be invoked by a continuous integration server and via the <code>watch</code> feature runs tests whenever the application code changes.</li>
+</ol>
+
+
+<h2>Karma configuration</h2>
+
+<h2>Write an e2e test</h2>
+
+<p>Before start to write an e2e, the concept of <a href="https://code.google.com/p/selenium/wiki/PageObjects">page object</a> has to be introduced because it will simplify the way to write, maintain and read e2e tests in the future.</p>
+
+<h3>Simon says: &ldquo;You are do it wrong&rdquo;</h3>
+
+<blockquote><p>If you have WebDriver APIs in your test methods, You&#8217;re Doing It Wrong.</p><footer><strong>Simon Stewart,</strong> <cite><a href='http://blog.rocketpoweredjetpants.com/'>PageObject</a></cite></footer></blockquote>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="k">void</span> <span class="nx">testLoginPage</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">driver</span><span class="p">.</span><span class="nx">findId</span><span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">).</span><span class="nx">setText</span><span class="p">(</span><span class="s2">&quot;foo-user&quot;</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">...</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In a e2e test method is better to hide the UI details and structure to have a simpler and more readable test, what happens to an e2e test if the <strong>UI implementation changes</strong>? What about <a href="https://docs.google.com/presentation/d/1682BnhVsmBudDkHWN_Bj_WAZ2iEJTwLwkHOnpYyP1Ac/edit?pli=1#slide=id.g339080ef4_028">a programmatic API to drive and interrogate a UI</a> in order to <strong>expose the service</strong> you interact with and <strong>not the implementation</strong>.</p>
+
+<h3>PageObject</h3>
+
+<p>An e2e test is a defined interaction of an agent simulating a human user with a web page. The interaction needs to refer to element in the html page to click and links and evaluate what is displayed. Writing a test that <em>directly</em> interact and manipulate the web page means the test will be subject to change when the web page changes. A <strong>page object</strong> wraps an html page providing an <em>&ldquo;application-specific API&rdquo;</em> to interact and manipulate page elements without accessing them directly. The e2e test will use the API which decouples the the test code from the web page.</p>
+
+<p>A web page could be really complex but <em><a href="http://martinfowler.com/bliki/PageObject.html">the complexity shouldn&rsquo;t be revealed by the page objects</a></em>.</p>
+
+<blockquote><p>The rule of thumb is to model the structure in the page that makes sense to the user of the application.</p><footer><strong>Martin Fowler,</strong> <cite><a href='http://martinfowler.com/bliki/PageObject.html'>PageObject</a></cite></footer></blockquote>
+
+
+<p>What should be a page objects finally? Is just a model or something more?</p>
+
+<blockquote><p>Page objects are commonly used for testing, but should not make assertions themselves. Their responsibility is to provide access to the state of the underlying page. It&#8217;s up to test clients to carry out the assertion logic.</p><footer><strong>Martin Fowler,</strong> <cite><a href='http://martinfowler.com/bliki/PageObject.html'>PageObject</a></cite></footer></blockquote>
+
+
+<p>The great advantage of a page object is to encapsulate a part of the UI along with its structure complexity, so a page object hides details of the UI from the tests, so:</p>
+
+<ol>
+<li>the logic that manipulates the UI is just in one place and can be modified or evolved without touching the test code;</li>
+<li>the tests are more readable, no additional and complex code to make access to UI elements, UI details are simply hidden at test level;</li>
+<li>if the UI changes the <a href="https://code.google.com/p/selenium/wiki/PageObjects">fix has to be applied in only one place</a>;</li>
+<li>e2e test writer interacts with a <strong>service</strong> offered by a <strong>particular part</strong> of a web page, <em>an test should test the functionality not its implementation</em>;</li>
+</ol>
+
+
+<p>An e2e test turns out to be simpler, easier to be maintained and a real source of documentation providing only the code necessary to test the expected behavior as when a human user interacts with the web page.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How to Test 2: TDD a Simple Example]]></title>
@@ -6189,51 +6334,6 @@ Using the <em>static method</em> <code>Proxy.newProxyInstance(Movie.class.getCla
 <ul>
 <li>It forwards the request from the client to another object, but it <em>changes the interface</em> of the objects it adapts.</li>
 <li>It is <em>different</em> from the <em>proxy</em> which always implement the <em>same interface</em> of the real object.</li>
-</ul>
-</li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Composite Pattern]]></title>
-    <link href="http://blackat.github.io/blog/2013/03/15/composite-pattern/"/>
-    <updated>2013-03-15T23:45:00+01:00</updated>
-    <id>http://blackat.github.io/blog/2013/03/15/composite-pattern</id>
-    <content type="html"><![CDATA[<blockquote><p>The Composite Pattern allows you to compose objects into tree structures to represent part-whole hierarchies. Composite lets client treat individual objects and composition of objects uniformly.</p><footer><strong>Bates and Sierra,</strong> <cite><a href='http://shop.oreilly.com/product/9780596007126.do'>Head First Design Patterns</a></cite></footer></blockquote>
-
-
-<!-- more -->
-
-
-<h2>Class Diagram</h2>
-
-<p><img src="http://blackat.github.io/images/posts/design-patterns/composite.jpg"></p>
-
-<p><code>Client</code> uses the <code>Component</code> to manipulate objects.</p>
-
-<p><code>Component</code> defines an interface both for the composite and for the leaf which are element of the collection. It might implement a default behavior for methods.</p>
-
-<p><code>Leaf</code> has no children and inherits methods and override what make sense for the class itself.</p>
-
-<p><code>Composite</code> has children, the <code>Components</code>, which can be <code>Component</code> or <code>Leaf</code> type and inherits methods and override what make sense for the class itself.</p>
-
-<h2>Key Points</h2>
-
-<ul>
-<li><p><strong>New Approach.</strong> Not necessarily related to iterators.</p></li>
-<li><p><strong>Trees.</strong> Build object structures in the form of <em>trees</em> containing both nodes and leaves.</p>
-
-<ul>
-<li>Same operations are applied over both composite and leaves.</li>
-<li>Ignore the differences between nodes and leaves.</li>
-</ul>
-</li>
-<li><p><strong>Part-whole Hierarchy.</strong> Node with children and leaves are in the same structure.</p>
-
-<ul>
-<li>Tree of objects made of parts, nodes and leaves, but threaten as a whole.</li>
 </ul>
 </li>
 </ul>

@@ -1,0 +1,404 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Angular E2e Test - Contrast Of Beauty</title>
+  <meta name="author" content="black@t">
+
+  
+  <meta name="description" content="An end-to-end (e2e) test aims to test an application from the user perspective, so how to automate the test of the application logic on the full &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blackat.github.io/blog/2015/07/25/angular-e2e-test/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Contrast Of Beauty" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,700,600' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Sorts+Mill+Goudy:400,400italic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,700italic,500,500italic' rel='stylesheet' type='text/css'>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-59763266-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Contrast Of Beauty</a></h1>
+  
+    <h2>I am just curious</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="blackat.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/oo-design-principles">Design Principles</a></li>
+  <li><a href="/design-patterns">Design Patterns</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Angular E2e Test</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-07-25T16:42:43+02:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>4:42 pm</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://blackat.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>An end-to-end (e2e) test aims to test an application from the user perspective, so how to automate the test of the application logic on the full system using the user interface via a web browser, for instance, to check if the application functionalities satisfy the specifications. <strong>[draft 2]</strong></p>
+
+<div id="toc-table-content"><table cellpadding="0" cellspacing="0" id="toc-container"><tbody><td><section class="toc-panel"><div class="toc-heading"><h3 class="toc-title"><span class="glyphicon glyphicon-list-alt"></span> Contents</h3></div><ul id="toc-listing"><li class="toc-item"><a href="#TOC-1-ingredients"><span class="tocnumber">1</span> <span class="toctext">Ingredients</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-1-1-install-vs-grunt"><span class="tocnumber">1.1</span> <span class="toctext">Install vs. Grunt</span></a></li></ul></li><li class="toc-item"><a href="#TOC-2-project-scaffolding"><span class="tocnumber">2</span> <span class="toctext">Project Scaffolding</span></a></li><li class="toc-item"><a href="#TOC-3-protractor-jasmine-karma-and-dot-dot-dot-what"><span class="tocnumber">3</span> <span class="toctext">Protractor, Jasmine, Karma and… what?</span></a></li><li class="toc-item"><a href="#TOC-4-karma-configuration"><span class="tocnumber">4</span> <span class="toctext">Karma configuration</span></a></li><li class="toc-item"><a href="#TOC-5-write-an-e2e-test"><span class="tocnumber">5</span> <span class="toctext">Write an e2e test</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-5-1-simon-says-you-are-do-it-wrong"><span class="tocnumber">5.1</span> <span class="toctext">Simon says: “You are do it wrong”</span></a></li><li class="toc-item"><a href="#TOC-5-2-pageobject"><span class="tocnumber">5.2</span> <span class="toctext">PageObject</span></a></li></ul></li></ul></section></td></tbody></table></div>
+
+
+<h2 id="TOC-1-ingredients">Ingredients</h2>
+
+<p>Following applications will be used to setup the environment and run e2e tests.</p>
+
+<ul>
+<li><a href="http://nodejs.org">Node.js</a>, an event-driven framework for server-side and networking applications.</li>
+<li><a href="https://github.com/angular/protractor">Protractor</a> developed by AngularJS team, running on Node.js, run e2e tests in a real browser using a WebDriver.</li>
+<li>WebDriver such as <a href="https://code.google.com/p/selenium/wiki/GettingStarted">Selenium</a> to control the browser and simulate user actions.</li>
+<li><a href="www.google.co.uk/chrome">Google Chrome</a> browser.</li>
+<li><a href="http://karma-runner.github.io/0.13/index.html">Karma</a> test runner.</li>
+</ul>
+
+
+<h3 id="TOC-1-1-install-vs-grunt">Install vs. Grunt</h3>
+
+<p>In this tutorial the Grunt approach has been chosen instead of installing Protractor and Selenium WebDriver globally and run them. The advantage is to have everything easier to setup and run, but paying the performance lost of starting a server each time.</p>
+
+<p>Grunt can define and automate task running such as run the application we want to test against a server, run e2e test and then shutdown the server. Everything is described in the <code>Gruntfile.js</code> and can be run by a continuous integration server.</p>
+
+<h2 id="TOC-2-project-scaffolding">Project Scaffolding</h2>
+
+<pre><code>├── Gruntfile.js
+├── LICENSE
+├── README.md
+├── css
+│   └── ui-navbar.css
+├── demo
+│   ├── app.js
+│   ├── index.html
+│   ├── package.json
+│   ├── partials
+│   │   ├── home.html
+│   │   ├── state1.html
+│   │   └── state2.html
+│   └── server.js
+├── dist
+│   ├── css
+│   │   ├── ui-navbar.css
+│   │   └── ui-navbar.min.css
+│   └── js
+│       ├── ui-navbar.js
+│       └── ui-navbar.min.js
+├── e2e
+│   ├── navbar.po.js
+│   └── navbar.spec.js
+├── package.json
+├── src
+│   └── navbar.js
+└── template
+    ├── navbar-li.html
+    ├── navbar-li.html.js
+    ├── navbar-ul.html
+    └── navbar-ul.html.js
+</code></pre>
+
+<p>The name of the folders is self-explanatory, the focus is on the <code>e2e</code> folder where acceptance tests are created. Each test file ends with <code>.spec.js</code> to identify a <strong>behavior specification</strong>, simply <strong>spec</strong>,  that should be tested.</p>
+
+<h2 id="TOC-3-protractor-jasmine-karma-and-dot-dot-dot-what">Protractor, Jasmine, Karma and… what?</h2>
+
+<p>There some ingredients in the recipe, but how are they mixed up? and how do they interact?</p>
+
+<ol>
+<li>Each <code>.spec.js</code> file written in <em>Jasmine</em> defines a <strong>test suite</strong> which is a set of <strong>behavior specifications</strong>, Behaviour Driven Development or <a href="http://dannorth.net/introducing-bdd/">BDD</a>. BDD is a way to use natural language to define behaviors that should be tested. In BDD a test <a href="http://dannorth.net/introducing-bdd/"><em>“it’s a sentence describing the next behaviour in which you are interested.”</em></a></li>
+<li><p><a href="http://jasmine.github.io">Jasmine</a> is a BDD testing framework, it comes with a web-based test runner to continuously execute test during the development phase. <em>Behaviors</em> are described in <em>specs</em> which are grouped by <em>spec suites</em>, for instance:
+<code>describe</code> function introduces a <em>spec suite</em> defined by the code block of the function. The Jasmine function <code>it</code> defines a <em>spec</em>. Jasmine can be used to write both unit tests and e2e tests.</p>
+
+<pre><code>  describe("A suite is just a function", function() {
+    var a;
+
+    it("and so is a spec", function() {
+      a = true;
+
+      expect(a).toBe(true);
+    });
+  });
+</code></pre></li>
+<li><p><a href="https://github.com/angular/protractor">Protractor</a> is a <code>Node.js</code> application able to run e2e tests written in JavaScript. It uses a WebDriver such as Selenium to control the browser and simulate user interaction with the web application.</p></li>
+<li><a href="http://karma-runner.github.io/0.13/index.html">Karma</a> is a test runner to automate test calling based on <code>karma.conf.js</code> configuration file. Jasmine comes with <code>SpecRunner.html</code> which must load test files we want to run and additional libraries and frameworks such as AngularJS, jQuery and so on. Karma configuration is simpler, some plugins can be used to better monitor the test running and can run tests against multiple browsers. Moreover Karma can be invoked by a continuous integration server and via the <code>watch</code> feature runs tests whenever the application code changes.</li>
+</ol>
+
+
+<h2 id="TOC-4-karma-configuration">Karma configuration</h2>
+
+<h2 id="TOC-5-write-an-e2e-test">Write an e2e test</h2>
+
+<p>Before start to write an e2e, the concept of <a href="https://code.google.com/p/selenium/wiki/PageObjects">page object</a> has to be introduced because it will simplify the way to write, maintain and read e2e tests in the future.</p>
+
+<h3 id="TOC-5-1-simon-says-you-are-do-it-wrong">Simon says: “You are do it wrong”</h3>
+
+<blockquote><p>If you have WebDriver APIs in your test methods, You&#8217;re Doing It Wrong.</p><footer><strong>Simon Stewart,</strong> <cite><a href="http://blog.rocketpoweredjetpants.com/">PageObject</a></cite></footer></blockquote>
+
+
+
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+</pre></td><td class="code"><pre><code class="javascript"><span class="line"><span class="k">void</span> <span class="nx">testLoginPage</span><span class="p">()</span> <span class="p">{</span>
+</span><span class="line">  <span class="nx">driver</span><span class="p">.</span><span class="nx">findId</span><span class="p">(</span><span class="s2">"username"</span><span class="p">).</span><span class="nx">setText</span><span class="p">(</span><span class="s2">"foo-user"</span><span class="p">);</span>
+</span><span class="line">  <span class="p">...</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>In a e2e test method is better to hide the UI details and structure to have a simpler and more readable test, what happens to an e2e test if the <strong>UI implementation changes</strong>? What about <a href="https://docs.google.com/presentation/d/1682BnhVsmBudDkHWN_Bj_WAZ2iEJTwLwkHOnpYyP1Ac/edit?pli=1#slide=id.g339080ef4_028">a programmatic API to drive and interrogate a UI</a> in order to <strong>expose the service</strong> you interact with and <strong>not the implementation</strong>.</p>
+
+<h3 id="TOC-5-2-pageobject">PageObject</h3>
+
+<p>An e2e test is a defined interaction of an agent simulating a human user with a web page. The interaction needs to refer to element in the html page to click and links and evaluate what is displayed. Writing a test that <em>directly</em> interact and manipulate the web page means the test will be subject to change when the web page changes. A <strong>page object</strong> wraps an html page providing an <em>“application-specific API”</em> to interact and manipulate page elements without accessing them directly. The e2e test will use the API which decouples the the test code from the web page.</p>
+
+<p>A web page could be really complex but <em><a href="http://martinfowler.com/bliki/PageObject.html">the complexity shouldn’t be revealed by the page objects</a></em>.</p>
+
+<blockquote><p>The rule of thumb is to model the structure in the page that makes sense to the user of the application.</p><footer><strong>Martin Fowler,</strong> <cite><a href="http://martinfowler.com/bliki/PageObject.html">PageObject</a></cite></footer></blockquote>
+
+
+<p>What should be a page objects finally? Is just a model or something more?</p>
+
+<blockquote><p>Page objects are commonly used for testing, but should not make assertions themselves. Their responsibility is to provide access to the state of the underlying page. It&#8217;s up to test clients to carry out the assertion logic.</p><footer><strong>Martin Fowler,</strong> <cite><a href="http://martinfowler.com/bliki/PageObject.html">PageObject</a></cite></footer></blockquote>
+
+
+<p>The great advantage of a page object is to encapsulate a part of the UI along with its structure complexity, so a page object hides details of the UI from the tests, so:</p>
+
+<ol>
+<li>the logic that manipulates the UI is just in one place and can be modified or evolved without touching the test code;</li>
+<li>the tests are more readable, no additional and complex code to make access to UI elements, UI details are simply hidden at test level;</li>
+<li>if the UI changes the <a href="https://code.google.com/p/selenium/wiki/PageObjects">fix has to be applied in only one place</a>;</li>
+<li>e2e test writer interacts with a <strong>service</strong> offered by a <strong>particular part</strong> of a web page, <em>an test should test the functionality not its implementation</em>;</li>
+</ol>
+
+
+<p>An e2e test turns out to be simpler, easier to be maintained and a real source of documentation providing only the code necessary to test the expected behavior as when a human user interacts with the web page.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">black@t</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-07-25T16:42:43+02:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>4:42 pm</span></time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blackat.github.io/blog/2015/07/25/angular-e2e-test/" data-via="eugeniolentini" data-counturl="http://blackat.github.io/blog/2015/07/25/angular-e2e-test/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/03/21/how-to-test-2-tdd-a-simple-example/" title="Previous Post: How to test 2: TDD a simple example">&laquo; How to test 2: TDD a simple example</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/07/25/angular-e2e-test/">Angular E2e Test</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/21/how-to-test-2-tdd-a-simple-example/">How to Test 2: TDD a Simple Example</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/07/how-to-test-1-find-errors-to-make-the-application-works/">How to Test 1: Find Errors to Make the Application Works</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/02/01/javascript-anatomy-of-an-object/">JavaScript: Anatomy of an Object</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/12/11/kii-web-application/">Kii Web Application</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/blackat">@blackat</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'blackat',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - black@t -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'blackatblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blackat.github.io/blog/2015/07/25/angular-e2e-test/';
+        var disqus_url = 'http://blackat.github.io/blog/2015/07/25/angular-e2e-test/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
