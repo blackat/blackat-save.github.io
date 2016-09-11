@@ -9,7 +9,6 @@ This is an _experiment tutorial_ to better learn some _101_ practices and how te
 
 The goal of the _experiment-project_ is to find, to correct bugs and make the application works by writing tests.
 
-This tutorial is still in __DRAFT 8 (almost done ;-) )__.
 <!-- more -->
 
 ## A bit of theory and jargon
@@ -30,7 +29,7 @@ A test has four phases:
 ## Clone the project
 Clone the project from [Github](https://github.com/blackat/tutorial-howtotest-1-collectors) and import it in you preferred IDE, [IntelliJ IDEA](https://www.jetbrains.com/idea/) in my case.
 
-## Project Structure
+### Project Structure
 
     ├── README.md
     ├── exercise-api
@@ -76,7 +75,7 @@ The application is mainly composed by a fake [Cloud Service](https://github.com/
 
 {% img center /images/posts/tutorial_1_how_to_test.png %}
 
-#### The workflow
+### The workflow
 
 1. The `CloudService` _has a_ certain numbers of different type collectors (hence the association in the UML diagram), in this case just with one able to collect tweets.
 2. A user who wants to post tweet in batch has to open a connection invoking the method `service.openConnection()` of the service.
@@ -93,7 +92,7 @@ The application is mainly composed by a fake [Cloud Service](https://github.com/
 6. A collector uses the `Callback` instance to add a task to a _processing list_.
 7. The list of active tasks will be then processed by a thread pool.
 
-#### How to initiliaze the service and run it
+### How to initiliaze the service and run it
 ``` java RunMeWorking.java https://github.com/blackat/tutorial-howtotest-1-collectors/blob/master/exercise-working/src/main/java/com/contrastofbeauty/tutorial/RunMeWorking.java
 public class RunMeWorking {
 
