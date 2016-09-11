@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://blackat.github.io/blog/2015/07/25/angular-e2e-test/</loc>
-    <lastmod>2015-07-25T16:42:43+02:00</lastmod>
+    <loc>http://blackat.github.io/blog/2016/09/11/furure-of-declaration-files/</loc>
+    <lastmod>2016-09-11T11:15:37+02:00</lastmod>
   </url>
   <url>
     <loc>http://blackat.github.io/blog/2015/03/21/how-to-test-2-tdd-a-simple-example/</loc>
@@ -194,9 +194,12 @@
     <loc>http://blackat.github.io/blog/categories/ios/</loc>
   </url>
   <url>
-    <loc>http://blackat.github.io/posts/2/</loc>
+    <loc>http://blackat.github.io/blog/categories/typescript/</loc>
   </url>
   <url>
-    <loc>http://blackat.github.io/posts/3/</loc>
+    <loc>http://blackat.github.io/blog/categories/typings/</loc>
+  </url>
+  <url>
+    <loc>http://blackat.github.io/blog/categories/angular2/</loc>
   </url>
 </urlset>

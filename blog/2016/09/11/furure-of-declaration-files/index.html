@@ -1,0 +1,357 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Furure of Declaration Files - Contrast Of Beauty</title>
+  <meta name="author" content="black@t">
+
+  
+  <meta name="description" content="When I have started to use TypeScript I have looked at Definitely Typed to see how many people where writing declaration files (.d.ts) and then &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blackat.github.io/blog/2016/09/11/furure-of-declaration-files/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Contrast Of Beauty" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,700,600' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Sorts+Mill+Goudy:400,400italic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,700italic,500,500italic' rel='stylesheet' type='text/css'>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-59763266-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Contrast Of Beauty</a></h1>
+  
+    <h2>I am just curious</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="blackat.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/oo-design-principles">Design Principles</a></li>
+  <li><a href="/design-patterns">Design Patterns</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Furure of Declaration Files</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-09-11T11:15:37+02:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>11:15 am</span></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://blackat.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>When I have started to use TypeScript I have looked at <a href="http://definitelytyped.org/">Definitely Typed</a> to see how many  people where writing declaration files (<code>.d.ts</code>) and then <a href="https://typescript.codeplex.com/wikipage?title=Writing%20Definition%20%28.d.ts%29%20Files">guidelines from Microsoft</a> to see how to do it. There was then the utility <a href="https://github.com/DefinitelyTyped/tsd">tsd</a>, but now many stuff has changed.</p>
+
+<div id="toc-table-content"><table cellpadding="0" cellspacing="0" id="toc-container"><tbody><td><section class="toc-panel"><div class="toc-heading"><h3 class="toc-title"><span class="glyphicon glyphicon-list-alt"></span> Contents</h3></div><ul id="toc-listing"><li class="toc-item"><a href="#TOC-1-evolution-at-glance"><span class="tocnumber">1</span> <span class="toctext">Evolution at Glance</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-1-1-tsd-package-manager"><span class="tocnumber">1.1</span> <span class="toctext">TSD Package Manager</span></a></li><li class="toc-item"><a href="#TOC-1-2-typings"><span class="tocnumber">1.2</span> <span class="toctext">Typings</span></a></li><li class="toc-item"><a href="#TOC-1-3-at-types"><span class="tocnumber">1.3</span> <span class="toctext">@Types</span></a><ul class="toc-list-item"><li class="toc-item"><a href="#TOC-1-3-1-usage"><span class="tocnumber">1.3.1</span> <span class="toctext">Usage</span></a></li><li class="toc-item"><a href="#TOC-1-3-2-type-search"><span class="tocnumber">1.3.2</span> <span class="toctext">Type Search</span></a></li></ul></li></ul></li></ul></section></td></tbody></table></div>
+
+
+<h2 id="TOC-1-evolution-at-glance">Evolution at Glance</h2>
+
+<h3 id="TOC-1-1-tsd-package-manager">TSD Package Manager</h3>
+
+<blockquote><p>TSD is a package manager to search and install TypeScript definition files directly from the community driven DefinitelyTyped repository.</p><footer><strong>DefinitelyTyped</strong> <cite><a href="https://github.com/DefinitelyTyped/tsd">TSD</a></cite></footer></blockquote>
+
+
+<p>A tool has to be installed via <code>npm</code> to fetch the package and start to configure a file named <code>tsd.json</code> that holds all the declaration (or definition) files. Basically <code>tsd</code> is like <code>npm</code> with similar commands able to manage defintion dependencies used by TypeScript compiler to transpile <code>.ts</code> files and by type guard to perform runtime check.</p>
+
+<blockquote><p>A type guard is some expression that performs a runtime check that guarantees the type in some scope.</p><footer><strong>TypeScript</strong> <cite><a href="https://www.typescriptlang.org/docs/handbook/advanced-types.html">Documentation</a></cite></footer></blockquote>
+
+
+<h3 id="TOC-1-2-typings">Typings</h3>
+
+<p>Some months go, looking at the <a href="https://github.com/DefinitelyTyped/tsd">GitHub repository</a>, I have discovered <a href="https://github.com/DefinitelyTyped/tsd/issues/269">the project has been deprecated</a> in favor of <a href="https://github.com/typings/typings">typings</a>. So <code>typings</code> is an evolution of <code>tsd</code> with some advantages explained <a href="https://github.com/typings/typings/issues/72">here</a> by <a href="https://github.com/blakeembrey">blakeembrey</a>.</p>
+
+<p>Basically the previous tool has been improved into a more generic package manager that acts like <code>npm</code>, then it still requires to be installed. Old projects have to be updated to migrate from <code>tsd</code> if previously used. Slighter different syntax needs to be learnt.</p>
+
+<h3 id="TOC-1-3-at-types">@Types</h3>
+
+<p>Recently I was experimenting <a href="https://github.com/angular/angular-cli">Angular2 Command Line Interface</a> and I have noticed that generating a new project the folder <code>typings</code> was not created, something missing? Not at all, TypeScript 2.0 has improved once again and a new property <code>types</code> has been kicked in the <code>tsconfig.json</code>.</p>
+
+<p>So looking at the <code>tsconfig.json</code> <a href="http://json.schemastore.org/tsconfig">schema definition</a> we can find</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+<span class="line-number">3</span>
+<span class="line-number">4</span>
+<span class="line-number">5</span>
+<span class="line-number">6</span>
+<span class="line-number">7</span>
+</pre></td><td class="code"><pre><code class="json"><span class="line"><span class="err">types:</span> <span class="p">{</span>
+</span><span class="line">  <span class="nt">"description"</span><span class="p">:</span> <span class="s2">"Type declaration files to be included in compilation. Requires TypeScript version 2.0 or later."</span><span class="p">,</span>
+</span><span class="line">  <span class="nt">"type"</span><span class="p">:</span> <span class="s2">"array"</span><span class="p">,</span>
+</span><span class="line">  <span class="nt">"items"</span><span class="p">:</span> <span class="p">{</span>
+</span><span class="line">    <span class="nt">"type"</span><span class="p">:</span> <span class="s2">"string"</span>
+</span><span class="line">  <span class="p">}</span>
+</span><span class="line"><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+<p>The evolution is explained in this post from <a href="https://blogs.msdn.microsoft.com/typescript/2016/06/15/the-future-of-declaration-files/">Daniel Rosenwasser</a> Program Manager on TypeScript.</p>
+
+<p>In a nutshell</p>
+
+<blockquote><p>Getting type declarations in TypeScript 2.0 will require no tools apart from npm.</p><footer><strong>Daniel Rosenwasser</strong> <cite><a href="https://blogs.msdn.microsoft.com/typescript/2016/06/15/the-future-of-declaration-files">The Future of Declaration Files</a></cite></footer></blockquote>
+
+
+<p>Really a good news! we can rid off some extra entities in our project such as:</p>
+
+<ul>
+<li>another package managers then <code>npm</code>;</li>
+<li><code>json</code> file for type declarations;</li>
+<li>configure <code>tsconfig.json</code> to exclude files from <code>typings</code> folder;</li>
+<li>the famous <code>///reference</code> at the beginning of each <code>.ts</code> file.</li>
+</ul>
+
+
+<h4 id="TOC-1-3-1-usage">Usage</h4>
+
+<p>Very simple:</p>
+
+<div class="bogus-wrapper"><notextile><figure class="code"><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class="line-number">1</span>
+</pre></td><td class="code"><pre><code class="bash"><span class="line">npm install --save @types/lodash
+</span></code></pre></td></tr></table></div></figure></notextile></div>
+
+
+
+
+<blockquote><p>From there you’ll be able to use lodash in your TypeScript code with no fuss. This works for both modules and global code.</p><footer><strong>Daniel Rosenwasser</strong> <cite><a href="https://blogs.msdn.microsoft.com/typescript/2016/06/15/the-future-of-declaration-files">The Future of Declaration Files</a></cite></footer></blockquote>
+
+
+<p>No more additional configuration or references at the beginning of each file.</p>
+
+<h4 id="TOC-1-3-2-type-search">Type Search</h4>
+
+<p>Please refer to <a href="http://microsoft.github.io/TypeSearch/">TypeSearch</a> search engine to find a type definition and how to install it via <code>npm</code>.</p>
+
+<p>At first sight I could say the project is cleaner, less utilities and, may be, a more consistent way to manage <code>.d.ts</code> files. I hope a definitive path has been defined (at least for a couple of years) in order to have all the dependencies centralized in one place.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">black@t</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2016-09-11T11:15:37+02:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>11:15 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/angular2/'>angular2</a>, <a class='category' href='/blog/categories/typescript/'>typescript,</a>, <a class='category' href='/blog/categories/typings/'>typings,</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://blackat.github.io/blog/2016/09/11/furure-of-declaration-files/" data-via="eugeniolentini" data-counturl="http://blackat.github.io/blog/2016/09/11/furure-of-declaration-files/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/03/21/how-to-test-2-tdd-a-simple-example/" title="Previous Post: How to test 2: TDD a simple example">&laquo; How to test 2: TDD a simple example</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2016/09/11/furure-of-declaration-files/">Furure of Declaration Files</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/21/how-to-test-2-tdd-a-simple-example/">How to Test 2: TDD a Simple Example</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/03/07/how-to-test-1-find-errors-to-make-the-application-works/">How to Test 1: Find Errors to Make the Application Works</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/02/01/javascript-anatomy-of-an-object/">JavaScript: Anatomy of an Object</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/12/11/kii-web-application/">Kii Web Application</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/blackat">@blackat</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'blackat',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - black@t -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'blackatblog';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blackat.github.io/blog/2016/09/11/furure-of-declaration-files/';
+        var disqus_url = 'http://blackat.github.io/blog/2016/09/11/furure-of-declaration-files/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
